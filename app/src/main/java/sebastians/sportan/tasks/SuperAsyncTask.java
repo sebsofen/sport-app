@@ -19,6 +19,8 @@ public class SuperAsyncTask extends AsyncTask<String,String,String>{
     public static final String SERVICE_USER = "User";
     public static final String SERVICE_AREA = "Area";
     public static final String SERVICE_CITY = "City";
+    public static final String SERVICE_SPORT = "Sport";
+    public static final String SERVICE_IMAGE = "Image";
     String host;
     int port;
     TTransport transport;

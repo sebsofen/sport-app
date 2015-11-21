@@ -1,6 +1,7 @@
 package sebastians.sportan.citylist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class CityListAdapter extends ArrayAdapter<City> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i("CityListAdapter", "position:"+ position);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.city_list_item, parent, false);

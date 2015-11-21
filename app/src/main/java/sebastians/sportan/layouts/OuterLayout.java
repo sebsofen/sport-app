@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import sebastians.sportan.R;
@@ -18,11 +20,12 @@ public class OuterLayout extends RelativeLayout {
     private final double AUTO_OPEN_SPEED_LIMIT = 800.0;
     private int mDraggingState = 0;
     private Button mQueenButton;
+    private ImageButton DraggButton;
     private ViewDragHelper mDragHelper;
     private int mDraggingBorder;
+
     private int mVerticalRange;
 
-    private double minscreenvisibility = .80;
 
     private boolean mIsOpen;
 
@@ -72,6 +75,7 @@ public class OuterLayout extends RelativeLayout {
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
+            Log.i("range", mVerticalRange + "");
             final float rangeToCheck = mVerticalRange;
             if (mDraggingBorder == 0) {
                 mIsOpen = false;
@@ -110,6 +114,9 @@ public class OuterLayout extends RelativeLayout {
     protected void onFinishInflate() {
         //mQueenButton  = (Button) findViewById(R.id.queen_button);
         mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
+        DraggButton = (ImageButton) findViewById(R.id.dragg);
+        mVerticalRange = getHeight() - DraggButton.getMeasuredHeight();
+        invalidate();
 
         mIsOpen = false;
 
@@ -118,7 +125,7 @@ public class OuterLayout extends RelativeLayout {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        mVerticalRange = (int) (h * minscreenvisibility);
+        mVerticalRange = (int) (h -  DraggButton.getMeasuredHeight());
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
@@ -131,13 +138,13 @@ public class OuterLayout extends RelativeLayout {
     }
 
     private boolean isQueenTarget(MotionEvent event) {
-        int[] queenLocation = new int[2];
-        //mQueenButton.getLocationOnScreen(queenLocation);
-        //int upperLimit = queenLocation[1] + mQueenButton.getMeasuredHeight();
-        //int lowerLimit = queenLocation[1];
-        //int y = (int) event.getRawY();
-        //return (y > lowerLimit && y < upperLimit);
-        return true;
+        int[] draggloc = new int[2];
+        DraggButton.getLocationOnScreen(draggloc);
+        int upperLimit = draggloc[1] + DraggButton.getMeasuredHeight();
+        int lowerLimit = draggloc[1];
+        int y = (int) event.getRawY();
+        return (y > lowerLimit && y < upperLimit);
+
     }
 
     @Override

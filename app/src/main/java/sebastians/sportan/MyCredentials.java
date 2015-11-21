@@ -41,6 +41,7 @@ public class MyCredentials {
         }else{
             identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
             password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
+
         }
 
 

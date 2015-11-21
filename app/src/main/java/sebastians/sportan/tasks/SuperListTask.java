@@ -2,6 +2,7 @@ package sebastians.sportan.tasks;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -56,8 +57,11 @@ public class SuperListTask<T> extends SuperAsyncTask {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if(connectedAdapter != null) {
+            Log.i("logg", "datasetchange");
             connectedAdapter.notifyDataSetInvalidated();
             connectedAdapter.notifyDataSetChanged();
+        }else{
+            Log.i("logg", "was ist hier lows");
         }
 
         if(this.connectedRefreshLayout != null)

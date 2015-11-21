@@ -33,25 +33,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.io.Serializable, Cloneable, Comparable<Area> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Area");
+public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, java.io.Serializable, Cloneable, Comparable<Image> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Image");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField CONTENT_FIELD_DESC = new org.apache.thrift.protocol.TField("content", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField CREATOR_FIELD_DESC = new org.apache.thrift.protocol.TField("creator", org.apache.thrift.protocol.TType.STRING, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new AreaStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new AreaTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new ImageStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new ImageTupleSchemeFactory());
   }
 
-  public String id; // required
-  public String title; // required
+  public String id; // optional
+  public String content; // optional
+  public String creator; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
-    TITLE((short)2, "title");
+    CONTENT((short)2, "content"),
+    CREATOR((short)3, "creator");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -68,8 +71,10 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       switch(fieldId) {
         case 1: // ID
           return ID;
-        case 2: // TITLE
-          return TITLE;
+        case 2: // CONTENT
+          return CONTENT;
+        case 3: // CREATOR
+          return CREATOR;
         default:
           return null;
       }
@@ -110,56 +115,54 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   }
 
   // isset id assignments
+  private static final _Fields optionals[] = {_Fields.ID,_Fields.CONTENT,_Fields.CREATOR};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.CONTENT, new org.apache.thrift.meta_data.FieldMetaData("content", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.CREATOR, new org.apache.thrift.meta_data.FieldMetaData("creator", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Area.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Image.class, metaDataMap);
   }
 
-  public Area() {
-  }
-
-  public Area(
-    String id,
-    String title)
-  {
-    this();
-    this.id = id;
-    this.title = title;
+  public Image() {
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Area(Area other) {
+  public Image(Image other) {
     if (other.isSetId()) {
       this.id = other.id;
     }
-    if (other.isSetTitle()) {
-      this.title = other.title;
+    if (other.isSetContent()) {
+      this.content = other.content;
+    }
+    if (other.isSetCreator()) {
+      this.creator = other.creator;
     }
   }
 
-  public Area deepCopy() {
-    return new Area(this);
+  public Image deepCopy() {
+    return new Image(this);
   }
 
   @Override
   public void clear() {
     this.id = null;
-    this.title = null;
+    this.content = null;
+    this.creator = null;
   }
 
   public String getId() {
     return this.id;
   }
 
-  public Area setId(String id) {
+  public Image setId(String id) {
     this.id = id;
     return this;
   }
@@ -179,27 +182,51 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
   }
 
-  public String getTitle() {
-    return this.title;
+  public String getContent() {
+    return this.content;
   }
 
-  public Area setTitle(String title) {
-    this.title = title;
+  public Image setContent(String content) {
+    this.content = content;
     return this;
   }
 
-  public void unsetTitle() {
-    this.title = null;
+  public void unsetContent() {
+    this.content = null;
   }
 
-  /** Returns true if field title is set (has been assigned a value) and false otherwise */
-  public boolean isSetTitle() {
-    return this.title != null;
+  /** Returns true if field content is set (has been assigned a value) and false otherwise */
+  public boolean isSetContent() {
+    return this.content != null;
   }
 
-  public void setTitleIsSet(boolean value) {
+  public void setContentIsSet(boolean value) {
     if (!value) {
-      this.title = null;
+      this.content = null;
+    }
+  }
+
+  public String getCreator() {
+    return this.creator;
+  }
+
+  public Image setCreator(String creator) {
+    this.creator = creator;
+    return this;
+  }
+
+  public void unsetCreator() {
+    this.creator = null;
+  }
+
+  /** Returns true if field creator is set (has been assigned a value) and false otherwise */
+  public boolean isSetCreator() {
+    return this.creator != null;
+  }
+
+  public void setCreatorIsSet(boolean value) {
+    if (!value) {
+      this.creator = null;
     }
   }
 
@@ -213,11 +240,19 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       }
       break;
 
-    case TITLE:
+    case CONTENT:
       if (value == null) {
-        unsetTitle();
+        unsetContent();
       } else {
-        setTitle((String)value);
+        setContent((String)value);
+      }
+      break;
+
+    case CREATOR:
+      if (value == null) {
+        unsetCreator();
+      } else {
+        setCreator((String)value);
       }
       break;
 
@@ -229,8 +264,11 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     case ID:
       return getId();
 
-    case TITLE:
-      return getTitle();
+    case CONTENT:
+      return getContent();
+
+    case CREATOR:
+      return getCreator();
 
     }
     throw new IllegalStateException();
@@ -245,8 +283,10 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     switch (field) {
     case ID:
       return isSetId();
-    case TITLE:
-      return isSetTitle();
+    case CONTENT:
+      return isSetContent();
+    case CREATOR:
+      return isSetCreator();
     }
     throw new IllegalStateException();
   }
@@ -255,12 +295,12 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Area)
-      return this.equals((Area)that);
+    if (that instanceof Image)
+      return this.equals((Image)that);
     return false;
   }
 
-  public boolean equals(Area that) {
+  public boolean equals(Image that) {
     if (that == null)
       return false;
 
@@ -273,12 +313,21 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         return false;
     }
 
-    boolean this_present_title = true && this.isSetTitle();
-    boolean that_present_title = true && that.isSetTitle();
-    if (this_present_title || that_present_title) {
-      if (!(this_present_title && that_present_title))
+    boolean this_present_content = true && this.isSetContent();
+    boolean that_present_content = true && that.isSetContent();
+    if (this_present_content || that_present_content) {
+      if (!(this_present_content && that_present_content))
         return false;
-      if (!this.title.equals(that.title))
+      if (!this.content.equals(that.content))
+        return false;
+    }
+
+    boolean this_present_creator = true && this.isSetCreator();
+    boolean that_present_creator = true && that.isSetCreator();
+    if (this_present_creator || that_present_creator) {
+      if (!(this_present_creator && that_present_creator))
+        return false;
+      if (!this.creator.equals(that.creator))
         return false;
     }
 
@@ -294,16 +343,21 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     if (present_id)
       list.add(id);
 
-    boolean present_title = true && (isSetTitle());
-    list.add(present_title);
-    if (present_title)
-      list.add(title);
+    boolean present_content = true && (isSetContent());
+    list.add(present_content);
+    if (present_content)
+      list.add(content);
+
+    boolean present_creator = true && (isSetCreator());
+    list.add(present_creator);
+    if (present_creator)
+      list.add(creator);
 
     return list.hashCode();
   }
 
   @Override
-  public int compareTo(Area other) {
+  public int compareTo(Image other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -320,12 +374,22 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetTitle()).compareTo(other.isSetTitle());
+    lastComparison = Boolean.valueOf(isSetContent()).compareTo(other.isSetContent());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetTitle()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
+    if (isSetContent()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.content, other.content);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetCreator()).compareTo(other.isSetCreator());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetCreator()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.creator, other.creator);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -347,36 +411,44 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Area(");
+    StringBuilder sb = new StringBuilder("Image(");
     boolean first = true;
 
-    sb.append("id:");
-    if (this.id == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.id);
+    if (isSetId()) {
+      sb.append("id:");
+      if (this.id == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.id);
+      }
+      first = false;
     }
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("title:");
-    if (this.title == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.title);
+    if (isSetContent()) {
+      if (!first) sb.append(", ");
+      sb.append("content:");
+      if (this.content == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.content);
+      }
+      first = false;
     }
-    first = false;
+    if (isSetCreator()) {
+      if (!first) sb.append(", ");
+      sb.append("creator:");
+      if (this.creator == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.creator);
+      }
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (id == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not present! Struct: " + toString());
-    }
-    if (title == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'title' was not present! Struct: " + toString());
-    }
     // check for sub-struct validity
   }
 
@@ -396,15 +468,15 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
   }
 
-  private static class AreaStandardSchemeFactory implements SchemeFactory {
-    public AreaStandardScheme getScheme() {
-      return new AreaStandardScheme();
+  private static class ImageStandardSchemeFactory implements SchemeFactory {
+    public ImageStandardScheme getScheme() {
+      return new ImageStandardScheme();
     }
   }
 
-  private static class AreaStandardScheme extends StandardScheme<Area> {
+  private static class ImageStandardScheme extends StandardScheme<Image> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Area struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Image struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -422,10 +494,18 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // TITLE
+          case 2: // CONTENT
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.title = iprot.readString();
-              struct.setTitleIsSet(true);
+              struct.content = iprot.readString();
+              struct.setContentIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // CREATOR
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.creator = iprot.readString();
+              struct.setCreatorIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -441,19 +521,30 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Area struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Image struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.id != null) {
-        oprot.writeFieldBegin(ID_FIELD_DESC);
-        oprot.writeString(struct.id);
-        oprot.writeFieldEnd();
+        if (struct.isSetId()) {
+          oprot.writeFieldBegin(ID_FIELD_DESC);
+          oprot.writeString(struct.id);
+          oprot.writeFieldEnd();
+        }
       }
-      if (struct.title != null) {
-        oprot.writeFieldBegin(TITLE_FIELD_DESC);
-        oprot.writeString(struct.title);
-        oprot.writeFieldEnd();
+      if (struct.content != null) {
+        if (struct.isSetContent()) {
+          oprot.writeFieldBegin(CONTENT_FIELD_DESC);
+          oprot.writeString(struct.content);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.creator != null) {
+        if (struct.isSetCreator()) {
+          oprot.writeFieldBegin(CREATOR_FIELD_DESC);
+          oprot.writeString(struct.creator);
+          oprot.writeFieldEnd();
+        }
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -461,28 +552,55 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   }
 
-  private static class AreaTupleSchemeFactory implements SchemeFactory {
-    public AreaTupleScheme getScheme() {
-      return new AreaTupleScheme();
+  private static class ImageTupleSchemeFactory implements SchemeFactory {
+    public ImageTupleScheme getScheme() {
+      return new ImageTupleScheme();
     }
   }
 
-  private static class AreaTupleScheme extends TupleScheme<Area> {
+  private static class ImageTupleScheme extends TupleScheme<Image> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Area struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Image struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      oprot.writeString(struct.id);
-      oprot.writeString(struct.title);
+      BitSet optionals = new BitSet();
+      if (struct.isSetId()) {
+        optionals.set(0);
+      }
+      if (struct.isSetContent()) {
+        optionals.set(1);
+      }
+      if (struct.isSetCreator()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetId()) {
+        oprot.writeString(struct.id);
+      }
+      if (struct.isSetContent()) {
+        oprot.writeString(struct.content);
+      }
+      if (struct.isSetCreator()) {
+        oprot.writeString(struct.creator);
+      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Area struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Image struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.id = iprot.readString();
-      struct.setIdIsSet(true);
-      struct.title = iprot.readString();
-      struct.setTitleIsSet(true);
+      BitSet incoming = iprot.readBitSet(3);
+      if (incoming.get(0)) {
+        struct.id = iprot.readString();
+        struct.setIdIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.content = iprot.readString();
+        struct.setContentIsSet(true);
+      }
+      if (incoming.get(2)) {
+        struct.creator = iprot.readString();
+        struct.setCreatorIsSet(true);
+      }
     }
   }
 

@@ -33,21 +33,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class AreaSvc {
+public class SportSvc {
 
   public interface Iface {
 
-    public void createArea(String title, String description, List<Coordinate> coords) throws org.apache.thrift.TException;
+    public Sport createSport(String token, Sport sport) throws org.apache.thrift.TException;
 
-    public List<Area> getNearBy(Coordinate coordinate, int limit) throws org.apache.thrift.TException;
+    public List<Sport> getAllSports(String bla) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void createArea(String title, String description, List<Coordinate> coords, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void createSport(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void getNearBy(Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void getAllSports(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -71,50 +71,51 @@ public class AreaSvc {
       super(iprot, oprot);
     }
 
-    public void createArea(String title, String description, List<Coordinate> coords) throws org.apache.thrift.TException
+    public Sport createSport(String token, Sport sport) throws org.apache.thrift.TException
     {
-      send_createArea(title, description, coords);
-      recv_createArea();
+      send_createSport(token, sport);
+      return recv_createSport();
     }
 
-    public void send_createArea(String title, String description, List<Coordinate> coords) throws org.apache.thrift.TException
+    public void send_createSport(String token, Sport sport) throws org.apache.thrift.TException
     {
-      createArea_args args = new createArea_args();
-      args.setTitle(title);
-      args.setDescription(description);
-      args.setCoords(coords);
-      sendBase("createArea", args);
+      createSport_args args = new createSport_args();
+      args.setToken(token);
+      args.setSport(sport);
+      sendBase("createSport", args);
     }
 
-    public void recv_createArea() throws org.apache.thrift.TException
+    public Sport recv_createSport() throws org.apache.thrift.TException
     {
-      createArea_result result = new createArea_result();
-      receiveBase(result, "createArea");
-      return;
-    }
-
-    public List<Area> getNearBy(Coordinate coordinate, int limit) throws org.apache.thrift.TException
-    {
-      send_getNearBy(coordinate, limit);
-      return recv_getNearBy();
-    }
-
-    public void send_getNearBy(Coordinate coordinate, int limit) throws org.apache.thrift.TException
-    {
-      getNearBy_args args = new getNearBy_args();
-      args.setCoordinate(coordinate);
-      args.setLimit(limit);
-      sendBase("getNearBy", args);
-    }
-
-    public List<Area> recv_getNearBy() throws org.apache.thrift.TException
-    {
-      getNearBy_result result = new getNearBy_result();
-      receiveBase(result, "getNearBy");
+      createSport_result result = new createSport_result();
+      receiveBase(result, "createSport");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getNearBy failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "createSport failed: unknown result");
+    }
+
+    public List<Sport> getAllSports(String bla) throws org.apache.thrift.TException
+    {
+      send_getAllSports(bla);
+      return recv_getAllSports();
+    }
+
+    public void send_getAllSports(String bla) throws org.apache.thrift.TException
+    {
+      getAllSports_args args = new getAllSports_args();
+      args.setBla(bla);
+      sendBase("getAllSports", args);
+    }
+
+    public List<Sport> recv_getAllSports() throws org.apache.thrift.TException
+    {
+      getAllSports_result result = new getAllSports_result();
+      receiveBase(result, "getAllSports");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAllSports failed: unknown result");
     }
 
   }
@@ -135,76 +136,70 @@ public class AreaSvc {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void createArea(String title, String description, List<Coordinate> coords, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void createSport(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createArea_call method_call = new createArea_call(title, description, coords, resultHandler, this, ___protocolFactory, ___transport);
+      createSport_call method_call = new createSport_call(token, sport, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class createArea_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private String title;
-      private String description;
-      private List<Coordinate> coords;
-      public createArea_call(String title, String description, List<Coordinate> coords, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class createSport_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String token;
+      private Sport sport;
+      public createSport_call(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.title = title;
-        this.description = description;
-        this.coords = coords;
+        this.token = token;
+        this.sport = sport;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createArea", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        createArea_args args = new createArea_args();
-        args.setTitle(title);
-        args.setDescription(description);
-        args.setCoords(coords);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createSport", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createSport_args args = new createSport_args();
+        args.setToken(token);
+        args.setSport(sport);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public void getResult() throws org.apache.thrift.TException {
+      public Sport getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_createArea();
+        return (new Client(prot)).recv_createSport();
       }
     }
 
-    public void getNearBy(Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void getAllSports(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getNearBy_call method_call = new getNearBy_call(coordinate, limit, resultHandler, this, ___protocolFactory, ___transport);
+      getAllSports_call method_call = new getAllSports_call(bla, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getNearBy_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private Coordinate coordinate;
-      private int limit;
-      public getNearBy_call(Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+    public static class getAllSports_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String bla;
+      public getAllSports_call(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.coordinate = coordinate;
-        this.limit = limit;
+        this.bla = bla;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getNearBy", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getNearBy_args args = new getNearBy_args();
-        args.setCoordinate(coordinate);
-        args.setLimit(limit);
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getAllSports", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getAllSports_args args = new getAllSports_args();
+        args.setBla(bla);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public List<Area> getResult() throws org.apache.thrift.TException {
+      public List<Sport> getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getNearBy();
+        return (new Client(prot)).recv_getAllSports();
       }
     }
 
@@ -221,47 +216,47 @@ public class AreaSvc {
     }
 
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("createArea", new createArea());
-      processMap.put("getNearBy", new getNearBy());
+      processMap.put("createSport", new createSport());
+      processMap.put("getAllSports", new getAllSports());
       return processMap;
     }
 
-    public static class createArea<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createArea_args> {
-      public createArea() {
-        super("createArea");
+    public static class createSport<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createSport_args> {
+      public createSport() {
+        super("createSport");
       }
 
-      public createArea_args getEmptyArgsInstance() {
-        return new createArea_args();
+      public createSport_args getEmptyArgsInstance() {
+        return new createSport_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public createArea_result getResult(I iface, createArea_args args) throws org.apache.thrift.TException {
-        createArea_result result = new createArea_result();
-        iface.createArea(args.title, args.description, args.coords);
+      public createSport_result getResult(I iface, createSport_args args) throws org.apache.thrift.TException {
+        createSport_result result = new createSport_result();
+        result.success = iface.createSport(args.token, args.sport);
         return result;
       }
     }
 
-    public static class getNearBy<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getNearBy_args> {
-      public getNearBy() {
-        super("getNearBy");
+    public static class getAllSports<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getAllSports_args> {
+      public getAllSports() {
+        super("getAllSports");
       }
 
-      public getNearBy_args getEmptyArgsInstance() {
-        return new getNearBy_args();
+      public getAllSports_args getEmptyArgsInstance() {
+        return new getAllSports_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public getNearBy_result getResult(I iface, getNearBy_args args) throws org.apache.thrift.TException {
-        getNearBy_result result = new getNearBy_result();
-        result.success = iface.getNearBy(args.coordinate, args.limit);
+      public getAllSports_result getResult(I iface, getAllSports_args args) throws org.apache.thrift.TException {
+        getAllSports_result result = new getAllSports_result();
+        result.success = iface.getAllSports(args.bla);
         return result;
       }
     }
@@ -279,75 +274,25 @@ public class AreaSvc {
     }
 
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
-      processMap.put("createArea", new createArea());
-      processMap.put("getNearBy", new getNearBy());
+      processMap.put("createSport", new createSport());
+      processMap.put("getAllSports", new getAllSports());
       return processMap;
     }
 
-    public static class createArea<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, createArea_args, Void> {
-      public createArea() {
-        super("createArea");
+    public static class createSport<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, createSport_args, Sport> {
+      public createSport() {
+        super("createSport");
       }
 
-      public createArea_args getEmptyArgsInstance() {
-        return new createArea_args();
+      public createSport_args getEmptyArgsInstance() {
+        return new createSport_args();
       }
 
-      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<Sport> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<Void>() { 
-          public void onComplete(Void o) {
-            createArea_result result = new createArea_result();
-            try {
-              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
-              return;
-            } catch (Exception e) {
-              LOGGER.error("Exception writing to internal frame buffer", e);
-            }
-            fb.close();
-          }
-          public void onError(Exception e) {
-            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
-            org.apache.thrift.TBase msg;
-            createArea_result result = new createArea_result();
-            {
-              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
-              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
-            }
-            try {
-              fcall.sendResponse(fb,msg,msgType,seqid);
-              return;
-            } catch (Exception ex) {
-              LOGGER.error("Exception writing to internal frame buffer", ex);
-            }
-            fb.close();
-          }
-        };
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      public void start(I iface, createArea_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
-        iface.createArea(args.title, args.description, args.coords,resultHandler);
-      }
-    }
-
-    public static class getNearBy<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getNearBy_args, List<Area>> {
-      public getNearBy() {
-        super("getNearBy");
-      }
-
-      public getNearBy_args getEmptyArgsInstance() {
-        return new getNearBy_args();
-      }
-
-      public AsyncMethodCallback<List<Area>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
-        final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<List<Area>>() { 
-          public void onComplete(List<Area> o) {
-            getNearBy_result result = new getNearBy_result();
+        return new AsyncMethodCallback<Sport>() { 
+          public void onComplete(Sport o) {
+            createSport_result result = new createSport_result();
             result.success = o;
             try {
               fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -360,7 +305,7 @@ public class AreaSvc {
           public void onError(Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TBase msg;
-            getNearBy_result result = new getNearBy_result();
+            createSport_result result = new createSport_result();
             {
               msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
               msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -380,35 +325,83 @@ public class AreaSvc {
         return false;
       }
 
-      public void start(I iface, getNearBy_args args, org.apache.thrift.async.AsyncMethodCallback<List<Area>> resultHandler) throws TException {
-        iface.getNearBy(args.coordinate, args.limit,resultHandler);
+      public void start(I iface, createSport_args args, org.apache.thrift.async.AsyncMethodCallback<Sport> resultHandler) throws TException {
+        iface.createSport(args.token, args.sport,resultHandler);
+      }
+    }
+
+    public static class getAllSports<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAllSports_args, List<Sport>> {
+      public getAllSports() {
+        super("getAllSports");
+      }
+
+      public getAllSports_args getEmptyArgsInstance() {
+        return new getAllSports_args();
+      }
+
+      public AsyncMethodCallback<List<Sport>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<List<Sport>>() { 
+          public void onComplete(List<Sport> o) {
+            getAllSports_result result = new getAllSports_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            getAllSports_result result = new getAllSports_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, getAllSports_args args, org.apache.thrift.async.AsyncMethodCallback<List<Sport>> resultHandler) throws TException {
+        iface.getAllSports(args.bla,resultHandler);
       }
     }
 
   }
 
-  public static class createArea_args implements org.apache.thrift.TBase<createArea_args, createArea_args._Fields>, java.io.Serializable, Cloneable, Comparable<createArea_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createArea_args");
+  public static class createSport_args implements org.apache.thrift.TBase<createSport_args, createSport_args._Fields>, java.io.Serializable, Cloneable, Comparable<createSport_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createSport_args");
 
-    private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)2);
-    private static final org.apache.thrift.protocol.TField COORDS_FIELD_DESC = new org.apache.thrift.protocol.TField("coords", org.apache.thrift.protocol.TType.LIST, (short)3);
+    private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField SPORT_FIELD_DESC = new org.apache.thrift.protocol.TField("sport", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new createArea_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createArea_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new createSport_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createSport_argsTupleSchemeFactory());
     }
 
-    public String title; // required
-    public String description; // required
-    public List<Coordinate> coords; // required
+    public String token; // required
+    public Sport sport; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      TITLE((short)1, "title"),
-      DESCRIPTION((short)2, "description"),
-      COORDS((short)3, "coords");
+      TOKEN((short)1, "token"),
+      SPORT((short)2, "sport");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -423,12 +416,10 @@ public class AreaSvc {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // TITLE
-            return TITLE;
-          case 2: // DESCRIPTION
-            return DESCRIPTION;
-          case 3: // COORDS
-            return COORDS;
+          case 1: // TOKEN
+            return TOKEN;
+          case 2: // SPORT
+            return SPORT;
           default:
             return null;
         }
@@ -472,171 +463,111 @@ public class AreaSvc {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.COORDS, new org.apache.thrift.meta_data.FieldMetaData("coords", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class))));
+      tmpMap.put(_Fields.SPORT, new org.apache.thrift.meta_data.FieldMetaData("sport", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createArea_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createSport_args.class, metaDataMap);
     }
 
-    public createArea_args() {
+    public createSport_args() {
     }
 
-    public createArea_args(
-      String title,
-      String description,
-      List<Coordinate> coords)
+    public createSport_args(
+      String token,
+      Sport sport)
     {
       this();
-      this.title = title;
-      this.description = description;
-      this.coords = coords;
+      this.token = token;
+      this.sport = sport;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public createArea_args(createArea_args other) {
-      if (other.isSetTitle()) {
-        this.title = other.title;
+    public createSport_args(createSport_args other) {
+      if (other.isSetToken()) {
+        this.token = other.token;
       }
-      if (other.isSetDescription()) {
-        this.description = other.description;
-      }
-      if (other.isSetCoords()) {
-        List<Coordinate> __this__coords = new ArrayList<Coordinate>(other.coords.size());
-        for (Coordinate other_element : other.coords) {
-          __this__coords.add(new Coordinate(other_element));
-        }
-        this.coords = __this__coords;
+      if (other.isSetSport()) {
+        this.sport = new Sport(other.sport);
       }
     }
 
-    public createArea_args deepCopy() {
-      return new createArea_args(this);
+    public createSport_args deepCopy() {
+      return new createSport_args(this);
     }
 
     @Override
     public void clear() {
-      this.title = null;
-      this.description = null;
-      this.coords = null;
+      this.token = null;
+      this.sport = null;
     }
 
-    public String getTitle() {
-      return this.title;
+    public String getToken() {
+      return this.token;
     }
 
-    public createArea_args setTitle(String title) {
-      this.title = title;
+    public createSport_args setToken(String token) {
+      this.token = token;
       return this;
     }
 
-    public void unsetTitle() {
-      this.title = null;
+    public void unsetToken() {
+      this.token = null;
     }
 
-    /** Returns true if field title is set (has been assigned a value) and false otherwise */
-    public boolean isSetTitle() {
-      return this.title != null;
+    /** Returns true if field token is set (has been assigned a value) and false otherwise */
+    public boolean isSetToken() {
+      return this.token != null;
     }
 
-    public void setTitleIsSet(boolean value) {
+    public void setTokenIsSet(boolean value) {
       if (!value) {
-        this.title = null;
+        this.token = null;
       }
     }
 
-    public String getDescription() {
-      return this.description;
+    public Sport getSport() {
+      return this.sport;
     }
 
-    public createArea_args setDescription(String description) {
-      this.description = description;
+    public createSport_args setSport(Sport sport) {
+      this.sport = sport;
       return this;
     }
 
-    public void unsetDescription() {
-      this.description = null;
+    public void unsetSport() {
+      this.sport = null;
     }
 
-    /** Returns true if field description is set (has been assigned a value) and false otherwise */
-    public boolean isSetDescription() {
-      return this.description != null;
+    /** Returns true if field sport is set (has been assigned a value) and false otherwise */
+    public boolean isSetSport() {
+      return this.sport != null;
     }
 
-    public void setDescriptionIsSet(boolean value) {
+    public void setSportIsSet(boolean value) {
       if (!value) {
-        this.description = null;
-      }
-    }
-
-    public int getCoordsSize() {
-      return (this.coords == null) ? 0 : this.coords.size();
-    }
-
-    public java.util.Iterator<Coordinate> getCoordsIterator() {
-      return (this.coords == null) ? null : this.coords.iterator();
-    }
-
-    public void addToCoords(Coordinate elem) {
-      if (this.coords == null) {
-        this.coords = new ArrayList<Coordinate>();
-      }
-      this.coords.add(elem);
-    }
-
-    public List<Coordinate> getCoords() {
-      return this.coords;
-    }
-
-    public createArea_args setCoords(List<Coordinate> coords) {
-      this.coords = coords;
-      return this;
-    }
-
-    public void unsetCoords() {
-      this.coords = null;
-    }
-
-    /** Returns true if field coords is set (has been assigned a value) and false otherwise */
-    public boolean isSetCoords() {
-      return this.coords != null;
-    }
-
-    public void setCoordsIsSet(boolean value) {
-      if (!value) {
-        this.coords = null;
+        this.sport = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case TITLE:
+      case TOKEN:
         if (value == null) {
-          unsetTitle();
+          unsetToken();
         } else {
-          setTitle((String)value);
+          setToken((String)value);
         }
         break;
 
-      case DESCRIPTION:
+      case SPORT:
         if (value == null) {
-          unsetDescription();
+          unsetSport();
         } else {
-          setDescription((String)value);
-        }
-        break;
-
-      case COORDS:
-        if (value == null) {
-          unsetCoords();
-        } else {
-          setCoords((List<Coordinate>)value);
+          setSport((Sport)value);
         }
         break;
 
@@ -645,14 +576,11 @@ public class AreaSvc {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case TITLE:
-        return getTitle();
+      case TOKEN:
+        return getToken();
 
-      case DESCRIPTION:
-        return getDescription();
-
-      case COORDS:
-        return getCoords();
+      case SPORT:
+        return getSport();
 
       }
       throw new IllegalStateException();
@@ -665,12 +593,10 @@ public class AreaSvc {
       }
 
       switch (field) {
-      case TITLE:
-        return isSetTitle();
-      case DESCRIPTION:
-        return isSetDescription();
-      case COORDS:
-        return isSetCoords();
+      case TOKEN:
+        return isSetToken();
+      case SPORT:
+        return isSetSport();
       }
       throw new IllegalStateException();
     }
@@ -679,39 +605,30 @@ public class AreaSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof createArea_args)
-        return this.equals((createArea_args)that);
+      if (that instanceof createSport_args)
+        return this.equals((createSport_args)that);
       return false;
     }
 
-    public boolean equals(createArea_args that) {
+    public boolean equals(createSport_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_title = true && this.isSetTitle();
-      boolean that_present_title = true && that.isSetTitle();
-      if (this_present_title || that_present_title) {
-        if (!(this_present_title && that_present_title))
+      boolean this_present_token = true && this.isSetToken();
+      boolean that_present_token = true && that.isSetToken();
+      if (this_present_token || that_present_token) {
+        if (!(this_present_token && that_present_token))
           return false;
-        if (!this.title.equals(that.title))
-          return false;
-      }
-
-      boolean this_present_description = true && this.isSetDescription();
-      boolean that_present_description = true && that.isSetDescription();
-      if (this_present_description || that_present_description) {
-        if (!(this_present_description && that_present_description))
-          return false;
-        if (!this.description.equals(that.description))
+        if (!this.token.equals(that.token))
           return false;
       }
 
-      boolean this_present_coords = true && this.isSetCoords();
-      boolean that_present_coords = true && that.isSetCoords();
-      if (this_present_coords || that_present_coords) {
-        if (!(this_present_coords && that_present_coords))
+      boolean this_present_sport = true && this.isSetSport();
+      boolean that_present_sport = true && that.isSetSport();
+      if (this_present_sport || that_present_sport) {
+        if (!(this_present_sport && that_present_sport))
           return false;
-        if (!this.coords.equals(that.coords))
+        if (!this.sport.equals(that.sport))
           return false;
       }
 
@@ -722,58 +639,43 @@ public class AreaSvc {
     public int hashCode() {
       List<Object> list = new ArrayList<Object>();
 
-      boolean present_title = true && (isSetTitle());
-      list.add(present_title);
-      if (present_title)
-        list.add(title);
+      boolean present_token = true && (isSetToken());
+      list.add(present_token);
+      if (present_token)
+        list.add(token);
 
-      boolean present_description = true && (isSetDescription());
-      list.add(present_description);
-      if (present_description)
-        list.add(description);
-
-      boolean present_coords = true && (isSetCoords());
-      list.add(present_coords);
-      if (present_coords)
-        list.add(coords);
+      boolean present_sport = true && (isSetSport());
+      list.add(present_sport);
+      if (present_sport)
+        list.add(sport);
 
       return list.hashCode();
     }
 
     @Override
-    public int compareTo(createArea_args other) {
+    public int compareTo(createSport_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
 
-      lastComparison = Boolean.valueOf(isSetTitle()).compareTo(other.isSetTitle());
+      lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetTitle()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
+      if (isSetToken()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
         if (lastComparison != 0) {
           return lastComparison;
         }
       }
-      lastComparison = Boolean.valueOf(isSetDescription()).compareTo(other.isSetDescription());
+      lastComparison = Boolean.valueOf(isSetSport()).compareTo(other.isSetSport());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetDescription()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.description, other.description);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetCoords()).compareTo(other.isSetCoords());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetCoords()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.coords, other.coords);
+      if (isSetSport()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sport, other.sport);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -795,30 +697,22 @@ public class AreaSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("createArea_args(");
+      StringBuilder sb = new StringBuilder("createSport_args(");
       boolean first = true;
 
-      sb.append("title:");
-      if (this.title == null) {
+      sb.append("token:");
+      if (this.token == null) {
         sb.append("null");
       } else {
-        sb.append(this.title);
+        sb.append(this.token);
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("description:");
-      if (this.description == null) {
+      sb.append("sport:");
+      if (this.sport == null) {
         sb.append("null");
       } else {
-        sb.append(this.description);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("coords:");
-      if (this.coords == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.coords);
+        sb.append(this.sport);
       }
       first = false;
       sb.append(")");
@@ -828,6 +722,9 @@ public class AreaSvc {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
+      if (sport != null) {
+        sport.validate();
+      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -846,15 +743,15 @@ public class AreaSvc {
       }
     }
 
-    private static class createArea_argsStandardSchemeFactory implements SchemeFactory {
-      public createArea_argsStandardScheme getScheme() {
-        return new createArea_argsStandardScheme();
+    private static class createSport_argsStandardSchemeFactory implements SchemeFactory {
+      public createSport_argsStandardScheme getScheme() {
+        return new createSport_argsStandardScheme();
       }
     }
 
-    private static class createArea_argsStandardScheme extends StandardScheme<createArea_args> {
+    private static class createSport_argsStandardScheme extends StandardScheme<createSport_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createArea_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createSport_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -864,793 +761,19 @@ public class AreaSvc {
             break;
           }
           switch (schemeField.id) {
-            case 1: // TITLE
+            case 1: // TOKEN
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.title = iprot.readString();
-                struct.setTitleIsSet(true);
+                struct.token = iprot.readString();
+                struct.setTokenIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // DESCRIPTION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.description = iprot.readString();
-                struct.setDescriptionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 3: // COORDS
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
-                  struct.coords = new ArrayList<Coordinate>(_list16.size);
-                  Coordinate _elem17;
-                  for (int _i18 = 0; _i18 < _list16.size; ++_i18)
-                  {
-                    _elem17 = new Coordinate();
-                    _elem17.read(iprot);
-                    struct.coords.add(_elem17);
-                  }
-                  iprot.readListEnd();
-                }
-                struct.setCoordsIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createArea_args struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.title != null) {
-          oprot.writeFieldBegin(TITLE_FIELD_DESC);
-          oprot.writeString(struct.title);
-          oprot.writeFieldEnd();
-        }
-        if (struct.description != null) {
-          oprot.writeFieldBegin(DESCRIPTION_FIELD_DESC);
-          oprot.writeString(struct.description);
-          oprot.writeFieldEnd();
-        }
-        if (struct.coords != null) {
-          oprot.writeFieldBegin(COORDS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter19 : struct.coords)
-            {
-              _iter19.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
-          oprot.writeFieldEnd();
-        }
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class createArea_argsTupleSchemeFactory implements SchemeFactory {
-      public createArea_argsTupleScheme getScheme() {
-        return new createArea_argsTupleScheme();
-      }
-    }
-
-    private static class createArea_argsTupleScheme extends TupleScheme<createArea_args> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createArea_args struct) throws org.apache.thrift.TException {
-        TTupleProtocol oprot = (TTupleProtocol) prot;
-        BitSet optionals = new BitSet();
-        if (struct.isSetTitle()) {
-          optionals.set(0);
-        }
-        if (struct.isSetDescription()) {
-          optionals.set(1);
-        }
-        if (struct.isSetCoords()) {
-          optionals.set(2);
-        }
-        oprot.writeBitSet(optionals, 3);
-        if (struct.isSetTitle()) {
-          oprot.writeString(struct.title);
-        }
-        if (struct.isSetDescription()) {
-          oprot.writeString(struct.description);
-        }
-        if (struct.isSetCoords()) {
-          {
-            oprot.writeI32(struct.coords.size());
-            for (Coordinate _iter20 : struct.coords)
-            {
-              _iter20.write(oprot);
-            }
-          }
-        }
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createArea_args struct) throws org.apache.thrift.TException {
-        TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(3);
-        if (incoming.get(0)) {
-          struct.title = iprot.readString();
-          struct.setTitleIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.description = iprot.readString();
-          struct.setDescriptionIsSet(true);
-        }
-        if (incoming.get(2)) {
-          {
-            org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.coords = new ArrayList<Coordinate>(_list21.size);
-            Coordinate _elem22;
-            for (int _i23 = 0; _i23 < _list21.size; ++_i23)
-            {
-              _elem22 = new Coordinate();
-              _elem22.read(iprot);
-              struct.coords.add(_elem22);
-            }
-          }
-          struct.setCoordsIsSet(true);
-        }
-      }
-    }
-
-  }
-
-  public static class createArea_result implements org.apache.thrift.TBase<createArea_result, createArea_result._Fields>, java.io.Serializable, Cloneable, Comparable<createArea_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createArea_result");
-
-
-    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-    static {
-      schemes.put(StandardScheme.class, new createArea_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createArea_resultTupleSchemeFactory());
-    }
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createArea_result.class, metaDataMap);
-    }
-
-    public createArea_result() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public createArea_result(createArea_result other) {
-    }
-
-    public createArea_result deepCopy() {
-      return new createArea_result(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof createArea_result)
-        return this.equals((createArea_result)that);
-      return false;
-    }
-
-    public boolean equals(createArea_result that) {
-      if (that == null)
-        return false;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      List<Object> list = new ArrayList<Object>();
-
-      return list.hashCode();
-    }
-
-    @Override
-    public int compareTo(createArea_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-      }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("createArea_result(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
-      try {
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class createArea_resultStandardSchemeFactory implements SchemeFactory {
-      public createArea_resultStandardScheme getScheme() {
-        return new createArea_resultStandardScheme();
-      }
-    }
-
-    private static class createArea_resultStandardScheme extends StandardScheme<createArea_result> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createArea_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createArea_result struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class createArea_resultTupleSchemeFactory implements SchemeFactory {
-      public createArea_resultTupleScheme getScheme() {
-        return new createArea_resultTupleScheme();
-      }
-    }
-
-    private static class createArea_resultTupleScheme extends TupleScheme<createArea_result> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createArea_result struct) throws org.apache.thrift.TException {
-        TTupleProtocol oprot = (TTupleProtocol) prot;
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createArea_result struct) throws org.apache.thrift.TException {
-        TTupleProtocol iprot = (TTupleProtocol) prot;
-      }
-    }
-
-  }
-
-  public static class getNearBy_args implements org.apache.thrift.TBase<getNearBy_args, getNearBy_args._Fields>, java.io.Serializable, Cloneable, Comparable<getNearBy_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getNearBy_args");
-
-    private static final org.apache.thrift.protocol.TField COORDINATE_FIELD_DESC = new org.apache.thrift.protocol.TField("coordinate", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField LIMIT_FIELD_DESC = new org.apache.thrift.protocol.TField("limit", org.apache.thrift.protocol.TType.I32, (short)2);
-
-    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-    static {
-      schemes.put(StandardScheme.class, new getNearBy_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getNearBy_argsTupleSchemeFactory());
-    }
-
-    public Coordinate coordinate; // required
-    public int limit; // required
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      COORDINATE((short)1, "coordinate"),
-      LIMIT((short)2, "limit");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 1: // COORDINATE
-            return COORDINATE;
-          case 2: // LIMIT
-            return LIMIT;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    private static final int __LIMIT_ISSET_ID = 0;
-    private byte __isset_bitfield = 0;
-    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.COORDINATE, new org.apache.thrift.meta_data.FieldMetaData("coordinate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class)));
-      tmpMap.put(_Fields.LIMIT, new org.apache.thrift.meta_data.FieldMetaData("limit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getNearBy_args.class, metaDataMap);
-    }
-
-    public getNearBy_args() {
-    }
-
-    public getNearBy_args(
-      Coordinate coordinate,
-      int limit)
-    {
-      this();
-      this.coordinate = coordinate;
-      this.limit = limit;
-      setLimitIsSet(true);
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getNearBy_args(getNearBy_args other) {
-      __isset_bitfield = other.__isset_bitfield;
-      if (other.isSetCoordinate()) {
-        this.coordinate = new Coordinate(other.coordinate);
-      }
-      this.limit = other.limit;
-    }
-
-    public getNearBy_args deepCopy() {
-      return new getNearBy_args(this);
-    }
-
-    @Override
-    public void clear() {
-      this.coordinate = null;
-      setLimitIsSet(false);
-      this.limit = 0;
-    }
-
-    public Coordinate getCoordinate() {
-      return this.coordinate;
-    }
-
-    public getNearBy_args setCoordinate(Coordinate coordinate) {
-      this.coordinate = coordinate;
-      return this;
-    }
-
-    public void unsetCoordinate() {
-      this.coordinate = null;
-    }
-
-    /** Returns true if field coordinate is set (has been assigned a value) and false otherwise */
-    public boolean isSetCoordinate() {
-      return this.coordinate != null;
-    }
-
-    public void setCoordinateIsSet(boolean value) {
-      if (!value) {
-        this.coordinate = null;
-      }
-    }
-
-    public int getLimit() {
-      return this.limit;
-    }
-
-    public getNearBy_args setLimit(int limit) {
-      this.limit = limit;
-      setLimitIsSet(true);
-      return this;
-    }
-
-    public void unsetLimit() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LIMIT_ISSET_ID);
-    }
-
-    /** Returns true if field limit is set (has been assigned a value) and false otherwise */
-    public boolean isSetLimit() {
-      return EncodingUtils.testBit(__isset_bitfield, __LIMIT_ISSET_ID);
-    }
-
-    public void setLimitIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __LIMIT_ISSET_ID, value);
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case COORDINATE:
-        if (value == null) {
-          unsetCoordinate();
-        } else {
-          setCoordinate((Coordinate)value);
-        }
-        break;
-
-      case LIMIT:
-        if (value == null) {
-          unsetLimit();
-        } else {
-          setLimit((Integer)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case COORDINATE:
-        return getCoordinate();
-
-      case LIMIT:
-        return getLimit();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case COORDINATE:
-        return isSetCoordinate();
-      case LIMIT:
-        return isSetLimit();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getNearBy_args)
-        return this.equals((getNearBy_args)that);
-      return false;
-    }
-
-    public boolean equals(getNearBy_args that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_coordinate = true && this.isSetCoordinate();
-      boolean that_present_coordinate = true && that.isSetCoordinate();
-      if (this_present_coordinate || that_present_coordinate) {
-        if (!(this_present_coordinate && that_present_coordinate))
-          return false;
-        if (!this.coordinate.equals(that.coordinate))
-          return false;
-      }
-
-      boolean this_present_limit = true;
-      boolean that_present_limit = true;
-      if (this_present_limit || that_present_limit) {
-        if (!(this_present_limit && that_present_limit))
-          return false;
-        if (this.limit != that.limit)
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      List<Object> list = new ArrayList<Object>();
-
-      boolean present_coordinate = true && (isSetCoordinate());
-      list.add(present_coordinate);
-      if (present_coordinate)
-        list.add(coordinate);
-
-      boolean present_limit = true;
-      list.add(present_limit);
-      if (present_limit)
-        list.add(limit);
-
-      return list.hashCode();
-    }
-
-    @Override
-    public int compareTo(getNearBy_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      lastComparison = Boolean.valueOf(isSetCoordinate()).compareTo(other.isSetCoordinate());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetCoordinate()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.coordinate, other.coordinate);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetLimit()).compareTo(other.isSetLimit());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetLimit()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.limit, other.limit);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getNearBy_args(");
-      boolean first = true;
-
-      sb.append("coordinate:");
-      if (this.coordinate == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.coordinate);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("limit:");
-      sb.append(this.limit);
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-      if (coordinate != null) {
-        coordinate.validate();
-      }
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
-      try {
-        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-        __isset_bitfield = 0;
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class getNearBy_argsStandardSchemeFactory implements SchemeFactory {
-      public getNearBy_argsStandardScheme getScheme() {
-        return new getNearBy_argsStandardScheme();
-      }
-    }
-
-    private static class getNearBy_argsStandardScheme extends StandardScheme<getNearBy_args> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getNearBy_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            case 1: // COORDINATE
+            case 2: // SPORT
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.coordinate = new Coordinate();
-                struct.coordinate.read(iprot);
-                struct.setCoordinateIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // LIMIT
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.limit = iprot.readI32();
-                struct.setLimitIsSet(true);
+                struct.sport = new Sport();
+                struct.sport.read(iprot);
+                struct.setSportIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -1666,81 +789,810 @@ public class AreaSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getNearBy_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createSport_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.coordinate != null) {
-          oprot.writeFieldBegin(COORDINATE_FIELD_DESC);
-          struct.coordinate.write(oprot);
+        if (struct.token != null) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          oprot.writeString(struct.token);
           oprot.writeFieldEnd();
         }
-        oprot.writeFieldBegin(LIMIT_FIELD_DESC);
-        oprot.writeI32(struct.limit);
-        oprot.writeFieldEnd();
+        if (struct.sport != null) {
+          oprot.writeFieldBegin(SPORT_FIELD_DESC);
+          struct.sport.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
 
     }
 
-    private static class getNearBy_argsTupleSchemeFactory implements SchemeFactory {
-      public getNearBy_argsTupleScheme getScheme() {
-        return new getNearBy_argsTupleScheme();
+    private static class createSport_argsTupleSchemeFactory implements SchemeFactory {
+      public createSport_argsTupleScheme getScheme() {
+        return new createSport_argsTupleScheme();
       }
     }
 
-    private static class getNearBy_argsTupleScheme extends TupleScheme<getNearBy_args> {
+    private static class createSport_argsTupleScheme extends TupleScheme<createSport_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getNearBy_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, createSport_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetCoordinate()) {
+        if (struct.isSetToken()) {
           optionals.set(0);
         }
-        if (struct.isSetLimit()) {
+        if (struct.isSetSport()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
-        if (struct.isSetCoordinate()) {
-          struct.coordinate.write(oprot);
+        if (struct.isSetToken()) {
+          oprot.writeString(struct.token);
         }
-        if (struct.isSetLimit()) {
-          oprot.writeI32(struct.limit);
+        if (struct.isSetSport()) {
+          struct.sport.write(oprot);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getNearBy_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, createSport_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.coordinate = new Coordinate();
-          struct.coordinate.read(iprot);
-          struct.setCoordinateIsSet(true);
+          struct.token = iprot.readString();
+          struct.setTokenIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.limit = iprot.readI32();
-          struct.setLimitIsSet(true);
+          struct.sport = new Sport();
+          struct.sport.read(iprot);
+          struct.setSportIsSet(true);
         }
       }
     }
 
   }
 
-  public static class getNearBy_result implements org.apache.thrift.TBase<getNearBy_result, getNearBy_result._Fields>, java.io.Serializable, Cloneable, Comparable<getNearBy_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getNearBy_result");
+  public static class createSport_result implements org.apache.thrift.TBase<createSport_result, createSport_result._Fields>, java.io.Serializable, Cloneable, Comparable<createSport_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createSport_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createSport_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createSport_resultTupleSchemeFactory());
+    }
+
+    public Sport success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createSport_result.class, metaDataMap);
+    }
+
+    public createSport_result() {
+    }
+
+    public createSport_result(
+      Sport success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createSport_result(createSport_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new Sport(other.success);
+      }
+    }
+
+    public createSport_result deepCopy() {
+      return new createSport_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public Sport getSuccess() {
+      return this.success;
+    }
+
+    public createSport_result setSuccess(Sport success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Sport)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createSport_result)
+        return this.equals((createSport_result)that);
+      return false;
+    }
+
+    public boolean equals(createSport_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true && (isSetSuccess());
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(createSport_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createSport_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createSport_resultStandardSchemeFactory implements SchemeFactory {
+      public createSport_resultStandardScheme getScheme() {
+        return new createSport_resultStandardScheme();
+      }
+    }
+
+    private static class createSport_resultStandardScheme extends StandardScheme<createSport_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createSport_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new Sport();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createSport_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createSport_resultTupleSchemeFactory implements SchemeFactory {
+      public createSport_resultTupleScheme getScheme() {
+        return new createSport_resultTupleScheme();
+      }
+    }
+
+    private static class createSport_resultTupleScheme extends TupleScheme<createSport_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createSport_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createSport_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.success = new Sport();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getAllSports_args implements org.apache.thrift.TBase<getAllSports_args, getAllSports_args._Fields>, java.io.Serializable, Cloneable, Comparable<getAllSports_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllSports_args");
+
+    private static final org.apache.thrift.protocol.TField BLA_FIELD_DESC = new org.apache.thrift.protocol.TField("bla", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getAllSports_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAllSports_argsTupleSchemeFactory());
+    }
+
+    public String bla; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      BLA((short)1, "bla");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // BLA
+            return BLA;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.BLA, new org.apache.thrift.meta_data.FieldMetaData("bla", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllSports_args.class, metaDataMap);
+    }
+
+    public getAllSports_args() {
+    }
+
+    public getAllSports_args(
+      String bla)
+    {
+      this();
+      this.bla = bla;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getAllSports_args(getAllSports_args other) {
+      if (other.isSetBla()) {
+        this.bla = other.bla;
+      }
+    }
+
+    public getAllSports_args deepCopy() {
+      return new getAllSports_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.bla = null;
+    }
+
+    public String getBla() {
+      return this.bla;
+    }
+
+    public getAllSports_args setBla(String bla) {
+      this.bla = bla;
+      return this;
+    }
+
+    public void unsetBla() {
+      this.bla = null;
+    }
+
+    /** Returns true if field bla is set (has been assigned a value) and false otherwise */
+    public boolean isSetBla() {
+      return this.bla != null;
+    }
+
+    public void setBlaIsSet(boolean value) {
+      if (!value) {
+        this.bla = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case BLA:
+        if (value == null) {
+          unsetBla();
+        } else {
+          setBla((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case BLA:
+        return getBla();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case BLA:
+        return isSetBla();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getAllSports_args)
+        return this.equals((getAllSports_args)that);
+      return false;
+    }
+
+    public boolean equals(getAllSports_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_bla = true && this.isSetBla();
+      boolean that_present_bla = true && that.isSetBla();
+      if (this_present_bla || that_present_bla) {
+        if (!(this_present_bla && that_present_bla))
+          return false;
+        if (!this.bla.equals(that.bla))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_bla = true && (isSetBla());
+      list.add(present_bla);
+      if (present_bla)
+        list.add(bla);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(getAllSports_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetBla()).compareTo(other.isSetBla());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetBla()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.bla, other.bla);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getAllSports_args(");
+      boolean first = true;
+
+      sb.append("bla:");
+      if (this.bla == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.bla);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getAllSports_argsStandardSchemeFactory implements SchemeFactory {
+      public getAllSports_argsStandardScheme getScheme() {
+        return new getAllSports_argsStandardScheme();
+      }
+    }
+
+    private static class getAllSports_argsStandardScheme extends StandardScheme<getAllSports_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllSports_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // BLA
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.bla = iprot.readString();
+                struct.setBlaIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllSports_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.bla != null) {
+          oprot.writeFieldBegin(BLA_FIELD_DESC);
+          oprot.writeString(struct.bla);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getAllSports_argsTupleSchemeFactory implements SchemeFactory {
+      public getAllSports_argsTupleScheme getScheme() {
+        return new getAllSports_argsTupleScheme();
+      }
+    }
+
+    private static class getAllSports_argsTupleScheme extends TupleScheme<getAllSports_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAllSports_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetBla()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetBla()) {
+          oprot.writeString(struct.bla);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAllSports_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.bla = iprot.readString();
+          struct.setBlaIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getAllSports_result implements org.apache.thrift.TBase<getAllSports_result, getAllSports_result._Fields>, java.io.Serializable, Cloneable, Comparable<getAllSports_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllSports_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getNearBy_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getNearBy_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getAllSports_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAllSports_resultTupleSchemeFactory());
     }
 
-    public List<Area> success; // required
+    public List<Sport> success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1806,16 +1658,16 @@ public class AreaSvc {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Area.class))));
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getNearBy_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllSports_result.class, metaDataMap);
     }
 
-    public getNearBy_result() {
+    public getAllSports_result() {
     }
 
-    public getNearBy_result(
-      List<Area> success)
+    public getAllSports_result(
+      List<Sport> success)
     {
       this();
       this.success = success;
@@ -1824,18 +1676,18 @@ public class AreaSvc {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getNearBy_result(getNearBy_result other) {
+    public getAllSports_result(getAllSports_result other) {
       if (other.isSetSuccess()) {
-        List<Area> __this__success = new ArrayList<Area>(other.success.size());
-        for (Area other_element : other.success) {
-          __this__success.add(new Area(other_element));
+        List<Sport> __this__success = new ArrayList<Sport>(other.success.size());
+        for (Sport other_element : other.success) {
+          __this__success.add(new Sport(other_element));
         }
         this.success = __this__success;
       }
     }
 
-    public getNearBy_result deepCopy() {
-      return new getNearBy_result(this);
+    public getAllSports_result deepCopy() {
+      return new getAllSports_result(this);
     }
 
     @Override
@@ -1847,22 +1699,22 @@ public class AreaSvc {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<Area> getSuccessIterator() {
+    public java.util.Iterator<Sport> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(Area elem) {
+    public void addToSuccess(Sport elem) {
       if (this.success == null) {
-        this.success = new ArrayList<Area>();
+        this.success = new ArrayList<Sport>();
       }
       this.success.add(elem);
     }
 
-    public List<Area> getSuccess() {
+    public List<Sport> getSuccess() {
       return this.success;
     }
 
-    public getNearBy_result setSuccess(List<Area> success) {
+    public getAllSports_result setSuccess(List<Sport> success) {
       this.success = success;
       return this;
     }
@@ -1888,7 +1740,7 @@ public class AreaSvc {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<Area>)value);
+          setSuccess((List<Sport>)value);
         }
         break;
 
@@ -1921,12 +1773,12 @@ public class AreaSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getNearBy_result)
-        return this.equals((getNearBy_result)that);
+      if (that instanceof getAllSports_result)
+        return this.equals((getAllSports_result)that);
       return false;
     }
 
-    public boolean equals(getNearBy_result that) {
+    public boolean equals(getAllSports_result that) {
       if (that == null)
         return false;
 
@@ -1955,7 +1807,7 @@ public class AreaSvc {
     }
 
     @Override
-    public int compareTo(getNearBy_result other) {
+    public int compareTo(getAllSports_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -1989,7 +1841,7 @@ public class AreaSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getNearBy_result(");
+      StringBuilder sb = new StringBuilder("getAllSports_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -2024,15 +1876,15 @@ public class AreaSvc {
       }
     }
 
-    private static class getNearBy_resultStandardSchemeFactory implements SchemeFactory {
-      public getNearBy_resultStandardScheme getScheme() {
-        return new getNearBy_resultStandardScheme();
+    private static class getAllSports_resultStandardSchemeFactory implements SchemeFactory {
+      public getAllSports_resultStandardScheme getScheme() {
+        return new getAllSports_resultStandardScheme();
       }
     }
 
-    private static class getNearBy_resultStandardScheme extends StandardScheme<getNearBy_result> {
+    private static class getAllSports_resultStandardScheme extends StandardScheme<getAllSports_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getNearBy_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllSports_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -2045,14 +1897,14 @@ public class AreaSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list24 = iprot.readListBegin();
-                  struct.success = new ArrayList<Area>(_list24.size);
-                  Area _elem25;
-                  for (int _i26 = 0; _i26 < _list24.size; ++_i26)
+                  org.apache.thrift.protocol.TList _list8 = iprot.readListBegin();
+                  struct.success = new ArrayList<Sport>(_list8.size);
+                  Sport _elem9;
+                  for (int _i10 = 0; _i10 < _list8.size; ++_i10)
                   {
-                    _elem25 = new Area();
-                    _elem25.read(iprot);
-                    struct.success.add(_elem25);
+                    _elem9 = new Sport();
+                    _elem9.read(iprot);
+                    struct.success.add(_elem9);
                   }
                   iprot.readListEnd();
                 }
@@ -2072,7 +1924,7 @@ public class AreaSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getNearBy_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllSports_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -2080,9 +1932,9 @@ public class AreaSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Area _iter27 : struct.success)
+            for (Sport _iter11 : struct.success)
             {
-              _iter27.write(oprot);
+              _iter11.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -2094,16 +1946,16 @@ public class AreaSvc {
 
     }
 
-    private static class getNearBy_resultTupleSchemeFactory implements SchemeFactory {
-      public getNearBy_resultTupleScheme getScheme() {
-        return new getNearBy_resultTupleScheme();
+    private static class getAllSports_resultTupleSchemeFactory implements SchemeFactory {
+      public getAllSports_resultTupleScheme getScheme() {
+        return new getAllSports_resultTupleScheme();
       }
     }
 
-    private static class getNearBy_resultTupleScheme extends TupleScheme<getNearBy_result> {
+    private static class getAllSports_resultTupleScheme extends TupleScheme<getAllSports_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getNearBy_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAllSports_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -2113,28 +1965,28 @@ public class AreaSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Area _iter28 : struct.success)
+            for (Sport _iter12 : struct.success)
             {
-              _iter28.write(oprot);
+              _iter12.write(oprot);
             }
           }
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getNearBy_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAllSports_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list29 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Area>(_list29.size);
-            Area _elem30;
-            for (int _i31 = 0; _i31 < _list29.size; ++_i31)
+            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Sport>(_list13.size);
+            Sport _elem14;
+            for (int _i15 = 0; _i15 < _list13.size; ++_i15)
             {
-              _elem30 = new Area();
-              _elem30.read(iprot);
-              struct.success.add(_elem30);
+              _elem14 = new Sport();
+              _elem14.read(iprot);
+              struct.success.add(_elem14);
             }
           }
           struct.setSuccessIsSet(true);

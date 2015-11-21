@@ -1,15 +1,21 @@
 package sebastians.sportan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import sebastians.sportan.layouts.OuterLayout;
+import sebastians.sportan.networking.Sport;
+import sebastians.sportan.tasks.SportListTask;
 
 public class SportSelectActivity extends Activity implements View.OnClickListener {
     private Button mQueen;
@@ -23,7 +29,25 @@ public class SportSelectActivity extends Activity implements View.OnClickListene
         mOuterLayout = (OuterLayout) findViewById(R.id.outer_layout);
         mMainLayout = (RelativeLayout) findViewById(R.id.sport_select_layout);
 
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.list_refresh);
+        final GridView sportListView = (GridView) findViewById(R.id.sport_list);
+        Log.i("SportSelectActivity", "" + sportListView);
+        final ArrayList<Sport> sportList = new ArrayList<>();
+        final SportListAdapter sportListAdapter = new SportListAdapter(this,R.id.sport_select_layout,sportList);
+        sportListView.setAdapter(sportListAdapter);
+        sportListAdapter.notifyDataSetChanged();
+        final Context mThis = this;
 
+        SportListTask sportListTask = new SportListTask(mThis);
+        //get last known location
+        sportListTask.setConnectedRefreshLayout(refreshLayout);
+        sportListTask.setConnectedAdapter(sportListAdapter);
+        sportListTask.connectArrayList(sportList);
+        sportListTask.execute("");
+
+
+
+        /*
 
         Button mButten = (Button)mMainLayout.findViewById(R.id.button2);
 
@@ -60,6 +84,7 @@ public class SportSelectActivity extends Activity implements View.OnClickListene
 
             }
         });
+        */
         mMainLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {

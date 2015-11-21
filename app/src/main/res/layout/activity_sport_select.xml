@@ -19,12 +19,6 @@
     android:background="@android:color/holo_blue_dark"
     android:elevation="1dp"
     >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="relstive"
-            android:id="@+id/button2"
-            android:layout_marginTop="128dp" />
 
 
         <fragment
@@ -32,11 +26,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             class="com.google.android.gms.maps.MapFragment"
-            android:layout_below="@+id/button2"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/dragg" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dragg"
+            android:padding="0dp"
+            android:background="@drawable/draggable"
+            android:baselineAlignBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
 
 
 

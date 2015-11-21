@@ -33,31 +33,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class City implements org.apache.thrift.TBase<City, City._Fields>, java.io.Serializable, Cloneable, Comparable<City> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("City");
+public class Sport implements org.apache.thrift.TBase<Sport, Sport._Fields>, java.io.Serializable, Cloneable, Comparable<Sport> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Sport");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField COORDS_FIELD_DESC = new org.apache.thrift.protocol.TField("coords", org.apache.thrift.protocol.TType.LIST, (short)3);
-  private static final org.apache.thrift.protocol.TField CENTER_FIELD_DESC = new org.apache.thrift.protocol.TField("center", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField ICON_FIELD_DESC = new org.apache.thrift.protocol.TField("icon", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField ICONID_FIELD_DESC = new org.apache.thrift.protocol.TField("iconid", org.apache.thrift.protocol.TType.STRING, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new CityStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new CityTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new SportStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new SportTupleSchemeFactory());
   }
 
-  public String id; // required
-  public String name; // required
-  public List<Coordinate> coords; // optional
-  public Coordinate center; // optional
+  public String id; // optional
+  public String name; // optional
+  public Image icon; // optional
+  public String iconid; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
     NAME((short)2, "name"),
-    COORDS((short)3, "coords"),
-    CENTER((short)4, "center");
+    ICON((short)3, "icon"),
+    ICONID((short)4, "iconid");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -76,10 +76,10 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           return ID;
         case 2: // NAME
           return NAME;
-        case 3: // COORDS
-          return COORDS;
-        case 4: // CENTER
-          return CENTER;
+        case 3: // ICON
+          return ICON;
+        case 4: // ICONID
+          return ICONID;
         default:
           return null;
       }
@@ -120,74 +120,60 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.COORDS,_Fields.CENTER};
+  private static final _Fields optionals[] = {_Fields.ID,_Fields.NAME,_Fields.ICON,_Fields.ICONID};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.COORDS, new org.apache.thrift.meta_data.FieldMetaData("coords", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class))));
-    tmpMap.put(_Fields.CENTER, new org.apache.thrift.meta_data.FieldMetaData("center", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class)));
+    tmpMap.put(_Fields.ICON, new org.apache.thrift.meta_data.FieldMetaData("icon", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Image.class)));
+    tmpMap.put(_Fields.ICONID, new org.apache.thrift.meta_data.FieldMetaData("iconid", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(City.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Sport.class, metaDataMap);
   }
 
-  public City() {
-  }
-
-  public City(
-    String id,
-    String name)
-  {
-    this();
-    this.id = id;
-    this.name = name;
+  public Sport() {
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public City(City other) {
+  public Sport(Sport other) {
     if (other.isSetId()) {
       this.id = other.id;
     }
     if (other.isSetName()) {
       this.name = other.name;
     }
-    if (other.isSetCoords()) {
-      List<Coordinate> __this__coords = new ArrayList<Coordinate>(other.coords.size());
-      for (Coordinate other_element : other.coords) {
-        __this__coords.add(new Coordinate(other_element));
-      }
-      this.coords = __this__coords;
+    if (other.isSetIcon()) {
+      this.icon = new Image(other.icon);
     }
-    if (other.isSetCenter()) {
-      this.center = new Coordinate(other.center);
+    if (other.isSetIconid()) {
+      this.iconid = other.iconid;
     }
   }
 
-  public City deepCopy() {
-    return new City(this);
+  public Sport deepCopy() {
+    return new Sport(this);
   }
 
   @Override
   public void clear() {
     this.id = null;
     this.name = null;
-    this.coords = null;
-    this.center = null;
+    this.icon = null;
+    this.iconid = null;
   }
 
   public String getId() {
     return this.id;
   }
 
-  public City setId(String id) {
+  public Sport setId(String id) {
     this.id = id;
     return this;
   }
@@ -211,7 +197,7 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     return this.name;
   }
 
-  public City setName(String name) {
+  public Sport setName(String name) {
     this.name = name;
     return this;
   }
@@ -231,66 +217,51 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     }
   }
 
-  public int getCoordsSize() {
-    return (this.coords == null) ? 0 : this.coords.size();
+  public Image getIcon() {
+    return this.icon;
   }
 
-  public java.util.Iterator<Coordinate> getCoordsIterator() {
-    return (this.coords == null) ? null : this.coords.iterator();
-  }
-
-  public void addToCoords(Coordinate elem) {
-    if (this.coords == null) {
-      this.coords = new ArrayList<Coordinate>();
-    }
-    this.coords.add(elem);
-  }
-
-  public List<Coordinate> getCoords() {
-    return this.coords;
-  }
-
-  public City setCoords(List<Coordinate> coords) {
-    this.coords = coords;
+  public Sport setIcon(Image icon) {
+    this.icon = icon;
     return this;
   }
 
-  public void unsetCoords() {
-    this.coords = null;
+  public void unsetIcon() {
+    this.icon = null;
   }
 
-  /** Returns true if field coords is set (has been assigned a value) and false otherwise */
-  public boolean isSetCoords() {
-    return this.coords != null;
+  /** Returns true if field icon is set (has been assigned a value) and false otherwise */
+  public boolean isSetIcon() {
+    return this.icon != null;
   }
 
-  public void setCoordsIsSet(boolean value) {
+  public void setIconIsSet(boolean value) {
     if (!value) {
-      this.coords = null;
+      this.icon = null;
     }
   }
 
-  public Coordinate getCenter() {
-    return this.center;
+  public String getIconid() {
+    return this.iconid;
   }
 
-  public City setCenter(Coordinate center) {
-    this.center = center;
+  public Sport setIconid(String iconid) {
+    this.iconid = iconid;
     return this;
   }
 
-  public void unsetCenter() {
-    this.center = null;
+  public void unsetIconid() {
+    this.iconid = null;
   }
 
-  /** Returns true if field center is set (has been assigned a value) and false otherwise */
-  public boolean isSetCenter() {
-    return this.center != null;
+  /** Returns true if field iconid is set (has been assigned a value) and false otherwise */
+  public boolean isSetIconid() {
+    return this.iconid != null;
   }
 
-  public void setCenterIsSet(boolean value) {
+  public void setIconidIsSet(boolean value) {
     if (!value) {
-      this.center = null;
+      this.iconid = null;
     }
   }
 
@@ -312,19 +283,19 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       }
       break;
 
-    case COORDS:
+    case ICON:
       if (value == null) {
-        unsetCoords();
+        unsetIcon();
       } else {
-        setCoords((List<Coordinate>)value);
+        setIcon((Image)value);
       }
       break;
 
-    case CENTER:
+    case ICONID:
       if (value == null) {
-        unsetCenter();
+        unsetIconid();
       } else {
-        setCenter((Coordinate)value);
+        setIconid((String)value);
       }
       break;
 
@@ -339,11 +310,11 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     case NAME:
       return getName();
 
-    case COORDS:
-      return getCoords();
+    case ICON:
+      return getIcon();
 
-    case CENTER:
-      return getCenter();
+    case ICONID:
+      return getIconid();
 
     }
     throw new IllegalStateException();
@@ -360,10 +331,10 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       return isSetId();
     case NAME:
       return isSetName();
-    case COORDS:
-      return isSetCoords();
-    case CENTER:
-      return isSetCenter();
+    case ICON:
+      return isSetIcon();
+    case ICONID:
+      return isSetIconid();
     }
     throw new IllegalStateException();
   }
@@ -372,12 +343,12 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof City)
-      return this.equals((City)that);
+    if (that instanceof Sport)
+      return this.equals((Sport)that);
     return false;
   }
 
-  public boolean equals(City that) {
+  public boolean equals(Sport that) {
     if (that == null)
       return false;
 
@@ -399,21 +370,21 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         return false;
     }
 
-    boolean this_present_coords = true && this.isSetCoords();
-    boolean that_present_coords = true && that.isSetCoords();
-    if (this_present_coords || that_present_coords) {
-      if (!(this_present_coords && that_present_coords))
+    boolean this_present_icon = true && this.isSetIcon();
+    boolean that_present_icon = true && that.isSetIcon();
+    if (this_present_icon || that_present_icon) {
+      if (!(this_present_icon && that_present_icon))
         return false;
-      if (!this.coords.equals(that.coords))
+      if (!this.icon.equals(that.icon))
         return false;
     }
 
-    boolean this_present_center = true && this.isSetCenter();
-    boolean that_present_center = true && that.isSetCenter();
-    if (this_present_center || that_present_center) {
-      if (!(this_present_center && that_present_center))
+    boolean this_present_iconid = true && this.isSetIconid();
+    boolean that_present_iconid = true && that.isSetIconid();
+    if (this_present_iconid || that_present_iconid) {
+      if (!(this_present_iconid && that_present_iconid))
         return false;
-      if (!this.center.equals(that.center))
+      if (!this.iconid.equals(that.iconid))
         return false;
     }
 
@@ -434,21 +405,21 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     if (present_name)
       list.add(name);
 
-    boolean present_coords = true && (isSetCoords());
-    list.add(present_coords);
-    if (present_coords)
-      list.add(coords);
+    boolean present_icon = true && (isSetIcon());
+    list.add(present_icon);
+    if (present_icon)
+      list.add(icon);
 
-    boolean present_center = true && (isSetCenter());
-    list.add(present_center);
-    if (present_center)
-      list.add(center);
+    boolean present_iconid = true && (isSetIconid());
+    list.add(present_iconid);
+    if (present_iconid)
+      list.add(iconid);
 
     return list.hashCode();
   }
 
   @Override
-  public int compareTo(City other) {
+  public int compareTo(Sport other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -475,22 +446,22 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetCoords()).compareTo(other.isSetCoords());
+    lastComparison = Boolean.valueOf(isSetIcon()).compareTo(other.isSetIcon());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetCoords()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.coords, other.coords);
+    if (isSetIcon()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.icon, other.icon);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetCenter()).compareTo(other.isSetCenter());
+    lastComparison = Boolean.valueOf(isSetIconid()).compareTo(other.isSetIconid());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetCenter()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.center, other.center);
+    if (isSetIconid()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.iconid, other.iconid);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -512,41 +483,45 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("City(");
+    StringBuilder sb = new StringBuilder("Sport(");
     boolean first = true;
 
-    sb.append("id:");
-    if (this.id == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.id);
-    }
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("name:");
-    if (this.name == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.name);
-    }
-    first = false;
-    if (isSetCoords()) {
-      if (!first) sb.append(", ");
-      sb.append("coords:");
-      if (this.coords == null) {
+    if (isSetId()) {
+      sb.append("id:");
+      if (this.id == null) {
         sb.append("null");
       } else {
-        sb.append(this.coords);
+        sb.append(this.id);
       }
       first = false;
     }
-    if (isSetCenter()) {
+    if (isSetName()) {
       if (!first) sb.append(", ");
-      sb.append("center:");
-      if (this.center == null) {
+      sb.append("name:");
+      if (this.name == null) {
         sb.append("null");
       } else {
-        sb.append(this.center);
+        sb.append(this.name);
+      }
+      first = false;
+    }
+    if (isSetIcon()) {
+      if (!first) sb.append(", ");
+      sb.append("icon:");
+      if (this.icon == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.icon);
+      }
+      first = false;
+    }
+    if (isSetIconid()) {
+      if (!first) sb.append(", ");
+      sb.append("iconid:");
+      if (this.iconid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.iconid);
       }
       first = false;
     }
@@ -556,15 +531,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (id == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not present! Struct: " + toString());
-    }
-    if (name == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'name' was not present! Struct: " + toString());
-    }
     // check for sub-struct validity
-    if (center != null) {
-      center.validate();
+    if (icon != null) {
+      icon.validate();
     }
   }
 
@@ -584,15 +553,15 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     }
   }
 
-  private static class CityStandardSchemeFactory implements SchemeFactory {
-    public CityStandardScheme getScheme() {
-      return new CityStandardScheme();
+  private static class SportStandardSchemeFactory implements SchemeFactory {
+    public SportStandardScheme getScheme() {
+      return new SportStandardScheme();
     }
   }
 
-  private static class CityStandardScheme extends StandardScheme<City> {
+  private static class SportStandardScheme extends StandardScheme<Sport> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, City struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Sport struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -618,30 +587,19 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // COORDS
-            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-              {
-                org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                struct.coords = new ArrayList<Coordinate>(_list0.size);
-                Coordinate _elem1;
-                for (int _i2 = 0; _i2 < _list0.size; ++_i2)
-                {
-                  _elem1 = new Coordinate();
-                  _elem1.read(iprot);
-                  struct.coords.add(_elem1);
-                }
-                iprot.readListEnd();
-              }
-              struct.setCoordsIsSet(true);
+          case 3: // ICON
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+              struct.icon = new Image();
+              struct.icon.read(iprot);
+              struct.setIconIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // CENTER
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.center = new Coordinate();
-              struct.center.read(iprot);
-              struct.setCenterIsSet(true);
+          case 4: // ICONID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.iconid = iprot.readString();
+              struct.setIconidIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -657,38 +615,35 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, City struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Sport struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       if (struct.id != null) {
-        oprot.writeFieldBegin(ID_FIELD_DESC);
-        oprot.writeString(struct.id);
-        oprot.writeFieldEnd();
-      }
-      if (struct.name != null) {
-        oprot.writeFieldBegin(NAME_FIELD_DESC);
-        oprot.writeString(struct.name);
-        oprot.writeFieldEnd();
-      }
-      if (struct.coords != null) {
-        if (struct.isSetCoords()) {
-          oprot.writeFieldBegin(COORDS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter3 : struct.coords)
-            {
-              _iter3.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
+        if (struct.isSetId()) {
+          oprot.writeFieldBegin(ID_FIELD_DESC);
+          oprot.writeString(struct.id);
           oprot.writeFieldEnd();
         }
       }
-      if (struct.center != null) {
-        if (struct.isSetCenter()) {
-          oprot.writeFieldBegin(CENTER_FIELD_DESC);
-          struct.center.write(oprot);
+      if (struct.name != null) {
+        if (struct.isSetName()) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.icon != null) {
+        if (struct.isSetIcon()) {
+          oprot.writeFieldBegin(ICON_FIELD_DESC);
+          struct.icon.write(oprot);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.iconid != null) {
+        if (struct.isSetIconid()) {
+          oprot.writeFieldBegin(ICONID_FIELD_DESC);
+          oprot.writeString(struct.iconid);
           oprot.writeFieldEnd();
         }
       }
@@ -698,67 +653,65 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
 
   }
 
-  private static class CityTupleSchemeFactory implements SchemeFactory {
-    public CityTupleScheme getScheme() {
-      return new CityTupleScheme();
+  private static class SportTupleSchemeFactory implements SchemeFactory {
+    public SportTupleScheme getScheme() {
+      return new SportTupleScheme();
     }
   }
 
-  private static class CityTupleScheme extends TupleScheme<City> {
+  private static class SportTupleScheme extends TupleScheme<Sport> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, City struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Sport struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      oprot.writeString(struct.id);
-      oprot.writeString(struct.name);
       BitSet optionals = new BitSet();
-      if (struct.isSetCoords()) {
+      if (struct.isSetId()) {
         optionals.set(0);
       }
-      if (struct.isSetCenter()) {
+      if (struct.isSetName()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
-      if (struct.isSetCoords()) {
-        {
-          oprot.writeI32(struct.coords.size());
-          for (Coordinate _iter4 : struct.coords)
-          {
-            _iter4.write(oprot);
-          }
-        }
+      if (struct.isSetIcon()) {
+        optionals.set(2);
       }
-      if (struct.isSetCenter()) {
-        struct.center.write(oprot);
+      if (struct.isSetIconid()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
+      if (struct.isSetId()) {
+        oprot.writeString(struct.id);
+      }
+      if (struct.isSetName()) {
+        oprot.writeString(struct.name);
+      }
+      if (struct.isSetIcon()) {
+        struct.icon.write(oprot);
+      }
+      if (struct.isSetIconid()) {
+        oprot.writeString(struct.iconid);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, City struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Sport struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.id = iprot.readString();
-      struct.setIdIsSet(true);
-      struct.name = iprot.readString();
-      struct.setNameIsSet(true);
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
-        {
-          org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.coords = new ArrayList<Coordinate>(_list5.size);
-          Coordinate _elem6;
-          for (int _i7 = 0; _i7 < _list5.size; ++_i7)
-          {
-            _elem6 = new Coordinate();
-            _elem6.read(iprot);
-            struct.coords.add(_elem6);
-          }
-        }
-        struct.setCoordsIsSet(true);
+        struct.id = iprot.readString();
+        struct.setIdIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.center = new Coordinate();
-        struct.center.read(iprot);
-        struct.setCenterIsSet(true);
+        struct.name = iprot.readString();
+        struct.setNameIsSet(true);
+      }
+      if (incoming.get(2)) {
+        struct.icon = new Image();
+        struct.icon.read(iprot);
+        struct.setIconIsSet(true);
+      }
+      if (incoming.get(3)) {
+        struct.iconid = iprot.readString();
+        struct.setIconidIsSet(true);
       }
     }
   }

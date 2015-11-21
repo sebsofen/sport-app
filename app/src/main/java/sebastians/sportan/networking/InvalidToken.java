@@ -33,25 +33,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.io.Serializable, Cloneable, Comparable<Area> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Area");
+public class InvalidToken extends TException implements org.apache.thrift.TBase<InvalidToken, InvalidToken._Fields>, java.io.Serializable, Cloneable, Comparable<InvalidToken> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("InvalidToken");
 
-  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)1);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new AreaStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new AreaTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new InvalidTokenStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new InvalidTokenTupleSchemeFactory());
   }
 
-  public String id; // required
-  public String title; // required
+  public String message; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ID((short)1, "id"),
-    TITLE((short)2, "title");
+    MESSAGE((short)1, "message");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -66,10 +63,8 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ID
-          return ID;
-        case 2: // TITLE
-          return TITLE;
+        case 1: // MESSAGE
+          return MESSAGE;
         default:
           return null;
       }
@@ -113,111 +108,71 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Area.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(InvalidToken.class, metaDataMap);
   }
 
-  public Area() {
+  public InvalidToken() {
   }
 
-  public Area(
-    String id,
-    String title)
+  public InvalidToken(
+    String message)
   {
     this();
-    this.id = id;
-    this.title = title;
+    this.message = message;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Area(Area other) {
-    if (other.isSetId()) {
-      this.id = other.id;
-    }
-    if (other.isSetTitle()) {
-      this.title = other.title;
+  public InvalidToken(InvalidToken other) {
+    if (other.isSetMessage()) {
+      this.message = other.message;
     }
   }
 
-  public Area deepCopy() {
-    return new Area(this);
+  public InvalidToken deepCopy() {
+    return new InvalidToken(this);
   }
 
   @Override
   public void clear() {
-    this.id = null;
-    this.title = null;
+    this.message = null;
   }
 
-  public String getId() {
-    return this.id;
+  public String getMessage() {
+    return this.message;
   }
 
-  public Area setId(String id) {
-    this.id = id;
+  public InvalidToken setMessage(String message) {
+    this.message = message;
     return this;
   }
 
-  public void unsetId() {
-    this.id = null;
+  public void unsetMessage() {
+    this.message = null;
   }
 
-  /** Returns true if field id is set (has been assigned a value) and false otherwise */
-  public boolean isSetId() {
-    return this.id != null;
+  /** Returns true if field message is set (has been assigned a value) and false otherwise */
+  public boolean isSetMessage() {
+    return this.message != null;
   }
 
-  public void setIdIsSet(boolean value) {
+  public void setMessageIsSet(boolean value) {
     if (!value) {
-      this.id = null;
-    }
-  }
-
-  public String getTitle() {
-    return this.title;
-  }
-
-  public Area setTitle(String title) {
-    this.title = title;
-    return this;
-  }
-
-  public void unsetTitle() {
-    this.title = null;
-  }
-
-  /** Returns true if field title is set (has been assigned a value) and false otherwise */
-  public boolean isSetTitle() {
-    return this.title != null;
-  }
-
-  public void setTitleIsSet(boolean value) {
-    if (!value) {
-      this.title = null;
+      this.message = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case ID:
+    case MESSAGE:
       if (value == null) {
-        unsetId();
+        unsetMessage();
       } else {
-        setId((String)value);
-      }
-      break;
-
-    case TITLE:
-      if (value == null) {
-        unsetTitle();
-      } else {
-        setTitle((String)value);
+        setMessage((String)value);
       }
       break;
 
@@ -226,11 +181,8 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case ID:
-      return getId();
-
-    case TITLE:
-      return getTitle();
+    case MESSAGE:
+      return getMessage();
 
     }
     throw new IllegalStateException();
@@ -243,10 +195,8 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
 
     switch (field) {
-    case ID:
-      return isSetId();
-    case TITLE:
-      return isSetTitle();
+    case MESSAGE:
+      return isSetMessage();
     }
     throw new IllegalStateException();
   }
@@ -255,30 +205,21 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Area)
-      return this.equals((Area)that);
+    if (that instanceof InvalidToken)
+      return this.equals((InvalidToken)that);
     return false;
   }
 
-  public boolean equals(Area that) {
+  public boolean equals(InvalidToken that) {
     if (that == null)
       return false;
 
-    boolean this_present_id = true && this.isSetId();
-    boolean that_present_id = true && that.isSetId();
-    if (this_present_id || that_present_id) {
-      if (!(this_present_id && that_present_id))
+    boolean this_present_message = true && this.isSetMessage();
+    boolean that_present_message = true && that.isSetMessage();
+    if (this_present_message || that_present_message) {
+      if (!(this_present_message && that_present_message))
         return false;
-      if (!this.id.equals(that.id))
-        return false;
-    }
-
-    boolean this_present_title = true && this.isSetTitle();
-    boolean that_present_title = true && that.isSetTitle();
-    if (this_present_title || that_present_title) {
-      if (!(this_present_title && that_present_title))
-        return false;
-      if (!this.title.equals(that.title))
+      if (!this.message.equals(that.message))
         return false;
     }
 
@@ -289,43 +230,28 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public int hashCode() {
     List<Object> list = new ArrayList<Object>();
 
-    boolean present_id = true && (isSetId());
-    list.add(present_id);
-    if (present_id)
-      list.add(id);
-
-    boolean present_title = true && (isSetTitle());
-    list.add(present_title);
-    if (present_title)
-      list.add(title);
+    boolean present_message = true && (isSetMessage());
+    list.add(present_message);
+    if (present_message)
+      list.add(message);
 
     return list.hashCode();
   }
 
   @Override
-  public int compareTo(Area other) {
+  public int compareTo(InvalidToken other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
 
-    lastComparison = Boolean.valueOf(isSetId()).compareTo(other.isSetId());
+    lastComparison = Boolean.valueOf(isSetMessage()).compareTo(other.isSetMessage());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetId()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.id, other.id);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetTitle()).compareTo(other.isSetTitle());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetTitle()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
+    if (isSetMessage()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.message, other.message);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -347,22 +273,14 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Area(");
+    StringBuilder sb = new StringBuilder("InvalidToken(");
     boolean first = true;
 
-    sb.append("id:");
-    if (this.id == null) {
+    sb.append("message:");
+    if (this.message == null) {
       sb.append("null");
     } else {
-      sb.append(this.id);
-    }
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("title:");
-    if (this.title == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.title);
+      sb.append(this.message);
     }
     first = false;
     sb.append(")");
@@ -371,12 +289,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (id == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not present! Struct: " + toString());
-    }
-    if (title == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'title' was not present! Struct: " + toString());
-    }
     // check for sub-struct validity
   }
 
@@ -396,15 +308,15 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
   }
 
-  private static class AreaStandardSchemeFactory implements SchemeFactory {
-    public AreaStandardScheme getScheme() {
-      return new AreaStandardScheme();
+  private static class InvalidTokenStandardSchemeFactory implements SchemeFactory {
+    public InvalidTokenStandardScheme getScheme() {
+      return new InvalidTokenStandardScheme();
     }
   }
 
-  private static class AreaStandardScheme extends StandardScheme<Area> {
+  private static class InvalidTokenStandardScheme extends StandardScheme<InvalidToken> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Area struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, InvalidToken struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -414,18 +326,10 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           break;
         }
         switch (schemeField.id) {
-          case 1: // ID
+          case 1: // MESSAGE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.id = iprot.readString();
-              struct.setIdIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 2: // TITLE
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.title = iprot.readString();
-              struct.setTitleIsSet(true);
+              struct.message = iprot.readString();
+              struct.setMessageIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -441,18 +345,13 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Area struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, InvalidToken struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.id != null) {
-        oprot.writeFieldBegin(ID_FIELD_DESC);
-        oprot.writeString(struct.id);
-        oprot.writeFieldEnd();
-      }
-      if (struct.title != null) {
-        oprot.writeFieldBegin(TITLE_FIELD_DESC);
-        oprot.writeString(struct.title);
+      if (struct.message != null) {
+        oprot.writeFieldBegin(MESSAGE_FIELD_DESC);
+        oprot.writeString(struct.message);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -461,28 +360,35 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   }
 
-  private static class AreaTupleSchemeFactory implements SchemeFactory {
-    public AreaTupleScheme getScheme() {
-      return new AreaTupleScheme();
+  private static class InvalidTokenTupleSchemeFactory implements SchemeFactory {
+    public InvalidTokenTupleScheme getScheme() {
+      return new InvalidTokenTupleScheme();
     }
   }
 
-  private static class AreaTupleScheme extends TupleScheme<Area> {
+  private static class InvalidTokenTupleScheme extends TupleScheme<InvalidToken> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Area struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, InvalidToken struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      oprot.writeString(struct.id);
-      oprot.writeString(struct.title);
+      BitSet optionals = new BitSet();
+      if (struct.isSetMessage()) {
+        optionals.set(0);
+      }
+      oprot.writeBitSet(optionals, 1);
+      if (struct.isSetMessage()) {
+        oprot.writeString(struct.message);
+      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Area struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, InvalidToken struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.id = iprot.readString();
-      struct.setIdIsSet(true);
-      struct.title = iprot.readString();
-      struct.setTitleIsSet(true);
+      BitSet incoming = iprot.readBitSet(1);
+      if (incoming.get(0)) {
+        struct.message = iprot.readString();
+        struct.setMessageIsSet(true);
+      }
     }
   }
 
