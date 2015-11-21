@@ -621,14 +621,14 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           case 3: // COORDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                struct.coords = new ArrayList<Coordinate>(_list0.size);
-                Coordinate _elem1;
-                for (int _i2 = 0; _i2 < _list0.size; ++_i2)
+                org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
+                struct.coords = new ArrayList<Coordinate>(_list16.size);
+                Coordinate _elem17;
+                for (int _i18 = 0; _i18 < _list16.size; ++_i18)
                 {
-                  _elem1 = new Coordinate();
-                  _elem1.read(iprot);
-                  struct.coords.add(_elem1);
+                  _elem17 = new Coordinate();
+                  _elem17.read(iprot);
+                  struct.coords.add(_elem17);
                 }
                 iprot.readListEnd();
               }
@@ -676,9 +676,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           oprot.writeFieldBegin(COORDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter3 : struct.coords)
+            for (Coordinate _iter19 : struct.coords)
             {
-              _iter3.write(oprot);
+              _iter19.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -722,9 +722,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       if (struct.isSetCoords()) {
         {
           oprot.writeI32(struct.coords.size());
-          for (Coordinate _iter4 : struct.coords)
+          for (Coordinate _iter20 : struct.coords)
           {
-            _iter4.write(oprot);
+            _iter20.write(oprot);
           }
         }
       }
@@ -743,14 +743,14 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.coords = new ArrayList<Coordinate>(_list5.size);
-          Coordinate _elem6;
-          for (int _i7 = 0; _i7 < _list5.size; ++_i7)
+          org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.coords = new ArrayList<Coordinate>(_list21.size);
+          Coordinate _elem22;
+          for (int _i23 = 0; _i23 < _list21.size; ++_i23)
           {
-            _elem6 = new Coordinate();
-            _elem6.read(iprot);
-            struct.coords.add(_elem6);
+            _elem22 = new Coordinate();
+            _elem22.read(iprot);
+            struct.coords.add(_elem22);
           }
         }
         struct.setCoordsIsSet(true);

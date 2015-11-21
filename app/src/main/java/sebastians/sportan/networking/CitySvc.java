@@ -41,6 +41,8 @@ public class CitySvc {
 
     public List<City> getNearBy(Coordinate coordinate, int limit) throws org.apache.thrift.TException;
 
+    public List<City> getAllCities() throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -48,6 +50,8 @@ public class CitySvc {
     public void createCity(String token, String title, List<Coordinate> coords, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void getNearBy(Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void getAllCities(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -115,6 +119,28 @@ public class CitySvc {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getNearBy failed: unknown result");
+    }
+
+    public List<City> getAllCities() throws org.apache.thrift.TException
+    {
+      send_getAllCities();
+      return recv_getAllCities();
+    }
+
+    public void send_getAllCities() throws org.apache.thrift.TException
+    {
+      getAllCities_args args = new getAllCities_args();
+      sendBase("getAllCities", args);
+    }
+
+    public List<City> recv_getAllCities() throws org.apache.thrift.TException
+    {
+      getAllCities_result result = new getAllCities_result();
+      receiveBase(result, "getAllCities");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAllCities failed: unknown result");
     }
 
   }
@@ -208,6 +234,35 @@ public class CitySvc {
       }
     }
 
+    public void getAllCities(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      getAllCities_call method_call = new getAllCities_call(resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getAllCities_call extends org.apache.thrift.async.TAsyncMethodCall {
+      public getAllCities_call(org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getAllCities", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getAllCities_args args = new getAllCities_args();
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public List<City> getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getAllCities();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -223,6 +278,7 @@ public class CitySvc {
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("createCity", new createCity());
       processMap.put("getNearBy", new getNearBy());
+      processMap.put("getAllCities", new getAllCities());
       return processMap;
     }
 
@@ -266,6 +322,26 @@ public class CitySvc {
       }
     }
 
+    public static class getAllCities<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getAllCities_args> {
+      public getAllCities() {
+        super("getAllCities");
+      }
+
+      public getAllCities_args getEmptyArgsInstance() {
+        return new getAllCities_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public getAllCities_result getResult(I iface, getAllCities_args args) throws org.apache.thrift.TException {
+        getAllCities_result result = new getAllCities_result();
+        result.success = iface.getAllCities();
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -281,6 +357,7 @@ public class CitySvc {
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("createCity", new createCity());
       processMap.put("getNearBy", new getNearBy());
+      processMap.put("getAllCities", new getAllCities());
       return processMap;
     }
 
@@ -382,6 +459,57 @@ public class CitySvc {
 
       public void start(I iface, getNearBy_args args, org.apache.thrift.async.AsyncMethodCallback<List<City>> resultHandler) throws TException {
         iface.getNearBy(args.coordinate, args.limit,resultHandler);
+      }
+    }
+
+    public static class getAllCities<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAllCities_args, List<City>> {
+      public getAllCities() {
+        super("getAllCities");
+      }
+
+      public getAllCities_args getEmptyArgsInstance() {
+        return new getAllCities_args();
+      }
+
+      public AsyncMethodCallback<List<City>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<List<City>>() { 
+          public void onComplete(List<City> o) {
+            getAllCities_result result = new getAllCities_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            getAllCities_result result = new getAllCities_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, getAllCities_args args, org.apache.thrift.async.AsyncMethodCallback<List<City>> resultHandler) throws TException {
+        iface.getAllCities(resultHandler);
       }
     }
 
@@ -883,14 +1011,14 @@ public class CitySvc {
             case 3: // COORDS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list32 = iprot.readListBegin();
-                  struct.coords = new ArrayList<Coordinate>(_list32.size);
-                  Coordinate _elem33;
-                  for (int _i34 = 0; _i34 < _list32.size; ++_i34)
+                  org.apache.thrift.protocol.TList _list48 = iprot.readListBegin();
+                  struct.coords = new ArrayList<Coordinate>(_list48.size);
+                  Coordinate _elem49;
+                  for (int _i50 = 0; _i50 < _list48.size; ++_i50)
                   {
-                    _elem33 = new Coordinate();
-                    _elem33.read(iprot);
-                    struct.coords.add(_elem33);
+                    _elem49 = new Coordinate();
+                    _elem49.read(iprot);
+                    struct.coords.add(_elem49);
                   }
                   iprot.readListEnd();
                 }
@@ -928,9 +1056,9 @@ public class CitySvc {
           oprot.writeFieldBegin(COORDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter35 : struct.coords)
+            for (Coordinate _iter51 : struct.coords)
             {
-              _iter35.write(oprot);
+              _iter51.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -973,9 +1101,9 @@ public class CitySvc {
         if (struct.isSetCoords()) {
           {
             oprot.writeI32(struct.coords.size());
-            for (Coordinate _iter36 : struct.coords)
+            for (Coordinate _iter52 : struct.coords)
             {
-              _iter36.write(oprot);
+              _iter52.write(oprot);
             }
           }
         }
@@ -995,14 +1123,14 @@ public class CitySvc {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list37 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.coords = new ArrayList<Coordinate>(_list37.size);
-            Coordinate _elem38;
-            for (int _i39 = 0; _i39 < _list37.size; ++_i39)
+            org.apache.thrift.protocol.TList _list53 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.coords = new ArrayList<Coordinate>(_list53.size);
+            Coordinate _elem54;
+            for (int _i55 = 0; _i55 < _list53.size; ++_i55)
             {
-              _elem38 = new Coordinate();
-              _elem38.read(iprot);
-              struct.coords.add(_elem38);
+              _elem54 = new Coordinate();
+              _elem54.read(iprot);
+              struct.coords.add(_elem54);
             }
           }
           struct.setCoordsIsSet(true);
@@ -2045,14 +2173,14 @@ public class CitySvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
-                  struct.success = new ArrayList<City>(_list40.size);
-                  City _elem41;
-                  for (int _i42 = 0; _i42 < _list40.size; ++_i42)
+                  org.apache.thrift.protocol.TList _list56 = iprot.readListBegin();
+                  struct.success = new ArrayList<City>(_list56.size);
+                  City _elem57;
+                  for (int _i58 = 0; _i58 < _list56.size; ++_i58)
                   {
-                    _elem41 = new City();
-                    _elem41.read(iprot);
-                    struct.success.add(_elem41);
+                    _elem57 = new City();
+                    _elem57.read(iprot);
+                    struct.success.add(_elem57);
                   }
                   iprot.readListEnd();
                 }
@@ -2080,9 +2208,9 @@ public class CitySvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (City _iter43 : struct.success)
+            for (City _iter59 : struct.success)
             {
-              _iter43.write(oprot);
+              _iter59.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -2113,9 +2241,9 @@ public class CitySvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (City _iter44 : struct.success)
+            for (City _iter60 : struct.success)
             {
-              _iter44.write(oprot);
+              _iter60.write(oprot);
             }
           }
         }
@@ -2127,14 +2255,677 @@ public class CitySvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<City>(_list45.size);
-            City _elem46;
-            for (int _i47 = 0; _i47 < _list45.size; ++_i47)
+            org.apache.thrift.protocol.TList _list61 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<City>(_list61.size);
+            City _elem62;
+            for (int _i63 = 0; _i63 < _list61.size; ++_i63)
             {
-              _elem46 = new City();
-              _elem46.read(iprot);
-              struct.success.add(_elem46);
+              _elem62 = new City();
+              _elem62.read(iprot);
+              struct.success.add(_elem62);
+            }
+          }
+          struct.setSuccessIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getAllCities_args implements org.apache.thrift.TBase<getAllCities_args, getAllCities_args._Fields>, java.io.Serializable, Cloneable, Comparable<getAllCities_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllCities_args");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getAllCities_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAllCities_argsTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllCities_args.class, metaDataMap);
+    }
+
+    public getAllCities_args() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getAllCities_args(getAllCities_args other) {
+    }
+
+    public getAllCities_args deepCopy() {
+      return new getAllCities_args(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getAllCities_args)
+        return this.equals((getAllCities_args)that);
+      return false;
+    }
+
+    public boolean equals(getAllCities_args that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(getAllCities_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getAllCities_args(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getAllCities_argsStandardSchemeFactory implements SchemeFactory {
+      public getAllCities_argsStandardScheme getScheme() {
+        return new getAllCities_argsStandardScheme();
+      }
+    }
+
+    private static class getAllCities_argsStandardScheme extends StandardScheme<getAllCities_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllCities_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllCities_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getAllCities_argsTupleSchemeFactory implements SchemeFactory {
+      public getAllCities_argsTupleScheme getScheme() {
+        return new getAllCities_argsTupleScheme();
+      }
+    }
+
+    private static class getAllCities_argsTupleScheme extends TupleScheme<getAllCities_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAllCities_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAllCities_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+      }
+    }
+
+  }
+
+  public static class getAllCities_result implements org.apache.thrift.TBase<getAllCities_result, getAllCities_result._Fields>, java.io.Serializable, Cloneable, Comparable<getAllCities_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllCities_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getAllCities_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAllCities_resultTupleSchemeFactory());
+    }
+
+    public List<City> success; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, City.class))));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllCities_result.class, metaDataMap);
+    }
+
+    public getAllCities_result() {
+    }
+
+    public getAllCities_result(
+      List<City> success)
+    {
+      this();
+      this.success = success;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getAllCities_result(getAllCities_result other) {
+      if (other.isSetSuccess()) {
+        List<City> __this__success = new ArrayList<City>(other.success.size());
+        for (City other_element : other.success) {
+          __this__success.add(new City(other_element));
+        }
+        this.success = __this__success;
+      }
+    }
+
+    public getAllCities_result deepCopy() {
+      return new getAllCities_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<City> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(City elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<City>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<City> getSuccess() {
+      return this.success;
+    }
+
+    public getAllCities_result setSuccess(List<City> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((List<City>)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getAllCities_result)
+        return this.equals((getAllCities_result)that);
+      return false;
+    }
+
+    public boolean equals(getAllCities_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_success = true && (isSetSuccess());
+      list.add(present_success);
+      if (present_success)
+        list.add(success);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(getAllCities_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getAllCities_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getAllCities_resultStandardSchemeFactory implements SchemeFactory {
+      public getAllCities_resultStandardScheme getScheme() {
+        return new getAllCities_resultStandardScheme();
+      }
+    }
+
+    private static class getAllCities_resultStandardScheme extends StandardScheme<getAllCities_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllCities_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list64 = iprot.readListBegin();
+                  struct.success = new ArrayList<City>(_list64.size);
+                  City _elem65;
+                  for (int _i66 = 0; _i66 < _list64.size; ++_i66)
+                  {
+                    _elem65 = new City();
+                    _elem65.read(iprot);
+                    struct.success.add(_elem65);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllCities_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (City _iter67 : struct.success)
+            {
+              _iter67.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getAllCities_resultTupleSchemeFactory implements SchemeFactory {
+      public getAllCities_resultTupleScheme getScheme() {
+        return new getAllCities_resultTupleScheme();
+      }
+    }
+
+    private static class getAllCities_resultTupleScheme extends TupleScheme<getAllCities_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAllCities_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (City _iter68 : struct.success)
+            {
+              _iter68.write(oprot);
+            }
+          }
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAllCities_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TList _list69 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<City>(_list69.size);
+            City _elem70;
+            for (int _i71 = 0; _i71 < _list69.size; ++_i71)
+            {
+              _elem70 = new City();
+              _elem70.read(iprot);
+              struct.success.add(_elem70);
             }
           }
           struct.setSuccessIsSet(true);

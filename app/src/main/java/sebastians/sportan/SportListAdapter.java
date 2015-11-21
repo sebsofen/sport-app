@@ -1,6 +1,7 @@
 package sebastians.sportan;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import sebastians.sportan.networking.Sport;
@@ -21,10 +23,15 @@ import sebastians.sportan.tasks.SvgImageTask;
 public class SportListAdapter extends ArrayAdapter<Sport> {
     Context context;
     ArrayList<Sport> sportList;
+    HashMap<String,Integer> selectedSports;
     public SportListAdapter(Context context, int resource, List<Sport> objects) {
         super(context, resource, objects);
         this.context = context;
         this.sportList = (ArrayList<Sport>) objects;
+    }
+
+    public void setSelectedList(HashMap<String,Integer> selectedSports) {
+        this.selectedSports = selectedSports;
     }
 
     @Override
@@ -44,7 +51,13 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         title.setText(sport.getName());
 
         Log.i("AREAADAPTER", "called");
+        if( this.selectedSports != null && this.selectedSports.get(sport.getId()) != null){
 
+            elementView.setBackgroundColor(Color.parseColor("#0000ff"));
+        }else {
+
+            elementView.setBackgroundColor(Color.parseColor("#00ffffff"));
+        }
         return elementView;
     }
 }

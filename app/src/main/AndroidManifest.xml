@@ -49,7 +49,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -59,7 +58,10 @@
         <activity
             android:name=".TestActivity"
             android:label="@string/title_activity_test" >
-
+        </activity>
+        <activity
+            android:name=".AreaDetailActivity"
+            android:label="@string/title_activity_area_detail" >
         </activity>
     </application>
 

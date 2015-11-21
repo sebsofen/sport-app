@@ -14,7 +14,10 @@ public class CustomAsyncTask extends SuperAsyncTask {
 
     @Override
     protected String doInBackground(String... strings) {
-        return taskCallBacks.doInBackground();
+
+        String ret = taskCallBacks.doInBackground();
+        closeTransport();
+        return ret;
     }
     @Override
     protected void onPostExecute(String s) {

@@ -2,6 +2,9 @@ package sebastians.sportan;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -11,17 +14,37 @@ import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.apache.thrift.protocol.TMultiplexedProtocol;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import sebastians.sportan.graphics.RoundMarker;
 import sebastians.sportan.layouts.OuterLayout;
+import sebastians.sportan.networking.Area;
+import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.networking.Sport;
+import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SportListTask;
+import sebastians.sportan.tasks.SuperAsyncTask;
+import sebastians.sportan.tasks.TaskCallBacks;
 
-public class SportSelectActivity extends Activity implements View.OnClickListener {
+public class SportSelectActivity extends Activity implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private Button mQueen;
     private Button mHidden;
     private OuterLayout mOuterLayout;
     private RelativeLayout mMainLayout;
+    protected HashMap<Marker,String> markerids = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +58,6 @@ public class SportSelectActivity extends Activity implements View.OnClickListene
         final ArrayList<Sport> sportList = new ArrayList<>();
         final SportListAdapter sportListAdapter = new SportListAdapter(this,R.id.sport_select_layout,sportList);
         sportListView.setAdapter(sportListAdapter);
-        sportListAdapter.notifyDataSetChanged();
         final Context mThis = this;
 
         SportListTask sportListTask = new SportListTask(mThis);
@@ -44,6 +66,42 @@ public class SportSelectActivity extends Activity implements View.OnClickListene
         sportListTask.setConnectedAdapter(sportListAdapter);
         sportListTask.connectArrayList(sportList);
         sportListTask.execute("");
+
+
+
+
+
+
+        final MapFragment map = (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        map.getMapAsync(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -106,4 +164,71 @@ public class SportSelectActivity extends Activity implements View.OnClickListene
         t.show();
     }
 
+    @Override
+    public void onMapReady(GoogleMap gMap) {
+        final GoogleMap googleMap = gMap;
+        LocationManager locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+        gMap.moveCamera(center);
+        gMap.animateCamera(zoom);
+        gMap.setMyLocationEnabled(true);
+
+
+        gMap.setOnMarkerClickListener(this);
+
+        final CustomAsyncTask markerTask = new CustomAsyncTask(this);
+        markerTask.setTaskCallBacks(new TaskCallBacks() {
+            ArrayList<Area> areas = new ArrayList<Area>();
+            @Override
+            public String doInBackground() {
+                TMultiplexedProtocol mp = null;
+                try {
+                    mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
+                    AreaSvc.Client client = new AreaSvc.Client(mp);
+                    areas.addAll(client.getAllAreasInCity("798a9d13-89f0-48d4-7a9b-5320237dbd11"));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onPostExecute() {
+                for(int i = 0; i < areas.size(); i++){
+                    Log.i("area", "number" + i);
+                    Area area = areas.get(i);
+                    markerids.put(
+                            googleMap.addMarker(
+                                    new MarkerOptions().position(new LatLng(area.center.lon, area.center.lat))
+                                            .title(area.title)
+                                            .snippet(area.description)
+                                            .flat(true)
+                                            .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+
+                            ), area.id);
+                }
+
+
+            }
+        });
+        markerTask.execute("");
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        String areaid = markerids.get(marker);
+        Intent intent = new Intent(this, AreaDetailActivity.class);
+        intent.putExtra(AreaDetailActivity.EXTRA_AREA_ID,areaid);
+        startActivity(intent);
+        return true;
+    }
 }
