@@ -3,10 +3,12 @@ package sebastians.sportan.layouts;
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -23,14 +25,15 @@ public class OuterLayout extends RelativeLayout {
     private ImageButton DraggButton;
     private ViewDragHelper mDragHelper;
     private int mDraggingBorder;
-
     private int mVerticalRange;
-
+    DragHelperCallback dragHelperCallback;
 
     private boolean mIsOpen;
 
 
     public class DragHelperCallback extends ViewDragHelper.Callback {
+        public Toolbar toolbar;
+
         @Override
         public void onViewDragStateChanged(int state) {
             if (state == mDraggingState) { // no change
@@ -52,9 +55,28 @@ public class OuterLayout extends RelativeLayout {
             mDraggingState = state;
         }
 
+        /**
+         * TODO quick and dirty, but it works!
+         * change interpolator ;-)
+         * @param changedView
+         * @param left
+         * @param top
+         * @param dx
+         * @param dy
+         */
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             mDraggingBorder = top;
+            if(toolbar != null){
+                int tHeight = toolbar.getHeight();
+                if((double) top / getHeight() < .5){
+                    toolbar.animate().translationY(0 - ((getHeight() / 2) - top)).setInterpolator(new AccelerateInterpolator(2));
+                }else{
+                    toolbar.animate().translationY(0).setInterpolator(new AccelerateInterpolator(2));
+                }
+            }
+
+
         }
 
         public int getViewVerticalDragRange(View child) {
@@ -96,6 +118,10 @@ public class OuterLayout extends RelativeLayout {
                 settleToOpen = false;
             }
 
+            if(settleToOpen){
+
+            }
+
             final int settleDestY = settleToOpen ? mVerticalRange : 0;
 
             if(mDragHelper.settleCapturedViewAt(0, settleDestY)) {
@@ -113,7 +139,9 @@ public class OuterLayout extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         //mQueenButton  = (Button) findViewById(R.id.queen_button);
-        mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
+        dragHelperCallback = new DragHelperCallback();
+        dragHelperCallback.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDragHelper = ViewDragHelper.create(this, 1.0f, dragHelperCallback);
         DraggButton = (ImageButton) findViewById(R.id.dragg);
         mVerticalRange = getHeight() - DraggButton.getMeasuredHeight();
         invalidate();

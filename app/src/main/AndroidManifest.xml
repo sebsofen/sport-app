@@ -63,6 +63,26 @@
             android:name=".AreaDetailActivity"
             android:label="@string/title_activity_area_detail" >
         </activity>
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="sportanapp.com"
+                    android:pathPrefix="/friends/"
+
+                    />
+
+                <data android:scheme="http"
+                    android:host="www.sportanapp.com"
+                    android:pathPrefix="/friends/"
+
+                    />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

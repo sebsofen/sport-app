@@ -48,7 +48,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         Sport sport = sportList.get(position);
         imageTask.setImageView(iconView);
         imageTask.execute(sport.getIconid());
-        title.setText(sport.getName());
+        title.setText(sport.getName().toUpperCase());
 
         Log.i("AREAADAPTER", "called");
         if( this.selectedSports != null && this.selectedSports.get(sport.getId()) != null){

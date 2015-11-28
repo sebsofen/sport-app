@@ -39,6 +39,7 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField CONTENT_FIELD_DESC = new org.apache.thrift.protocol.TField("content", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField CREATOR_FIELD_DESC = new org.apache.thrift.protocol.TField("creator", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField BCONTENT_FIELD_DESC = new org.apache.thrift.protocol.TField("bcontent", org.apache.thrift.protocol.TType.STRING, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -49,12 +50,14 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
   public String id; // optional
   public String content; // optional
   public String creator; // optional
+  public ByteBuffer bcontent; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
     CONTENT((short)2, "content"),
-    CREATOR((short)3, "creator");
+    CREATOR((short)3, "creator"),
+    BCONTENT((short)4, "bcontent");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -75,6 +78,8 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
           return CONTENT;
         case 3: // CREATOR
           return CREATOR;
+        case 4: // BCONTENT
+          return BCONTENT;
         default:
           return null;
       }
@@ -115,7 +120,7 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.ID,_Fields.CONTENT,_Fields.CREATOR};
+  private static final _Fields optionals[] = {_Fields.ID,_Fields.CONTENT,_Fields.CREATOR,_Fields.BCONTENT};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -125,6 +130,8 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.CREATOR, new org.apache.thrift.meta_data.FieldMetaData("creator", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.BCONTENT, new org.apache.thrift.meta_data.FieldMetaData("bcontent", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING        , true)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Image.class, metaDataMap);
   }
@@ -145,6 +152,9 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
     if (other.isSetCreator()) {
       this.creator = other.creator;
     }
+    if (other.isSetBcontent()) {
+      this.bcontent = org.apache.thrift.TBaseHelper.copyBinary(other.bcontent);
+    }
   }
 
   public Image deepCopy() {
@@ -156,6 +166,7 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
     this.id = null;
     this.content = null;
     this.creator = null;
+    this.bcontent = null;
   }
 
   public String getId() {
@@ -230,6 +241,40 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
     }
   }
 
+  public byte[] getBcontent() {
+    setBcontent(org.apache.thrift.TBaseHelper.rightSize(bcontent));
+    return bcontent == null ? null : bcontent.array();
+  }
+
+  public ByteBuffer bufferForBcontent() {
+    return org.apache.thrift.TBaseHelper.copyBinary(bcontent);
+  }
+
+  public Image setBcontent(byte[] bcontent) {
+    this.bcontent = bcontent == null ? (ByteBuffer)null : ByteBuffer.wrap(Arrays.copyOf(bcontent, bcontent.length));
+    return this;
+  }
+
+  public Image setBcontent(ByteBuffer bcontent) {
+    this.bcontent = org.apache.thrift.TBaseHelper.copyBinary(bcontent);
+    return this;
+  }
+
+  public void unsetBcontent() {
+    this.bcontent = null;
+  }
+
+  /** Returns true if field bcontent is set (has been assigned a value) and false otherwise */
+  public boolean isSetBcontent() {
+    return this.bcontent != null;
+  }
+
+  public void setBcontentIsSet(boolean value) {
+    if (!value) {
+      this.bcontent = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case ID:
@@ -256,6 +301,14 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
       }
       break;
 
+    case BCONTENT:
+      if (value == null) {
+        unsetBcontent();
+      } else {
+        setBcontent((ByteBuffer)value);
+      }
+      break;
+
     }
   }
 
@@ -269,6 +322,9 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
 
     case CREATOR:
       return getCreator();
+
+    case BCONTENT:
+      return getBcontent();
 
     }
     throw new IllegalStateException();
@@ -287,6 +343,8 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
       return isSetContent();
     case CREATOR:
       return isSetCreator();
+    case BCONTENT:
+      return isSetBcontent();
     }
     throw new IllegalStateException();
   }
@@ -331,6 +389,15 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
         return false;
     }
 
+    boolean this_present_bcontent = true && this.isSetBcontent();
+    boolean that_present_bcontent = true && that.isSetBcontent();
+    if (this_present_bcontent || that_present_bcontent) {
+      if (!(this_present_bcontent && that_present_bcontent))
+        return false;
+      if (!this.bcontent.equals(that.bcontent))
+        return false;
+    }
+
     return true;
   }
 
@@ -352,6 +419,11 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
     list.add(present_creator);
     if (present_creator)
       list.add(creator);
+
+    boolean present_bcontent = true && (isSetBcontent());
+    list.add(present_bcontent);
+    if (present_bcontent)
+      list.add(bcontent);
 
     return list.hashCode();
   }
@@ -390,6 +462,16 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
     }
     if (isSetCreator()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.creator, other.creator);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetBcontent()).compareTo(other.isSetBcontent());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetBcontent()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.bcontent, other.bcontent);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -440,6 +522,16 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
         sb.append("null");
       } else {
         sb.append(this.creator);
+      }
+      first = false;
+    }
+    if (isSetBcontent()) {
+      if (!first) sb.append(", ");
+      sb.append("bcontent:");
+      if (this.bcontent == null) {
+        sb.append("null");
+      } else {
+        org.apache.thrift.TBaseHelper.toString(this.bcontent, sb);
       }
       first = false;
     }
@@ -510,6 +602,14 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 4: // BCONTENT
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.bcontent = iprot.readBinary();
+              struct.setBcontentIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -546,6 +646,13 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
           oprot.writeFieldEnd();
         }
       }
+      if (struct.bcontent != null) {
+        if (struct.isSetBcontent()) {
+          oprot.writeFieldBegin(BCONTENT_FIELD_DESC);
+          oprot.writeBinary(struct.bcontent);
+          oprot.writeFieldEnd();
+        }
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -573,7 +680,10 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
       if (struct.isSetCreator()) {
         optionals.set(2);
       }
-      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetBcontent()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetId()) {
         oprot.writeString(struct.id);
       }
@@ -583,12 +693,15 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
       if (struct.isSetCreator()) {
         oprot.writeString(struct.creator);
       }
+      if (struct.isSetBcontent()) {
+        oprot.writeBinary(struct.bcontent);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Image struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(3);
+      BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         struct.id = iprot.readString();
         struct.setIdIsSet(true);
@@ -600,6 +713,10 @@ public class Image implements org.apache.thrift.TBase<Image, Image._Fields>, jav
       if (incoming.get(2)) {
         struct.creator = iprot.readString();
         struct.setCreatorIsSet(true);
+      }
+      if (incoming.get(3)) {
+        struct.bcontent = iprot.readBinary();
+        struct.setBcontentIsSet(true);
       }
     }
   }

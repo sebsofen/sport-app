@@ -47,11 +47,16 @@ public class MyCredentials {
 
     }
 
+    //TODO change to more realistic thing!
     public boolean isTokenExpired(){
-        return tokenValidity < System.currentTimeMillis();
+        return true;
+        /*return tokenValidity < System.currentTimeMillis();*/
     }
 
     public String getToken(){
+        if(this.isTokenExpired())
+            renewToken();
+
         return this.token;
     }
 

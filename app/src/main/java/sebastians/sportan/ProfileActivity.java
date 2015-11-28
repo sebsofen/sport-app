@@ -1,6 +1,7 @@
 package sebastians.sportan;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +24,9 @@ public class ProfileActivity extends ActionBarActivity {
     ImageButton edit_username_button;
     TextView edit_username_text;
     SwipeRefreshLayout swipeRefresh;
+    ImageButton share_btn;
+    EditText user_id_txt;
+    MyCredentials myCredentials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,26 @@ public class ProfileActivity extends ActionBarActivity {
         final ProfileActivity mThis = this;
         edit_username_text = (TextView)findViewById(R.id.username);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
+
+        user_id_txt = (EditText) findViewById(R.id.user_id_txt);
+        share_btn = (ImageButton) findViewById(R.id.share_btn);
+
+        myCredentials = new MyCredentials(this);
+        user_id_txt.setText(myCredentials.getIdentifier());
+
+        //share userid ;_)
+        share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(); intent2.setAction(Intent.ACTION_SEND);
+                intent2.setType("text/plain");
+                intent2.putExtra(Intent.EXTRA_TEXT, "I want to be friends with you on sportan: http://www.sportanapp.com/friends/" + myCredentials.getIdentifier() );
+                startActivity(Intent.createChooser(intent2, "Share via"));
+            }
+        });
+
+
+
         edit_username_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

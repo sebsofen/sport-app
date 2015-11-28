@@ -38,11 +38,12 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)6);
-  private static final org.apache.thrift.protocol.TField CITYID_FIELD_DESC = new org.apache.thrift.protocol.TField("cityid", org.apache.thrift.protocol.TType.STRING, (short)7);
   private static final org.apache.thrift.protocol.TField SPORTS_FIELD_DESC = new org.apache.thrift.protocol.TField("sports", org.apache.thrift.protocol.TType.LIST, (short)3);
   private static final org.apache.thrift.protocol.TField CENTER_FIELD_DESC = new org.apache.thrift.protocol.TField("center", org.apache.thrift.protocol.TType.STRUCT, (short)4);
   private static final org.apache.thrift.protocol.TField COORDS_FIELD_DESC = new org.apache.thrift.protocol.TField("coords", org.apache.thrift.protocol.TType.LIST, (short)5);
+  private static final org.apache.thrift.protocol.TField DESCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("description", org.apache.thrift.protocol.TType.STRING, (short)6);
+  private static final org.apache.thrift.protocol.TField CITYID_FIELD_DESC = new org.apache.thrift.protocol.TField("cityid", org.apache.thrift.protocol.TType.STRING, (short)7);
+  private static final org.apache.thrift.protocol.TField IMAGEID_FIELD_DESC = new org.apache.thrift.protocol.TField("imageid", org.apache.thrift.protocol.TType.STRING, (short)8);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -52,21 +53,23 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
   public String id; // optional
   public String title; // optional
-  public String description; // optional
-  public String cityid; // optional
   public List<String> sports; // optional
   public Coordinate center; // optional
   public List<Coordinate> coords; // optional
+  public String description; // optional
+  public String cityid; // optional
+  public String imageid; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
     TITLE((short)2, "title"),
-    DESCRIPTION((short)6, "description"),
-    CITYID((short)7, "cityid"),
     SPORTS((short)3, "sports"),
     CENTER((short)4, "center"),
-    COORDS((short)5, "coords");
+    COORDS((short)5, "coords"),
+    DESCRIPTION((short)6, "description"),
+    CITYID((short)7, "cityid"),
+    IMAGEID((short)8, "imageid");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -85,16 +88,18 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           return ID;
         case 2: // TITLE
           return TITLE;
-        case 6: // DESCRIPTION
-          return DESCRIPTION;
-        case 7: // CITYID
-          return CITYID;
         case 3: // SPORTS
           return SPORTS;
         case 4: // CENTER
           return CENTER;
         case 5: // COORDS
           return COORDS;
+        case 6: // DESCRIPTION
+          return DESCRIPTION;
+        case 7: // CITYID
+          return CITYID;
+        case 8: // IMAGEID
+          return IMAGEID;
         default:
           return null;
       }
@@ -135,17 +140,13 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.ID,_Fields.TITLE,_Fields.DESCRIPTION,_Fields.CITYID,_Fields.SPORTS,_Fields.CENTER,_Fields.COORDS};
+  private static final _Fields optionals[] = {_Fields.ID,_Fields.TITLE,_Fields.SPORTS,_Fields.CENTER,_Fields.COORDS,_Fields.DESCRIPTION,_Fields.CITYID,_Fields.IMAGEID};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.CITYID, new org.apache.thrift.meta_data.FieldMetaData("cityid", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.SPORTS, new org.apache.thrift.meta_data.FieldMetaData("sports", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
@@ -155,6 +156,12 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     tmpMap.put(_Fields.COORDS, new org.apache.thrift.meta_data.FieldMetaData("coords", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class))));
+    tmpMap.put(_Fields.DESCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("description", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.CITYID, new org.apache.thrift.meta_data.FieldMetaData("cityid", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.IMAGEID, new org.apache.thrift.meta_data.FieldMetaData("imageid", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Area.class, metaDataMap);
   }
@@ -172,12 +179,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     if (other.isSetTitle()) {
       this.title = other.title;
     }
-    if (other.isSetDescription()) {
-      this.description = other.description;
-    }
-    if (other.isSetCityid()) {
-      this.cityid = other.cityid;
-    }
     if (other.isSetSports()) {
       List<String> __this__sports = new ArrayList<String>(other.sports);
       this.sports = __this__sports;
@@ -192,6 +193,15 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       }
       this.coords = __this__coords;
     }
+    if (other.isSetDescription()) {
+      this.description = other.description;
+    }
+    if (other.isSetCityid()) {
+      this.cityid = other.cityid;
+    }
+    if (other.isSetImageid()) {
+      this.imageid = other.imageid;
+    }
   }
 
   public Area deepCopy() {
@@ -202,11 +212,12 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public void clear() {
     this.id = null;
     this.title = null;
-    this.description = null;
-    this.cityid = null;
     this.sports = null;
     this.center = null;
     this.coords = null;
+    this.description = null;
+    this.cityid = null;
+    this.imageid = null;
   }
 
   public String getId() {
@@ -254,54 +265,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
   public void setTitleIsSet(boolean value) {
     if (!value) {
       this.title = null;
-    }
-  }
-
-  public String getDescription() {
-    return this.description;
-  }
-
-  public Area setDescription(String description) {
-    this.description = description;
-    return this;
-  }
-
-  public void unsetDescription() {
-    this.description = null;
-  }
-
-  /** Returns true if field description is set (has been assigned a value) and false otherwise */
-  public boolean isSetDescription() {
-    return this.description != null;
-  }
-
-  public void setDescriptionIsSet(boolean value) {
-    if (!value) {
-      this.description = null;
-    }
-  }
-
-  public String getCityid() {
-    return this.cityid;
-  }
-
-  public Area setCityid(String cityid) {
-    this.cityid = cityid;
-    return this;
-  }
-
-  public void unsetCityid() {
-    this.cityid = null;
-  }
-
-  /** Returns true if field cityid is set (has been assigned a value) and false otherwise */
-  public boolean isSetCityid() {
-    return this.cityid != null;
-  }
-
-  public void setCityidIsSet(boolean value) {
-    if (!value) {
-      this.cityid = null;
     }
   }
 
@@ -407,6 +370,78 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
   }
 
+  public String getDescription() {
+    return this.description;
+  }
+
+  public Area setDescription(String description) {
+    this.description = description;
+    return this;
+  }
+
+  public void unsetDescription() {
+    this.description = null;
+  }
+
+  /** Returns true if field description is set (has been assigned a value) and false otherwise */
+  public boolean isSetDescription() {
+    return this.description != null;
+  }
+
+  public void setDescriptionIsSet(boolean value) {
+    if (!value) {
+      this.description = null;
+    }
+  }
+
+  public String getCityid() {
+    return this.cityid;
+  }
+
+  public Area setCityid(String cityid) {
+    this.cityid = cityid;
+    return this;
+  }
+
+  public void unsetCityid() {
+    this.cityid = null;
+  }
+
+  /** Returns true if field cityid is set (has been assigned a value) and false otherwise */
+  public boolean isSetCityid() {
+    return this.cityid != null;
+  }
+
+  public void setCityidIsSet(boolean value) {
+    if (!value) {
+      this.cityid = null;
+    }
+  }
+
+  public String getImageid() {
+    return this.imageid;
+  }
+
+  public Area setImageid(String imageid) {
+    this.imageid = imageid;
+    return this;
+  }
+
+  public void unsetImageid() {
+    this.imageid = null;
+  }
+
+  /** Returns true if field imageid is set (has been assigned a value) and false otherwise */
+  public boolean isSetImageid() {
+    return this.imageid != null;
+  }
+
+  public void setImageidIsSet(boolean value) {
+    if (!value) {
+      this.imageid = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case ID:
@@ -422,22 +457,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         unsetTitle();
       } else {
         setTitle((String)value);
-      }
-      break;
-
-    case DESCRIPTION:
-      if (value == null) {
-        unsetDescription();
-      } else {
-        setDescription((String)value);
-      }
-      break;
-
-    case CITYID:
-      if (value == null) {
-        unsetCityid();
-      } else {
-        setCityid((String)value);
       }
       break;
 
@@ -465,6 +484,30 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       }
       break;
 
+    case DESCRIPTION:
+      if (value == null) {
+        unsetDescription();
+      } else {
+        setDescription((String)value);
+      }
+      break;
+
+    case CITYID:
+      if (value == null) {
+        unsetCityid();
+      } else {
+        setCityid((String)value);
+      }
+      break;
+
+    case IMAGEID:
+      if (value == null) {
+        unsetImageid();
+      } else {
+        setImageid((String)value);
+      }
+      break;
+
     }
   }
 
@@ -476,12 +519,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     case TITLE:
       return getTitle();
 
-    case DESCRIPTION:
-      return getDescription();
-
-    case CITYID:
-      return getCityid();
-
     case SPORTS:
       return getSports();
 
@@ -490,6 +527,15 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
 
     case COORDS:
       return getCoords();
+
+    case DESCRIPTION:
+      return getDescription();
+
+    case CITYID:
+      return getCityid();
+
+    case IMAGEID:
+      return getImageid();
 
     }
     throw new IllegalStateException();
@@ -506,16 +552,18 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       return isSetId();
     case TITLE:
       return isSetTitle();
-    case DESCRIPTION:
-      return isSetDescription();
-    case CITYID:
-      return isSetCityid();
     case SPORTS:
       return isSetSports();
     case CENTER:
       return isSetCenter();
     case COORDS:
       return isSetCoords();
+    case DESCRIPTION:
+      return isSetDescription();
+    case CITYID:
+      return isSetCityid();
+    case IMAGEID:
+      return isSetImageid();
     }
     throw new IllegalStateException();
   }
@@ -551,24 +599,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         return false;
     }
 
-    boolean this_present_description = true && this.isSetDescription();
-    boolean that_present_description = true && that.isSetDescription();
-    if (this_present_description || that_present_description) {
-      if (!(this_present_description && that_present_description))
-        return false;
-      if (!this.description.equals(that.description))
-        return false;
-    }
-
-    boolean this_present_cityid = true && this.isSetCityid();
-    boolean that_present_cityid = true && that.isSetCityid();
-    if (this_present_cityid || that_present_cityid) {
-      if (!(this_present_cityid && that_present_cityid))
-        return false;
-      if (!this.cityid.equals(that.cityid))
-        return false;
-    }
-
     boolean this_present_sports = true && this.isSetSports();
     boolean that_present_sports = true && that.isSetSports();
     if (this_present_sports || that_present_sports) {
@@ -596,6 +626,33 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         return false;
     }
 
+    boolean this_present_description = true && this.isSetDescription();
+    boolean that_present_description = true && that.isSetDescription();
+    if (this_present_description || that_present_description) {
+      if (!(this_present_description && that_present_description))
+        return false;
+      if (!this.description.equals(that.description))
+        return false;
+    }
+
+    boolean this_present_cityid = true && this.isSetCityid();
+    boolean that_present_cityid = true && that.isSetCityid();
+    if (this_present_cityid || that_present_cityid) {
+      if (!(this_present_cityid && that_present_cityid))
+        return false;
+      if (!this.cityid.equals(that.cityid))
+        return false;
+    }
+
+    boolean this_present_imageid = true && this.isSetImageid();
+    boolean that_present_imageid = true && that.isSetImageid();
+    if (this_present_imageid || that_present_imageid) {
+      if (!(this_present_imageid && that_present_imageid))
+        return false;
+      if (!this.imageid.equals(that.imageid))
+        return false;
+    }
+
     return true;
   }
 
@@ -613,16 +670,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     if (present_title)
       list.add(title);
 
-    boolean present_description = true && (isSetDescription());
-    list.add(present_description);
-    if (present_description)
-      list.add(description);
-
-    boolean present_cityid = true && (isSetCityid());
-    list.add(present_cityid);
-    if (present_cityid)
-      list.add(cityid);
-
     boolean present_sports = true && (isSetSports());
     list.add(present_sports);
     if (present_sports)
@@ -637,6 +684,21 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     list.add(present_coords);
     if (present_coords)
       list.add(coords);
+
+    boolean present_description = true && (isSetDescription());
+    list.add(present_description);
+    if (present_description)
+      list.add(description);
+
+    boolean present_cityid = true && (isSetCityid());
+    list.add(present_cityid);
+    if (present_cityid)
+      list.add(cityid);
+
+    boolean present_imageid = true && (isSetImageid());
+    list.add(present_imageid);
+    if (present_imageid)
+      list.add(imageid);
 
     return list.hashCode();
   }
@@ -669,26 +731,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetDescription()).compareTo(other.isSetDescription());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetDescription()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.description, other.description);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetCityid()).compareTo(other.isSetCityid());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetCityid()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.cityid, other.cityid);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     lastComparison = Boolean.valueOf(isSetSports()).compareTo(other.isSetSports());
     if (lastComparison != 0) {
       return lastComparison;
@@ -715,6 +757,36 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
     }
     if (isSetCoords()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.coords, other.coords);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetDescription()).compareTo(other.isSetDescription());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetDescription()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.description, other.description);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetCityid()).compareTo(other.isSetCityid());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetCityid()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.cityid, other.cityid);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetImageid()).compareTo(other.isSetImageid());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetImageid()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.imageid, other.imageid);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -758,26 +830,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       }
       first = false;
     }
-    if (isSetDescription()) {
-      if (!first) sb.append(", ");
-      sb.append("description:");
-      if (this.description == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.description);
-      }
-      first = false;
-    }
-    if (isSetCityid()) {
-      if (!first) sb.append(", ");
-      sb.append("cityid:");
-      if (this.cityid == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.cityid);
-      }
-      first = false;
-    }
     if (isSetSports()) {
       if (!first) sb.append(", ");
       sb.append("sports:");
@@ -805,6 +857,36 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         sb.append("null");
       } else {
         sb.append(this.coords);
+      }
+      first = false;
+    }
+    if (isSetDescription()) {
+      if (!first) sb.append(", ");
+      sb.append("description:");
+      if (this.description == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.description);
+      }
+      first = false;
+    }
+    if (isSetCityid()) {
+      if (!first) sb.append(", ");
+      sb.append("cityid:");
+      if (this.cityid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.cityid);
+      }
+      first = false;
+    }
+    if (isSetImageid()) {
+      if (!first) sb.append(", ");
+      sb.append("imageid:");
+      if (this.imageid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.imageid);
       }
       first = false;
     }
@@ -870,22 +952,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 6: // DESCRIPTION
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.description = iprot.readString();
-              struct.setDescriptionIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 7: // CITYID
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.cityid = iprot.readString();
-              struct.setCityidIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
           case 3: // SPORTS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
@@ -928,6 +994,30 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
                 iprot.readListEnd();
               }
               struct.setCoordsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // DESCRIPTION
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.description = iprot.readString();
+              struct.setDescriptionIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 7: // CITYID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.cityid = iprot.readString();
+              struct.setCityidIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 8: // IMAGEID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.imageid = iprot.readString();
+              struct.setImageidIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -1010,6 +1100,13 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           oprot.writeFieldEnd();
         }
       }
+      if (struct.imageid != null) {
+        if (struct.isSetImageid()) {
+          oprot.writeFieldBegin(IMAGEID_FIELD_DESC);
+          oprot.writeString(struct.imageid);
+          oprot.writeFieldEnd();
+        }
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -1034,33 +1131,30 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       if (struct.isSetTitle()) {
         optionals.set(1);
       }
-      if (struct.isSetDescription()) {
+      if (struct.isSetSports()) {
         optionals.set(2);
       }
-      if (struct.isSetCityid()) {
+      if (struct.isSetCenter()) {
         optionals.set(3);
       }
-      if (struct.isSetSports()) {
+      if (struct.isSetCoords()) {
         optionals.set(4);
       }
-      if (struct.isSetCenter()) {
+      if (struct.isSetDescription()) {
         optionals.set(5);
       }
-      if (struct.isSetCoords()) {
+      if (struct.isSetCityid()) {
         optionals.set(6);
       }
-      oprot.writeBitSet(optionals, 7);
+      if (struct.isSetImageid()) {
+        optionals.set(7);
+      }
+      oprot.writeBitSet(optionals, 8);
       if (struct.isSetId()) {
         oprot.writeString(struct.id);
       }
       if (struct.isSetTitle()) {
         oprot.writeString(struct.title);
-      }
-      if (struct.isSetDescription()) {
-        oprot.writeString(struct.description);
-      }
-      if (struct.isSetCityid()) {
-        oprot.writeString(struct.cityid);
       }
       if (struct.isSetSports()) {
         {
@@ -1083,12 +1177,21 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           }
         }
       }
+      if (struct.isSetDescription()) {
+        oprot.writeString(struct.description);
+      }
+      if (struct.isSetCityid()) {
+        oprot.writeString(struct.cityid);
+      }
+      if (struct.isSetImageid()) {
+        oprot.writeString(struct.imageid);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Area struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(7);
+      BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
         struct.id = iprot.readString();
         struct.setIdIsSet(true);
@@ -1098,14 +1201,6 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         struct.setTitleIsSet(true);
       }
       if (incoming.get(2)) {
-        struct.description = iprot.readString();
-        struct.setDescriptionIsSet(true);
-      }
-      if (incoming.get(3)) {
-        struct.cityid = iprot.readString();
-        struct.setCityidIsSet(true);
-      }
-      if (incoming.get(4)) {
         {
           org.apache.thrift.protocol.TList _list10 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
           struct.sports = new ArrayList<String>(_list10.size);
@@ -1118,12 +1213,12 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
         }
         struct.setSportsIsSet(true);
       }
-      if (incoming.get(5)) {
+      if (incoming.get(3)) {
         struct.center = new Coordinate();
         struct.center.read(iprot);
         struct.setCenterIsSet(true);
       }
-      if (incoming.get(6)) {
+      if (incoming.get(4)) {
         {
           org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.coords = new ArrayList<Coordinate>(_list13.size);
@@ -1136,6 +1231,18 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           }
         }
         struct.setCoordsIsSet(true);
+      }
+      if (incoming.get(5)) {
+        struct.description = iprot.readString();
+        struct.setDescriptionIsSet(true);
+      }
+      if (incoming.get(6)) {
+        struct.cityid = iprot.readString();
+        struct.setCityidIsSet(true);
+      }
+      if (incoming.get(7)) {
+        struct.imageid = iprot.readString();
+        struct.setImageidIsSet(true);
       }
     }
   }
