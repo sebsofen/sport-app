@@ -37,8 +37,10 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("User");
 
   private static final org.apache.thrift.protocol.TField IDENTIFIER_FIELD_DESC = new org.apache.thrift.protocol.TField("identifier", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField PASSWORD_FIELD_DESC = new org.apache.thrift.protocol.TField("password", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField ROLE_FIELD_DESC = new org.apache.thrift.protocol.TField("role", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField PROFILE_FIELD_DESC = new org.apache.thrift.protocol.TField("profile", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRUCT, (short)5);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -47,14 +49,18 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   }
 
   public String identifier; // optional
+  public String password; // optional
   public String role; // optional
-  public UserProfile profile; // optional
+  public Profile profile; // optional
+  public Token token; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     IDENTIFIER((short)1, "identifier"),
+    PASSWORD((short)2, "password"),
     ROLE((short)3, "role"),
-    PROFILE((short)4, "profile");
+    PROFILE((short)4, "profile"),
+    TOKEN((short)5, "token");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -71,10 +77,14 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       switch(fieldId) {
         case 1: // IDENTIFIER
           return IDENTIFIER;
+        case 2: // PASSWORD
+          return PASSWORD;
         case 3: // ROLE
           return ROLE;
         case 4: // PROFILE
           return PROFILE;
+        case 5: // TOKEN
+          return TOKEN;
         default:
           return null;
       }
@@ -115,16 +125,20 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.ROLE,_Fields.PROFILE};
+  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.PASSWORD,_Fields.ROLE,_Fields.PROFILE,_Fields.TOKEN};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.IDENTIFIER, new org.apache.thrift.meta_data.FieldMetaData("identifier", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.PASSWORD, new org.apache.thrift.meta_data.FieldMetaData("password", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.ROLE, new org.apache.thrift.meta_data.FieldMetaData("role", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.PROFILE, new org.apache.thrift.meta_data.FieldMetaData("profile", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, UserProfile.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Profile.class)));
+    tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Token.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(User.class, metaDataMap);
   }
@@ -139,11 +153,17 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     if (other.isSetIdentifier()) {
       this.identifier = other.identifier;
     }
+    if (other.isSetPassword()) {
+      this.password = other.password;
+    }
     if (other.isSetRole()) {
       this.role = other.role;
     }
     if (other.isSetProfile()) {
-      this.profile = new UserProfile(other.profile);
+      this.profile = new Profile(other.profile);
+    }
+    if (other.isSetToken()) {
+      this.token = new Token(other.token);
     }
   }
 
@@ -154,8 +174,10 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   @Override
   public void clear() {
     this.identifier = null;
+    this.password = null;
     this.role = null;
     this.profile = null;
+    this.token = null;
   }
 
   public String getIdentifier() {
@@ -179,6 +201,30 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   public void setIdentifierIsSet(boolean value) {
     if (!value) {
       this.identifier = null;
+    }
+  }
+
+  public String getPassword() {
+    return this.password;
+  }
+
+  public User setPassword(String password) {
+    this.password = password;
+    return this;
+  }
+
+  public void unsetPassword() {
+    this.password = null;
+  }
+
+  /** Returns true if field password is set (has been assigned a value) and false otherwise */
+  public boolean isSetPassword() {
+    return this.password != null;
+  }
+
+  public void setPasswordIsSet(boolean value) {
+    if (!value) {
+      this.password = null;
     }
   }
 
@@ -206,11 +252,11 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     }
   }
 
-  public UserProfile getProfile() {
+  public Profile getProfile() {
     return this.profile;
   }
 
-  public User setProfile(UserProfile profile) {
+  public User setProfile(Profile profile) {
     this.profile = profile;
     return this;
   }
@@ -230,6 +276,30 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     }
   }
 
+  public Token getToken() {
+    return this.token;
+  }
+
+  public User setToken(Token token) {
+    this.token = token;
+    return this;
+  }
+
+  public void unsetToken() {
+    this.token = null;
+  }
+
+  /** Returns true if field token is set (has been assigned a value) and false otherwise */
+  public boolean isSetToken() {
+    return this.token != null;
+  }
+
+  public void setTokenIsSet(boolean value) {
+    if (!value) {
+      this.token = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case IDENTIFIER:
@@ -237,6 +307,14 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         unsetIdentifier();
       } else {
         setIdentifier((String)value);
+      }
+      break;
+
+    case PASSWORD:
+      if (value == null) {
+        unsetPassword();
+      } else {
+        setPassword((String)value);
       }
       break;
 
@@ -252,7 +330,15 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (value == null) {
         unsetProfile();
       } else {
-        setProfile((UserProfile)value);
+        setProfile((Profile)value);
+      }
+      break;
+
+    case TOKEN:
+      if (value == null) {
+        unsetToken();
+      } else {
+        setToken((Token)value);
       }
       break;
 
@@ -264,11 +350,17 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     case IDENTIFIER:
       return getIdentifier();
 
+    case PASSWORD:
+      return getPassword();
+
     case ROLE:
       return getRole();
 
     case PROFILE:
       return getProfile();
+
+    case TOKEN:
+      return getToken();
 
     }
     throw new IllegalStateException();
@@ -283,10 +375,14 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     switch (field) {
     case IDENTIFIER:
       return isSetIdentifier();
+    case PASSWORD:
+      return isSetPassword();
     case ROLE:
       return isSetRole();
     case PROFILE:
       return isSetProfile();
+    case TOKEN:
+      return isSetToken();
     }
     throw new IllegalStateException();
   }
@@ -313,6 +409,15 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         return false;
     }
 
+    boolean this_present_password = true && this.isSetPassword();
+    boolean that_present_password = true && that.isSetPassword();
+    if (this_present_password || that_present_password) {
+      if (!(this_present_password && that_present_password))
+        return false;
+      if (!this.password.equals(that.password))
+        return false;
+    }
+
     boolean this_present_role = true && this.isSetRole();
     boolean that_present_role = true && that.isSetRole();
     if (this_present_role || that_present_role) {
@@ -331,6 +436,15 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         return false;
     }
 
+    boolean this_present_token = true && this.isSetToken();
+    boolean that_present_token = true && that.isSetToken();
+    if (this_present_token || that_present_token) {
+      if (!(this_present_token && that_present_token))
+        return false;
+      if (!this.token.equals(that.token))
+        return false;
+    }
+
     return true;
   }
 
@@ -343,6 +457,11 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     if (present_identifier)
       list.add(identifier);
 
+    boolean present_password = true && (isSetPassword());
+    list.add(present_password);
+    if (present_password)
+      list.add(password);
+
     boolean present_role = true && (isSetRole());
     list.add(present_role);
     if (present_role)
@@ -352,6 +471,11 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     list.add(present_profile);
     if (present_profile)
       list.add(profile);
+
+    boolean present_token = true && (isSetToken());
+    list.add(present_token);
+    if (present_token)
+      list.add(token);
 
     return list.hashCode();
   }
@@ -374,6 +498,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetPassword()).compareTo(other.isSetPassword());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPassword()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.password, other.password);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     lastComparison = Boolean.valueOf(isSetRole()).compareTo(other.isSetRole());
     if (lastComparison != 0) {
       return lastComparison;
@@ -390,6 +524,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     }
     if (isSetProfile()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.profile, other.profile);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetToken()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -423,6 +567,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
       first = false;
     }
+    if (isSetPassword()) {
+      if (!first) sb.append(", ");
+      sb.append("password:");
+      if (this.password == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.password);
+      }
+      first = false;
+    }
     if (isSetRole()) {
       if (!first) sb.append(", ");
       sb.append("role:");
@@ -443,6 +597,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
       first = false;
     }
+    if (isSetToken()) {
+      if (!first) sb.append(", ");
+      sb.append("token:");
+      if (this.token == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.token);
+      }
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }
@@ -452,6 +616,9 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     // check for sub-struct validity
     if (profile != null) {
       profile.validate();
+    }
+    if (token != null) {
+      token.validate();
     }
   }
 
@@ -497,6 +664,14 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 2: // PASSWORD
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.password = iprot.readString();
+              struct.setPasswordIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           case 3: // ROLE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.role = iprot.readString();
@@ -507,9 +682,18 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
             break;
           case 4: // PROFILE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.profile = new UserProfile();
+              struct.profile = new Profile();
               struct.profile.read(iprot);
               struct.setProfileIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // TOKEN
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+              struct.token = new Token();
+              struct.token.read(iprot);
+              struct.setTokenIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -536,6 +720,13 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
           oprot.writeFieldEnd();
         }
       }
+      if (struct.password != null) {
+        if (struct.isSetPassword()) {
+          oprot.writeFieldBegin(PASSWORD_FIELD_DESC);
+          oprot.writeString(struct.password);
+          oprot.writeFieldEnd();
+        }
+      }
       if (struct.role != null) {
         if (struct.isSetRole()) {
           oprot.writeFieldBegin(ROLE_FIELD_DESC);
@@ -547,6 +738,13 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         if (struct.isSetProfile()) {
           oprot.writeFieldBegin(PROFILE_FIELD_DESC);
           struct.profile.write(oprot);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.token != null) {
+        if (struct.isSetToken()) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          struct.token.write(oprot);
           oprot.writeFieldEnd();
         }
       }
@@ -571,15 +769,24 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (struct.isSetIdentifier()) {
         optionals.set(0);
       }
-      if (struct.isSetRole()) {
+      if (struct.isSetPassword()) {
         optionals.set(1);
       }
-      if (struct.isSetProfile()) {
+      if (struct.isSetRole()) {
         optionals.set(2);
       }
-      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetProfile()) {
+        optionals.set(3);
+      }
+      if (struct.isSetToken()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetIdentifier()) {
         oprot.writeString(struct.identifier);
+      }
+      if (struct.isSetPassword()) {
+        oprot.writeString(struct.password);
       }
       if (struct.isSetRole()) {
         oprot.writeString(struct.role);
@@ -587,24 +794,36 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (struct.isSetProfile()) {
         struct.profile.write(oprot);
       }
+      if (struct.isSetToken()) {
+        struct.token.write(oprot);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, User struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(3);
+      BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.identifier = iprot.readString();
         struct.setIdentifierIsSet(true);
       }
       if (incoming.get(1)) {
+        struct.password = iprot.readString();
+        struct.setPasswordIsSet(true);
+      }
+      if (incoming.get(2)) {
         struct.role = iprot.readString();
         struct.setRoleIsSet(true);
       }
-      if (incoming.get(2)) {
-        struct.profile = new UserProfile();
+      if (incoming.get(3)) {
+        struct.profile = new Profile();
         struct.profile.read(iprot);
         struct.setProfileIsSet(true);
+      }
+      if (incoming.get(4)) {
+        struct.token = new Token();
+        struct.token.read(iprot);
+        struct.setTokenIsSet(true);
       }
     }
   }

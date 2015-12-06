@@ -44,8 +44,7 @@ import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
 public class SportSelectActivity extends AppCompatActivity implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
-    private Button mQueen;
-    private Button mHidden;
+
     private OuterLayout mOuterLayout;
     private RelativeLayout mMainLayout;
     private Context mThis;

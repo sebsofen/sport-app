@@ -76,6 +76,7 @@ public class SelectCityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("SelectCityFragment", "create fragment view yo");
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_select_city, container, false);
         final SelectCityFragment mThis = this;

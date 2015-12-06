@@ -43,9 +43,9 @@ public class UserSvc {
 
     public UserCredentials createUser(String password) throws InvalidOperation, org.apache.thrift.TException;
 
-    public void setProfile(String token, UserProfile profile) throws org.apache.thrift.TException;
+    public void setProfile(String token, Profile profile) throws org.apache.thrift.TException;
 
-    public ThriftToken requestToken(String username, String plain_pw) throws org.apache.thrift.TException;
+    public Token requestToken(String username, String plain_pw) throws org.apache.thrift.TException;
 
     public void setAdmin(String token, String userid) throws org.apache.thrift.TException;
 
@@ -55,7 +55,7 @@ public class UserSvc {
 
     public void createUser(String password, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void setProfile(String token, UserProfile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void setProfile(String token, Profile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void requestToken(String username, String plain_pw, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -109,13 +109,13 @@ public class UserSvc {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "createUser failed: unknown result");
     }
 
-    public void setProfile(String token, UserProfile profile) throws org.apache.thrift.TException
+    public void setProfile(String token, Profile profile) throws org.apache.thrift.TException
     {
       send_setProfile(token, profile);
       recv_setProfile();
     }
 
-    public void send_setProfile(String token, UserProfile profile) throws org.apache.thrift.TException
+    public void send_setProfile(String token, Profile profile) throws org.apache.thrift.TException
     {
       setProfile_args args = new setProfile_args();
       args.setToken(token);
@@ -130,7 +130,7 @@ public class UserSvc {
       return;
     }
 
-    public ThriftToken requestToken(String username, String plain_pw) throws org.apache.thrift.TException
+    public Token requestToken(String username, String plain_pw) throws org.apache.thrift.TException
     {
       send_requestToken(username, plain_pw);
       return recv_requestToken();
@@ -144,7 +144,7 @@ public class UserSvc {
       sendBase("requestToken", args);
     }
 
-    public ThriftToken recv_requestToken() throws org.apache.thrift.TException
+    public Token recv_requestToken() throws org.apache.thrift.TException
     {
       requestToken_result result = new requestToken_result();
       receiveBase(result, "requestToken");
@@ -225,7 +225,7 @@ public class UserSvc {
       }
     }
 
-    public void setProfile(String token, UserProfile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void setProfile(String token, Profile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       setProfile_call method_call = new setProfile_call(token, profile, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -234,8 +234,8 @@ public class UserSvc {
 
     public static class setProfile_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String token;
-      private UserProfile profile;
-      public setProfile_call(String token, UserProfile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private Profile profile;
+      public setProfile_call(String token, Profile profile, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.token = token;
         this.profile = profile;
@@ -285,7 +285,7 @@ public class UserSvc {
         prot.writeMessageEnd();
       }
 
-      public ThriftToken getResult() throws org.apache.thrift.TException {
+      public Token getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -561,7 +561,7 @@ public class UserSvc {
       }
     }
 
-    public static class requestToken<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, requestToken_args, ThriftToken> {
+    public static class requestToken<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, requestToken_args, Token> {
       public requestToken() {
         super("requestToken");
       }
@@ -570,10 +570,10 @@ public class UserSvc {
         return new requestToken_args();
       }
 
-      public AsyncMethodCallback<ThriftToken> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<Token> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<ThriftToken>() { 
-          public void onComplete(ThriftToken o) {
+        return new AsyncMethodCallback<Token>() { 
+          public void onComplete(Token o) {
             requestToken_result result = new requestToken_result();
             result.success = o;
             try {
@@ -607,7 +607,7 @@ public class UserSvc {
         return false;
       }
 
-      public void start(I iface, requestToken_args args, org.apache.thrift.async.AsyncMethodCallback<ThriftToken> resultHandler) throws TException {
+      public void start(I iface, requestToken_args args, org.apache.thrift.async.AsyncMethodCallback<Token> resultHandler) throws TException {
         iface.requestToken(args.username, args.plain_pw,resultHandler);
       }
     }
@@ -1511,7 +1511,7 @@ public class UserSvc {
     }
 
     public String token; // required
-    public UserProfile profile; // required
+    public Profile profile; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1581,7 +1581,7 @@ public class UserSvc {
       tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.PROFILE, new org.apache.thrift.meta_data.FieldMetaData("profile", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, UserProfile.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Profile.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(setProfile_args.class, metaDataMap);
     }
@@ -1591,7 +1591,7 @@ public class UserSvc {
 
     public setProfile_args(
       String token,
-      UserProfile profile)
+      Profile profile)
     {
       this();
       this.token = token;
@@ -1606,7 +1606,7 @@ public class UserSvc {
         this.token = other.token;
       }
       if (other.isSetProfile()) {
-        this.profile = new UserProfile(other.profile);
+        this.profile = new Profile(other.profile);
       }
     }
 
@@ -1644,11 +1644,11 @@ public class UserSvc {
       }
     }
 
-    public UserProfile getProfile() {
+    public Profile getProfile() {
       return this.profile;
     }
 
-    public setProfile_args setProfile(UserProfile profile) {
+    public setProfile_args setProfile(Profile profile) {
       this.profile = profile;
       return this;
     }
@@ -1682,7 +1682,7 @@ public class UserSvc {
         if (value == null) {
           unsetProfile();
         } else {
-          setProfile((UserProfile)value);
+          setProfile((Profile)value);
         }
         break;
 
@@ -1886,7 +1886,7 @@ public class UserSvc {
               break;
             case 2: // PROFILE
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.profile = new UserProfile();
+                struct.profile = new Profile();
                 struct.profile.read(iprot);
                 struct.setProfileIsSet(true);
               } else { 
@@ -1960,7 +1960,7 @@ public class UserSvc {
           struct.setTokenIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.profile = new UserProfile();
+          struct.profile = new Profile();
           struct.profile.read(iprot);
           struct.setProfileIsSet(true);
         }
@@ -2694,7 +2694,7 @@ public class UserSvc {
       schemes.put(TupleScheme.class, new requestToken_resultTupleSchemeFactory());
     }
 
-    public ThriftToken success; // required
+    public Token success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2759,7 +2759,7 @@ public class UserSvc {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ThriftToken.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Token.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(requestToken_result.class, metaDataMap);
     }
@@ -2768,7 +2768,7 @@ public class UserSvc {
     }
 
     public requestToken_result(
-      ThriftToken success)
+      Token success)
     {
       this();
       this.success = success;
@@ -2779,7 +2779,7 @@ public class UserSvc {
      */
     public requestToken_result(requestToken_result other) {
       if (other.isSetSuccess()) {
-        this.success = new ThriftToken(other.success);
+        this.success = new Token(other.success);
       }
     }
 
@@ -2792,11 +2792,11 @@ public class UserSvc {
       this.success = null;
     }
 
-    public ThriftToken getSuccess() {
+    public Token getSuccess() {
       return this.success;
     }
 
-    public requestToken_result setSuccess(ThriftToken success) {
+    public requestToken_result setSuccess(Token success) {
       this.success = success;
       return this;
     }
@@ -2822,7 +2822,7 @@ public class UserSvc {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((ThriftToken)value);
+          setSuccess((Token)value);
         }
         break;
 
@@ -2981,7 +2981,7 @@ public class UserSvc {
           switch (schemeField.id) {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.success = new ThriftToken();
+                struct.success = new Token();
                 struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
@@ -3040,7 +3040,7 @@ public class UserSvc {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = new ThriftToken();
+          struct.success = new Token();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }

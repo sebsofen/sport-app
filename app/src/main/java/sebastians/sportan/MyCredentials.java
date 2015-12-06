@@ -10,7 +10,7 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
-import sebastians.sportan.networking.ThriftToken;
+import sebastians.sportan.networking.Token;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.UserCreationTask;
 
@@ -74,10 +74,10 @@ public class MyCredentials {
             TMultiplexedProtocol mp = new TMultiplexedProtocol(protocol, "User");
             UserSvc.Client client = new UserSvc.Client(mp);
 
-            ThriftToken thriftToken = client.requestToken(this.getIdentifier(),this.getPassword());
+            Token thriftToken = client.requestToken(this.getIdentifier(),this.getPassword());
             //read and transform token information
             String token = thriftToken.getToken();
-            long validity =System.currentTimeMillis() + thriftToken.getValidityDuration();
+            long validity =System.currentTimeMillis() + thriftToken.getValidity();
             SharedPreferences.Editor edit = sharedPref.edit();
             edit.putString(MyCredentials.USERCREDENTIALS_TOKEN, token);
             edit.putLong(MyCredentials.USERCREDENTIALS_TOKENVALIDITY, validity);

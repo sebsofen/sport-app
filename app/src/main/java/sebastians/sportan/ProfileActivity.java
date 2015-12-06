@@ -2,6 +2,7 @@ package sebastians.sportan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -14,18 +15,21 @@ import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
-import sebastians.sportan.networking.UserProfile;
+import sebastians.sportan.networking.Profile;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
-public class ProfileActivity extends ActionBarActivity {
+public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.OnFragmentInteractionListener {
     ImageButton edit_username_button;
     TextView edit_username_text;
     SwipeRefreshLayout swipeRefresh;
     ImageButton share_btn;
+    ImageButton select_city_btn;
     EditText user_id_txt;
+    EditText city_name_txt;
+    SelectCityFragment select_city_fragment;
     MyCredentials myCredentials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +41,18 @@ public class ProfileActivity extends ActionBarActivity {
         edit_username_text = (TextView)findViewById(R.id.username);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
 
-        user_id_txt = (EditText) findViewById(R.id.user_id_txt);
+
         share_btn = (ImageButton) findViewById(R.id.share_btn);
+        select_city_btn = (ImageButton) findViewById(R.id.select_city_btn);
+
+        user_id_txt = (EditText) findViewById(R.id.user_id_txt);
+        city_name_txt = (EditText) findViewById(R.id.city_name_txt);
+
 
         myCredentials = new MyCredentials(this);
         user_id_txt.setText(myCredentials.getIdentifier());
+
+        ;
 
         //share userid ;_)
         share_btn.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +62,14 @@ public class ProfileActivity extends ActionBarActivity {
                 intent2.setType("text/plain");
                 intent2.putExtra(Intent.EXTRA_TEXT, "I want to be friends with you on sportan: http://www.sportanapp.com/friends/" + myCredentials.getIdentifier() );
                 startActivity(Intent.createChooser(intent2, "Share via"));
+            }
+        });
+
+        select_city_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("ProfileActivity", "start fragment");
+                getFragmentManager().beginTransaction().replace(R.id.select_city_fragment, new SelectCityFragment()).commit();
             }
         });
 
@@ -82,7 +101,7 @@ public class ProfileActivity extends ActionBarActivity {
                                     }
                                     TMultiplexedProtocol mp = transmit.openTransport(SuperAsyncTask.SERVICE_USER);
                                     UserSvc.Client client = new UserSvc.Client(mp);
-                                    UserProfile profile = new UserProfile();
+                                    Profile profile = new Profile();
                                     profile.setUsername(userInputValue);
                                     client.setProfile(myCredentials.getToken(), profile);
                                     Log.i("ProfileActivity","new username set");
@@ -126,4 +145,8 @@ public class ProfileActivity extends ActionBarActivity {
         edit_username_text.setText(username);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.i("ProfileActivity", "hoo");
+    }
 }

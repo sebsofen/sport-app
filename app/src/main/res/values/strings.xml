@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">Sportan</string>
+    <string name="app_name">Sport App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <!-- <string name="host">192.168.178.156</string> -->
-     <string name="host">192.168.178.33</string>
-    <string name="port">9090</string>
-    <string name="preference_file_key">mprefs</string>
-    <string name="title_activity_map_overview">MapOverviewActivity</string>
-    <string name="title_activity_area_list">AreaListActivity</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="host">192.168.178.156</string>
+    <!-- <string name="host">192.168.178.33</string> -->
+     <string name="port">9090</string>
+     <string name="preference_file_key">mprefs</string>
+     <string name="title_activity_map_overview">MapOverviewActivity</string>
+     <string name="title_activity_area_list">AreaListActivity</string>
+     <string name="title_activity_profile">ProfileActivity</string>
+     <string name="title_activity_main2">Main2Activity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+ <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_sport_select">SportSelectActivity</string>
     <string name="title_activity_test">TestActivity</string>
