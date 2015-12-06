@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.app;
 
 import android.app.Application;
 import android.content.res.Configuration;
@@ -58,6 +58,7 @@ public class SportApplication extends Application {
      * image cache
      * limit in cache has to be set wisely
      *
+     * TODO ADD DISK CACHE IF POSSIBLE
      */
     public static class ImageCache {
         private static LruCache<String,Image> cache = new LruCache<>(100);

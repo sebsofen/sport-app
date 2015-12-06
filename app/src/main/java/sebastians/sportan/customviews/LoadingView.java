@@ -1,4 +1,4 @@
-package sebastians.sportan.custviews;
+package sebastians.sportan.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;

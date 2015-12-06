@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import sebastians.sportan.adapters.SportListAdapter;
+import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.networking.Image;

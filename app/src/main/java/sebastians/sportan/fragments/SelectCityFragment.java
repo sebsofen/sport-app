@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -15,7 +15,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import sebastians.sportan.citylist.CityListAdapter;
+import sebastians.sportan.R;
+import sebastians.sportan.adapters.CityListAdapter;
 import sebastians.sportan.networking.City;
 import sebastians.sportan.networking.Coordinate;
 import sebastians.sportan.tasks.CityListTask;

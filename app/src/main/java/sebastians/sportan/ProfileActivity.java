@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
+import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.fragments.SelectCityFragment;
 import sebastians.sportan.networking.City;
 import sebastians.sportan.networking.Profile;
 import sebastians.sportan.networking.UserSvc;
@@ -58,9 +60,10 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(); intent2.setAction(Intent.ACTION_SEND);
+                Intent intent2 = new Intent();
+                intent2.setAction(Intent.ACTION_SEND);
                 intent2.setType("text/plain");
-                intent2.putExtra(Intent.EXTRA_TEXT, "I want to be friends with you on sportan: http://www.sportanapp.com/friends/" + myCredentials.getIdentifier() );
+                intent2.putExtra(Intent.EXTRA_TEXT, "I want to be friends with you on sportan: http://www.sportanapp.com/friends/" + myCredentials.getIdentifier());
                 startActivity(Intent.createChooser(intent2, "Share via"));
             }
         });

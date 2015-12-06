@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.fragments.SelectCityFragment;
 import sebastians.sportan.networking.City;
 
 

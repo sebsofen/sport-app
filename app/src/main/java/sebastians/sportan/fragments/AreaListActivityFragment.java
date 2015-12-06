@@ -1,4 +1,4 @@
-package sebastians.sportan.arealist;
+package sebastians.sportan.fragments;
 
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import sebastians.sportan.R;
+import sebastians.sportan.adapters.AreaListAdapter;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.Coordinate;
 import sebastians.sportan.tasks.AreaListTask;

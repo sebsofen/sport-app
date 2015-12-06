@@ -8,8 +8,8 @@ import android.widget.ImageView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
-import sebastians.sportan.MyCredentials;
-import sebastians.sportan.SportApplication;
+import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.InvalidOperation;

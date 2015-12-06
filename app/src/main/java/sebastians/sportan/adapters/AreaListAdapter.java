@@ -1,4 +1,4 @@
-package sebastians.sportan.arealist;
+package sebastians.sportan.adapters;
 
 import android.content.Context;
 import android.util.Log;

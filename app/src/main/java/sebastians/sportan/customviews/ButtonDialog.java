@@ -1,4 +1,4 @@
-package sebastians.sportan.custviews;
+package sebastians.sportan.customviews;
 
 import android.app.AlertDialog;
 import android.content.Context;

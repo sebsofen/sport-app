@@ -32,7 +32,8 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import sebastians.sportan.custviews.ButtonDialog;
+import sebastians.sportan.adapters.SportListAdapter;
+import sebastians.sportan.customviews.ButtonDialog;
 import sebastians.sportan.graphics.RoundMarker;
 import sebastians.sportan.layouts.OuterLayout;
 import sebastians.sportan.networking.Area;

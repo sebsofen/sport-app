@@ -9,6 +9,7 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
+import sebastians.sportan.adapters.SportListAdapter;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.SportListTask;
 

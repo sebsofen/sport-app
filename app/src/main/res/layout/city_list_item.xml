@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true" />
 
-    <sebastians.sportan.custviews.GeoContourView
+    <sebastians.sportan.customviews.GeoContourView
         android:layout_width="200px"
         android:layout_height="200px"
         android:id="@+id/geocontour"

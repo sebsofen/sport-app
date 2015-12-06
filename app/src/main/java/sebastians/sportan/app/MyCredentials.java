@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,6 +10,7 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
+import sebastians.sportan.R;
 import sebastians.sportan.networking.Token;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.UserCreationTask;

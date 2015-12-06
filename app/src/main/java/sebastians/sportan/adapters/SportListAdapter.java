@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sebastians.sportan.R;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.SvgImageTask;
 

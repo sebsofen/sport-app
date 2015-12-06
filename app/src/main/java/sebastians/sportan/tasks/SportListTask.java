@@ -8,7 +8,7 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import sebastians.sportan.SportApplication;
+import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.InvalidOperation;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.networking.SportSvc;

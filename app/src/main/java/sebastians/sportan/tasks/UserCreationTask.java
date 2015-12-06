@@ -7,7 +7,7 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.Random;
 
-import sebastians.sportan.MyCredentials;
+import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.R;
 import sebastians.sportan.networking.InvalidOperation;
 import sebastians.sportan.networking.UserCredentials;

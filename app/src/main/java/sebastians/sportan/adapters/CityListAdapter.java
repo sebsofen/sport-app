@@ -1,4 +1,4 @@
-package sebastians.sportan.citylist;
+package sebastians.sportan.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sebastians.sportan.R;
-import sebastians.sportan.custviews.GeoContourView;
+import sebastians.sportan.customviews.GeoContourView;
 import sebastians.sportan.networking.City;
 import sebastians.sportan.networking.Coordinate;
 

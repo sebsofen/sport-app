@@ -1,5 +1,5 @@
 
-package sebastians.sportan.custviews;
+package sebastians.sportan.customviews;
 
 import android.content.Context;
 import android.graphics.Canvas;
