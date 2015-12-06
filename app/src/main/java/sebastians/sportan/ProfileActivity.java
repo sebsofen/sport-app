@@ -2,7 +2,6 @@ package sebastians.sportan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
+import sebastians.sportan.networking.City;
 import sebastians.sportan.networking.Profile;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
@@ -52,7 +52,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         myCredentials = new MyCredentials(this);
         user_id_txt.setText(myCredentials.getIdentifier());
 
-        ;
+
 
         //share userid ;_)
         share_btn.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
             @Override
             public void onClick(View v) {
                 Log.i("ProfileActivity", "start fragment");
-                getFragmentManager().beginTransaction().replace(R.id.select_city_fragment, new SelectCityFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SelectCityFragment()).commit();
             }
         });
 
@@ -145,8 +145,10 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         edit_username_text.setText(username);
     }
 
+
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        Log.i("ProfileActivity", "hoo");
+    public void onFragmentInteraction(City city) {
+        Log.i("ProfileActivity", "City set");
+        city_name_txt.setText(city.getName());
     }
 }

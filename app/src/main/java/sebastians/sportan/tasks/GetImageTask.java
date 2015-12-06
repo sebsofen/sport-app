@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import sebastians.sportan.MyCredentials;
+import sebastians.sportan.SportApplication;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.InvalidOperation;
@@ -91,11 +92,16 @@ public class GetImageTask extends SuperAsyncTask {
             return null;
         }
         */
+        if(SportApplication.ImageCache.getImageById(imageid) != null){
+            image = SportApplication.ImageCache.getImageById(imageid);
+            return null;
+        }
 
         try {
             TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_IMAGE);
             ImageSvc.Client client = new ImageSvc.Client(mp);
             image = client.getImageById(imageid);
+            SportApplication.ImageCache.addImage(image);
             /*
             FileOutputStream stream = new FileOutputStream(file);
 

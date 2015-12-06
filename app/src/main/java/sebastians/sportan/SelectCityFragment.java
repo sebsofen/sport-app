@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,43 +21,15 @@ import sebastians.sportan.networking.Coordinate;
 import sebastians.sportan.tasks.CityListTask;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SelectCityFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SelectCityFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SelectCityFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class SelectCityFragment extends Fragment {
+
+
+
 
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SelectCityFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SelectCityFragment newInstance(String param1, String param2) {
-        SelectCityFragment fragment = new SelectCityFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     public SelectCityFragment() {
         // Required empty public constructor
@@ -67,10 +38,7 @@ public class SelectCityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -80,15 +48,7 @@ public class SelectCityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_select_city, container, false);
         final SelectCityFragment mThis = this;
-        Button done = (Button) view.findViewById(R.id.done);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("butt", "pressed");
-                getActivity().getFragmentManager().beginTransaction().remove(mThis).commit();
 
-            }
-        });
 
 
         //connect listview to adapter and task!
@@ -101,31 +61,32 @@ public class SelectCityFragment extends Fragment {
 
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.city_list_refresh);
+        CityListTask cityListTask= new CityListTask(myFragement.getActivity());
+        //get last known location
+        LocationManager locationManager = (LocationManager) myFragement.getActivity().getSystemService(myFragement.getActivity().LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
 
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        CityListTask cityListTask= new CityListTask(myFragement.getActivity());
-                        //get last known location
-                        LocationManager locationManager = (LocationManager) myFragement.getActivity().getSystemService(myFragement.getActivity().LOCATION_SERVICE);
-                        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (location != null) {
-
-                            Coordinate coord = new Coordinate(location.getLatitude(), location.getLongitude());
-                            cityListTask.setCoordinate(coord);
-                            cityListAdapter.setUserLocation(coord);
-                        }
-
-                        cityListTask.setConnectedRefreshLayout(swipeRefreshLayout);
-                        cityListTask.setConnectedAdapter(cityListAdapter);
-                        cityListTask.connectArrayList(cityArrayList);
-                        cityListTask.execute("");
-                    }
-                });
+            Coordinate coord = new Coordinate(location.getLatitude(), location.getLongitude());
+            cityListTask.setCoordinate(coord);
+            cityListAdapter.setUserLocation(coord);
+        }
+        cityListTask.setConnectedRefreshLayout(swipeRefreshLayout);
+        cityListTask.setConnectedAdapter(cityListAdapter);
+        cityListTask.connectArrayList(cityArrayList);
+        cityListTask.execute("");
 
 
 
+        cityListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(mListener != null){
+                    mListener.onFragmentInteraction(cityArrayList.get(position));
+                }
+                getActivity().getFragmentManager().beginTransaction().remove(mThis).commit();
+            }
+        });
 
 
 
@@ -134,12 +95,6 @@ public class SelectCityFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -170,7 +125,7 @@ public class SelectCityFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(City city);
     }
 
 }

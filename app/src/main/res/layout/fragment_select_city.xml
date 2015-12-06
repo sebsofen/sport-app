@@ -8,17 +8,6 @@
 
     >
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check"
-        android:id="@+id/done"
-        android:layout_gravity="right|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/city_list_refresh"
         android:layout_width="match_parent"

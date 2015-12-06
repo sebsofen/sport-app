@@ -1,12 +1,13 @@
 package sebastians.sportan;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import sebastians.sportan.networking.City;
 
 
 public class MainActivity extends ActionBarActivity implements SelectCityFragment.OnFragmentInteractionListener {
@@ -49,8 +50,9 @@ public class MainActivity extends ActionBarActivity implements SelectCityFragmen
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(City city) {
 
     }
 }
