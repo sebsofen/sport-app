@@ -17,6 +17,10 @@ import sebastians.sportan.networking.Sport;
 public class SportApplication extends Application {
 
 
+    public SportApplication(){
+        super();
+
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

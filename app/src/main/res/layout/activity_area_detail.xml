@@ -1,75 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     tools:context="sebastians.sportan.AreaDetailActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/areaid_txt"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="submit"
-        android:id="@+id/submit_btn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="adm"
+            android:id="@+id/adm_swtch"
+            android:layout_alignBottom="@+id/toolbar"
+            android:layout_alignParentLeft="true"
+            android:checked="false" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/title_edit"
-        android:layout_below="@+id/areaid_txt"
+        </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:hint="name"
-        android:layout_toLeftOf="@+id/area_img" />
+        android:id="@+id/fragment_container"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="5dp">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/description_edit"
-        android:layout_below="@+id/title_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/title_edit"
-        android:hint="description" />
+    </RelativeLayout>
 
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sport_list"
-        android:layout_alignParentLeft="true"
-        android:numColumns="3"
-        android:choiceMode="multipleChoice"
-        android:layout_below="@+id/img_btn"
-        android:layout_alignRight="@+id/submit_btn"
-        android:layout_above="@+id/submit_btn" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="select image"
-        android:id="@+id/img_btn"
-        android:layout_below="@+id/description_edit"
-        android:layout_alignRight="@+id/sport_list" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/area_img"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/img_btn"
-        android:layout_alignRight="@+id/img_btn"
-        android:background="#c75454"
-        android:layout_alignLeft="@+id/img_btn" />
 
 </RelativeLayout>

@@ -11,8 +11,13 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
 import sebastians.sportan.R;
+import sebastians.sportan.networking.ServiceConstants;
 import sebastians.sportan.networking.Token;
+import sebastians.sportan.networking.User;
 import sebastians.sportan.networking.UserSvc;
+import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.SuperAsyncTask;
+import sebastians.sportan.tasks.TaskCallBacks;
 import sebastians.sportan.tasks.UserCreationTask;
 
 /**
@@ -30,6 +35,7 @@ public class MyCredentials {
     private long tokenValidity;
     private String token;
     SharedPreferences sharedPref;
+    public static User Me;
 
     public MyCredentials(Context ctx){
         host = ctx.getString(R.string.host);
@@ -43,10 +49,52 @@ public class MyCredentials {
             identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
             password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
 
+            //load user details in static object
+            if(Me == null){
+
+            final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
+            gatherInformationTask.setTaskCallBacks(
+                    new TaskCallBacks() {
+                        User user;
+                        @Override
+                        public String doInBackground() {
+                            TMultiplexedProtocol mp = null;
+                            try {
+                                mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_USER);
+                                UserSvc.Client client = new UserSvc.Client(mp);
+                                user = client.getMe(getToken());
+                                gatherInformationTask.closeTransport();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+                        @Override
+                        public void onPreExecute() {
+                        }
+                        @Override
+                        public void onPostExecute() {
+                            MyCredentials.Me = user;
+                        }
+                    }
+            );
+            gatherInformationTask.execute("");
+
+            }
         }
 
 
     }
+
+    public  boolean amIAdmin() {
+
+        return (MyCredentials.Me != null && MyCredentials.Me.getRole() != null  && (MyCredentials.Me.getRole().equals(ServiceConstants.ROLE_ADMIN) || MyCredentials.Me.getRole().equals(ServiceConstants.ROLE_SUPERADMIN)));
+    }
+
+    public boolean amISuperAdmin() {
+        return (MyCredentials.Me != null && MyCredentials.Me.getRole() != null  && MyCredentials.Me.getRole().equals(ServiceConstants.ROLE_SUPERADMIN));
+    }
+
 
     //TODO change to more realistic thing!
     public boolean isTokenExpired(){

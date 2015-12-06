@@ -39,6 +39,7 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
   private static final org.apache.thrift.protocol.TField IDENTIFIER_FIELD_DESC = new org.apache.thrift.protocol.TField("identifier", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField USERNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("username", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField PROFILEPICTURE_FIELD_DESC = new org.apache.thrift.protocol.TField("profilepicture", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField CITY_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("city_id", org.apache.thrift.protocol.TType.STRING, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -49,12 +50,14 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
   public String identifier; // optional
   public String username; // optional
   public ByteBuffer profilepicture; // optional
+  public String city_id; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     IDENTIFIER((short)1, "identifier"),
     USERNAME((short)2, "username"),
-    PROFILEPICTURE((short)3, "profilepicture");
+    PROFILEPICTURE((short)3, "profilepicture"),
+    CITY_ID((short)4, "city_id");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -75,6 +78,8 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
           return USERNAME;
         case 3: // PROFILEPICTURE
           return PROFILEPICTURE;
+        case 4: // CITY_ID
+          return CITY_ID;
         default:
           return null;
       }
@@ -115,7 +120,7 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.USERNAME,_Fields.PROFILEPICTURE};
+  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.USERNAME,_Fields.PROFILEPICTURE,_Fields.CITY_ID};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -125,6 +130,8 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.PROFILEPICTURE, new org.apache.thrift.meta_data.FieldMetaData("profilepicture", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING        , true)));
+    tmpMap.put(_Fields.CITY_ID, new org.apache.thrift.meta_data.FieldMetaData("city_id", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Profile.class, metaDataMap);
   }
@@ -145,6 +152,9 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
     if (other.isSetProfilepicture()) {
       this.profilepicture = org.apache.thrift.TBaseHelper.copyBinary(other.profilepicture);
     }
+    if (other.isSetCity_id()) {
+      this.city_id = other.city_id;
+    }
   }
 
   public Profile deepCopy() {
@@ -156,6 +166,7 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
     this.identifier = null;
     this.username = null;
     this.profilepicture = null;
+    this.city_id = null;
   }
 
   public String getIdentifier() {
@@ -240,6 +251,30 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
     }
   }
 
+  public String getCity_id() {
+    return this.city_id;
+  }
+
+  public Profile setCity_id(String city_id) {
+    this.city_id = city_id;
+    return this;
+  }
+
+  public void unsetCity_id() {
+    this.city_id = null;
+  }
+
+  /** Returns true if field city_id is set (has been assigned a value) and false otherwise */
+  public boolean isSetCity_id() {
+    return this.city_id != null;
+  }
+
+  public void setCity_idIsSet(boolean value) {
+    if (!value) {
+      this.city_id = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case IDENTIFIER:
@@ -266,6 +301,14 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
       }
       break;
 
+    case CITY_ID:
+      if (value == null) {
+        unsetCity_id();
+      } else {
+        setCity_id((String)value);
+      }
+      break;
+
     }
   }
 
@@ -279,6 +322,9 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
 
     case PROFILEPICTURE:
       return getProfilepicture();
+
+    case CITY_ID:
+      return getCity_id();
 
     }
     throw new IllegalStateException();
@@ -297,6 +343,8 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
       return isSetUsername();
     case PROFILEPICTURE:
       return isSetProfilepicture();
+    case CITY_ID:
+      return isSetCity_id();
     }
     throw new IllegalStateException();
   }
@@ -341,6 +389,15 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
         return false;
     }
 
+    boolean this_present_city_id = true && this.isSetCity_id();
+    boolean that_present_city_id = true && that.isSetCity_id();
+    if (this_present_city_id || that_present_city_id) {
+      if (!(this_present_city_id && that_present_city_id))
+        return false;
+      if (!this.city_id.equals(that.city_id))
+        return false;
+    }
+
     return true;
   }
 
@@ -362,6 +419,11 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
     list.add(present_profilepicture);
     if (present_profilepicture)
       list.add(profilepicture);
+
+    boolean present_city_id = true && (isSetCity_id());
+    list.add(present_city_id);
+    if (present_city_id)
+      list.add(city_id);
 
     return list.hashCode();
   }
@@ -400,6 +462,16 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
     }
     if (isSetProfilepicture()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.profilepicture, other.profilepicture);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetCity_id()).compareTo(other.isSetCity_id());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetCity_id()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.city_id, other.city_id);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -450,6 +522,16 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
         sb.append("null");
       } else {
         org.apache.thrift.TBaseHelper.toString(this.profilepicture, sb);
+      }
+      first = false;
+    }
+    if (isSetCity_id()) {
+      if (!first) sb.append(", ");
+      sb.append("city_id:");
+      if (this.city_id == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.city_id);
       }
       first = false;
     }
@@ -520,6 +602,14 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 4: // CITY_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.city_id = iprot.readString();
+              struct.setCity_idIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -556,6 +646,13 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
           oprot.writeFieldEnd();
         }
       }
+      if (struct.city_id != null) {
+        if (struct.isSetCity_id()) {
+          oprot.writeFieldBegin(CITY_ID_FIELD_DESC);
+          oprot.writeString(struct.city_id);
+          oprot.writeFieldEnd();
+        }
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -583,7 +680,10 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
       if (struct.isSetProfilepicture()) {
         optionals.set(2);
       }
-      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetCity_id()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetIdentifier()) {
         oprot.writeString(struct.identifier);
       }
@@ -593,12 +693,15 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
       if (struct.isSetProfilepicture()) {
         oprot.writeBinary(struct.profilepicture);
       }
+      if (struct.isSetCity_id()) {
+        oprot.writeString(struct.city_id);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Profile struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(3);
+      BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         struct.identifier = iprot.readString();
         struct.setIdentifierIsSet(true);
@@ -610,6 +713,10 @@ public class Profile implements org.apache.thrift.TBase<Profile, Profile._Fields
       if (incoming.get(2)) {
         struct.profilepicture = iprot.readBinary();
         struct.setProfilepictureIsSet(true);
+      }
+      if (incoming.get(3)) {
+        struct.city_id = iprot.readString();
+        struct.setCity_idIsSet(true);
       }
     }
   }

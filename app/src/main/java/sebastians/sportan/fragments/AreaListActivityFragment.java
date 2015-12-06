@@ -21,7 +21,7 @@ import sebastians.sportan.tasks.AreaListTask;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class AreaListActivityFragment extends Fragment {
+public class AreaListActivityFragment extends Fragment  {
 
     public AreaListActivityFragment() {
     }
