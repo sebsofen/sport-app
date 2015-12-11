@@ -12,7 +12,7 @@ import sebastians.sportan.fragments.SelectCityFragment;
 import sebastians.sportan.networking.City;
 
 
-public class MainActivity extends ActionBarActivity implements SelectCityFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
     public MyCredentials myCredentials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements SelectCityFragmen
 
 
     @Override
-    public void onFragmentInteraction(City city) {
+    public void citySelected(City city) {
 
     }
 }

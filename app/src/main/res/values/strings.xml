@@ -2,7 +2,7 @@
     <string name="app_name">Sport App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="host">134.106.47.181</string>
+    <string name="host">192.168.178.156</string>
     <!-- <string name="host">192.168.178.33</string> -->
      <string name="port">9090</string>
      <string name="preference_file_key">mprefs</string>
@@ -17,4 +17,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_area_detail">AreaDetailActivity</string>
     <string name="title_activity_urlrespond">URLRespondActivity</string>
+    <string name="title_activity_entry">EntryActivity</string>
+    <string name="title_activity_main_loading">MainLoadingActivity</string>
+    <string name="title_activity_tab">TabActivity</string>
 </resources>

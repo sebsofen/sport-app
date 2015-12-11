@@ -37,11 +37,11 @@ public class MyCredentials {
     SharedPreferences sharedPref;
     public static User Me;
 
-    public MyCredentials(Context ctx){
+    public MyCredentials(Context ctx, MyCredentialsFinishedCallBack myCredentialsFinishedCallBack){
         host = ctx.getString(R.string.host);
         port = Integer.parseInt(ctx.getString(R.string.port));
         sharedPref = ctx.getSharedPreferences(ctx.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
+        final MyCredentialsFinishedCallBack mMyCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
         if("".equals(sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"")) && "".equals(sharedPref.getString(USERCREDENTIALS_PASSWORD,""))){
             UserCreationTask userCreationTask = new UserCreationTask(ctx);
             userCreationTask.execute("");
@@ -52,42 +52,53 @@ public class MyCredentials {
             //load user details in static object
             if(Me == null){
 
-            final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
-            gatherInformationTask.setTaskCallBacks(
-                    new TaskCallBacks() {
-                        User user;
-                        @Override
-                        public String doInBackground() {
-                            TMultiplexedProtocol mp = null;
-                            try {
-                                mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_USER);
-                                UserSvc.Client client = new UserSvc.Client(mp);
-                                user = client.getMe(getToken());
-                                gatherInformationTask.closeTransport();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
+                gatherInformationTask.setTaskCallBacks(
+                        new TaskCallBacks() {
+                            User user;
+                            @Override
+                            public String doInBackground() {
+                                TMultiplexedProtocol mp = null;
+                                try {
+                                    mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_USER);
+                                    UserSvc.Client client = new UserSvc.Client(mp);
+                                    user = client.getMe(getToken());
+                                    gatherInformationTask.closeTransport();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                return null;
                             }
-                            return null;
+                            @Override
+                            public void onPreExecute() {
+                            }
+                            @Override
+                            public void onPostExecute() {
+
+                                MyCredentials.Me = user;
+                                if(mMyCredentialsFinishedCallBack != null){
+                                    mMyCredentialsFinishedCallBack.onFinish();
+                                }
+                            }
                         }
-                        @Override
-                        public void onPreExecute() {
-                        }
-                        @Override
-                        public void onPostExecute() {
-                            MyCredentials.Me = user;
-                        }
-                    }
-            );
-            gatherInformationTask.execute("");
+                );
+                gatherInformationTask.execute("");
 
             }
         }
+    }
+
+    public MyCredentials(Context ctx){
+        this(ctx,null);
 
 
     }
 
+    /**
+     * will tell, if user is super admin!
+     * @return
+     */
     public  boolean amIAdmin() {
-
         return (MyCredentials.Me != null && MyCredentials.Me.getRole() != null  && (MyCredentials.Me.getRole().equals(ServiceConstants.ROLE_ADMIN) || MyCredentials.Me.getRole().equals(ServiceConstants.ROLE_SUPERADMIN)));
     }
 
@@ -99,7 +110,6 @@ public class MyCredentials {
     //TODO change to more realistic thing!
     public boolean isTokenExpired(){
         return true;
-        /*return tokenValidity < System.currentTimeMillis();*/
     }
 
     public String getToken(){
@@ -122,19 +132,15 @@ public class MyCredentials {
             TProtocol protocol = new TBinaryProtocol(transport);
             TMultiplexedProtocol mp = new TMultiplexedProtocol(protocol, "User");
             UserSvc.Client client = new UserSvc.Client(mp);
-
             Token thriftToken = client.requestToken(this.getIdentifier(),this.getPassword());
-            //read and transform token information
             String token = thriftToken.getToken();
             long validity =System.currentTimeMillis() + thriftToken.getValidity();
             SharedPreferences.Editor edit = sharedPref.edit();
             edit.putString(MyCredentials.USERCREDENTIALS_TOKEN, token);
             edit.putLong(MyCredentials.USERCREDENTIALS_TOKENVALIDITY, validity);
             edit.apply();
-
             this.tokenValidity = validity;
             this.token = token;
-
         } catch (Exception x) {
             x.printStackTrace();
         } finally {

@@ -23,7 +23,7 @@ import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
-public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.OnFragmentInteractionListener {
+public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
     ImageButton edit_username_button;
     TextView edit_username_text;
     SwipeRefreshLayout swipeRefresh;
@@ -31,7 +31,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
     ImageButton select_city_btn;
     EditText user_id_txt;
     EditText city_name_txt;
-    SelectCityFragment select_city_fragment;
+
     MyCredentials myCredentials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +150,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
 
 
     @Override
-    public void onFragmentInteraction(City city) {
+    public void citySelected(City city) {
         Log.i("ProfileActivity", "City set");
         city_name_txt.setText(city.getName());
     }

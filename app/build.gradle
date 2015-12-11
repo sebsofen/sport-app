@@ -40,10 +40,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-
+    compile 'com.android.support:design:22.2.0'
     compile 'com.google.android.gms:play-services:8.3.0'
     //compile files('libs/javax.annotation.jar')
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.0.1'
     //compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'org.apache.thrift:libthrift:+'
     //compile 'org.slf4j:slf4j-log4j12:1.7.12'

@@ -28,7 +28,7 @@ public class SelectCityFragment extends Fragment {
 
 
 
-    private OnFragmentInteractionListener mListener;
+    private SelectedCityListener mListener;
 
 
 
@@ -83,7 +83,7 @@ public class SelectCityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mListener != null){
-                    mListener.onFragmentInteraction(cityArrayList.get(position));
+                    mListener.citySelected(cityArrayList.get(position));
                 }
                 getActivity().getFragmentManager().beginTransaction().remove(mThis).commit();
             }
@@ -101,10 +101,10 @@ public class SelectCityFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (SelectedCityListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement SelectedCityListener");
         }
     }
 
@@ -124,9 +124,9 @@ public class SelectCityFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface SelectedCityListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(City city);
+        void citySelected(City city);
     }
 
 }
