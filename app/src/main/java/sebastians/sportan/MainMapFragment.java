@@ -1,0 +1,199 @@
+package sebastians.sportan;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.RelativeLayout;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.apache.thrift.protocol.TMultiplexedProtocol;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import sebastians.sportan.adapters.SportListAdapter;
+import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.customviews.ButtonDialog;
+import sebastians.sportan.graphics.RoundMarker;
+import sebastians.sportan.layouts.OuterLayout;
+import sebastians.sportan.networking.Area;
+import sebastians.sportan.networking.AreaSvc;
+import sebastians.sportan.networking.Sport;
+import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.SportListTask;
+import sebastians.sportan.tasks.SuperAsyncTask;
+import sebastians.sportan.tasks.TaskCallBacks;
+
+/**
+ * Created by sebastian on 11/12/15.
+ */
+public class MainMapFragment extends Fragment implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
+
+    private OuterLayout mapLayout;
+    private RelativeLayout sportSelectLayout;
+    private Context mThis;
+    protected HashMap<Marker,String> markerids = new HashMap<>();
+
+    public static MainMapFragment newInstance() {
+        MainMapFragment fragment = new MainMapFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_areamapoverview, container, false);
+        mThis = getActivity();
+        mapLayout = (OuterLayout) view.findViewById(R.id.outer_layout);
+        sportSelectLayout = (RelativeLayout) view.findViewById(R.id.sport_select_layout);
+
+        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.list_refresh);
+        final GridView sportListView = (GridView) view.findViewById(R.id.sport_list);
+
+        final ArrayList<Sport> sportList = new ArrayList<>();
+        final SportListAdapter sportListAdapter = new SportListAdapter(mThis,R.id.sport_select_layout,sportList);
+        sportListView.setAdapter(sportListAdapter);
+
+        SportListTask sportListTask = new SportListTask(mThis);
+        sportListTask.setConnectedRefreshLayout(refreshLayout);
+        sportListTask.setConnectedAdapter(sportListAdapter);
+        sportListTask.connectArrayList(sportList);
+        sportListTask.execute();
+
+        final MapFragment map = (MapFragment)getActivity().getFragmentManager().findFragmentById(R.id.map);
+        map.getMapAsync(this);
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap gMap){
+    final GoogleMap googleMap = gMap;
+    LocationManager locationManager = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
+    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    if(location != null) {
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+        gMap.moveCamera(center);
+        gMap.animateCamera(zoom);
+    }
+
+    gMap.setMyLocationEnabled(true);
+    gMap.setOnMarkerClickListener(this);
+    gMap.setOnMapLongClickListener(this);
+
+
+    final CustomAsyncTask markerTask = new CustomAsyncTask(mThis);
+    markerTask.setTaskCallBacks(new TaskCallBacks() {
+        ArrayList<Area> areas = new ArrayList<Area>();
+        @Override
+        public String doInBackground() {
+            TMultiplexedProtocol mp = null;
+            try {
+                mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
+                AreaSvc.Client client = new AreaSvc.Client(mp);
+                areas.addAll(client.getAllAreasInCity(MyCredentials.Me.getProfile().getCity_id()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onPreExecute() {
+
+        }
+
+        @Override
+        public void onPostExecute() {
+            for(int i = 0; i < areas.size(); i++){
+                Log.i("area", "number" + i);
+                Area area = areas.get(i);
+                Log.i("area", area.center.lat + "lon: " + area.center.lon);
+                markerids.put(
+                        googleMap.addMarker(
+                                new MarkerOptions().position(new LatLng(area.center.lat, area.center.lon))
+                                        .title(area.title)
+                                        .snippet(area.description)
+                                        .flat(true)
+                                        .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+
+                        ), area.id);
+            }
+
+
+        }
+    });
+    markerTask.execute("");
+}
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        String areaid = markerids.get(marker);
+        Intent intent = new Intent(mThis, AreaDetailActivity.class);
+        intent.putExtra(AreaDetailActivity.EXTRA_AREA_ID, areaid);
+        startActivity(intent);
+        return true;
+    }
+
+    @Override
+    public void onMapLongClick(final LatLng latLng) {
+        //open dialog! -> but only, if user is set as admin
+        //TODO IFADMIN
+        new ButtonDialog(mThis, "Create new area at this location", "Create","Abort", null, "do it") {
+            @Override
+            public void onPositiveButtonClick() {
+                Log.i("sportselectactivity", "create");
+                //start intent for new area
+                Intent intent = new Intent(mThis, AreaDetailActivity.class);
+                intent.putExtra(AreaDetailActivity.EXTRA_AREA_LAT, latLng.latitude);
+                intent.putExtra(AreaDetailActivity.EXTRA_AREA_LON, latLng.longitude);
+
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onNegativeButtonClick() {
+                Log.i("sportselectactivity", "abort");
+            }
+
+            @Override
+            public void onNeutralButtonClick() {
+                Log.i("sportselectactivity", "neutral");
+
+            }
+        };
+    }
+}

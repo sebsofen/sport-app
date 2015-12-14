@@ -1897,14 +1897,14 @@ public class SportSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list24 = iprot.readListBegin();
-                  struct.success = new ArrayList<Sport>(_list24.size);
-                  Sport _elem25;
-                  for (int _i26 = 0; _i26 < _list24.size; ++_i26)
+                  org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
+                  struct.success = new ArrayList<Sport>(_list40.size);
+                  Sport _elem41;
+                  for (int _i42 = 0; _i42 < _list40.size; ++_i42)
                   {
-                    _elem25 = new Sport();
-                    _elem25.read(iprot);
-                    struct.success.add(_elem25);
+                    _elem41 = new Sport();
+                    _elem41.read(iprot);
+                    struct.success.add(_elem41);
                   }
                   iprot.readListEnd();
                 }
@@ -1932,9 +1932,9 @@ public class SportSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Sport _iter27 : struct.success)
+            for (Sport _iter43 : struct.success)
             {
-              _iter27.write(oprot);
+              _iter43.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -1965,9 +1965,9 @@ public class SportSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Sport _iter28 : struct.success)
+            for (Sport _iter44 : struct.success)
             {
-              _iter28.write(oprot);
+              _iter44.write(oprot);
             }
           }
         }
@@ -1979,14 +1979,14 @@ public class SportSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list29 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Sport>(_list29.size);
-            Sport _elem30;
-            for (int _i31 = 0; _i31 < _list29.size; ++_i31)
+            org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<Sport>(_list45.size);
+            Sport _elem46;
+            for (int _i47 = 0; _i47 < _list45.size; ++_i47)
             {
-              _elem30 = new Sport();
-              _elem30.read(iprot);
-              struct.success.add(_elem30);
+              _elem46 = new Sport();
+              _elem46.read(iprot);
+              struct.success.add(_elem46);
             }
           }
           struct.setSuccessIsSet(true);

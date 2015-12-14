@@ -7,7 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class TabActivity extends AppCompatActivity {
     final TabActivity mThis = this;
@@ -32,29 +33,43 @@ public class TabActivity extends AppCompatActivity {
 
             toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
+
             getSupportActionBar().setHomeButtonEnabled(true);
 
+        }
 
 
-            toolbar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View item) {
-                    int id = item.getId();
-                    Log.i("Sportselect", "selected actionbarstuff");
-                    //noinspection SimplifiableIfStatement
-                    if (id == R.id.action_settings) {
-                        //launch profile activity!
 
-                        Log.i("Sportselect", "selected settings");
-                        Intent intent = new Intent(mThis, ProfileActivity.class);
-                        startActivity(intent);
-                    }
 
-                }
-            });
 
 
         }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        Log.i("Sportselect", "selected actionbarstuff");
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            //launch profile activity!
+
+            Log.i("Sportselect", "selected settings");
+            Intent intent = new Intent(mThis, ProfileActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
+
+

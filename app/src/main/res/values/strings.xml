@@ -3,6 +3,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="host">192.168.178.156</string>
+    <string name="webhost">trailmagic.de</string>
+    <string name="webwwwhost">www.trailmagic.de</string>
+    <string name="apppref">/sport/</string>
     <!-- <string name="host">192.168.178.33</string> -->
      <string name="port">9090</string>
      <string name="preference_file_key">mprefs</string>

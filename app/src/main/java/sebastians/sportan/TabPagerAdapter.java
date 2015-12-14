@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    private String tabTitles[] = new String[] { "Map", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "Map", "Friends"};
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -21,23 +21,21 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
-
-                break;
+                return MainMapFragment.newInstance();
+            case 1:
+                return MainFriendsFragment.newInstance();
             default:
                 return PageFragment.newInstance(position + 1);
         }
-
-        return PageFragment.newInstance(position + 1);
     }
 
 
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override

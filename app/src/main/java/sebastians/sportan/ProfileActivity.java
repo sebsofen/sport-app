@@ -63,7 +63,9 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                 Intent intent2 = new Intent();
                 intent2.setAction(Intent.ACTION_SEND);
                 intent2.setType("text/plain");
-                intent2.putExtra(Intent.EXTRA_TEXT, "I want to be friends with you on sportan: http://www.sportanapp.com/friends/" + myCredentials.getIdentifier());
+                String link = getResources().getString(R.string.webhost) + getResources().getString(R.string.apppref) + "users/" +  myCredentials.getIdentifier();
+
+                intent2.putExtra(Intent.EXTRA_TEXT, "Hey Hey, Sport Informell: " + link);
                 startActivity(Intent.createChooser(intent2, "Share via"));
             }
         });

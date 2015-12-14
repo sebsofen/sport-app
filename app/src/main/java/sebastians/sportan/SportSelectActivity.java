@@ -7,7 +7,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,30 +73,7 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
 
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
 
-            toolbar.setTitle(R.string.app_name);
-            setSupportActionBar(toolbar);
-
-            getSupportActionBar().setHomeButtonEnabled(true);
-            toolbar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View item) {
-                    int id = item.getId();
-                    Log.i("Sportselect", "selected actionbarstuff");
-                    //noinspection SimplifiableIfStatement
-                    if (id == R.id.action_settings) {
-                        //launch profile activity!
-
-                        Log.i("Sportselect", "selected settings");
-                        Intent intent = new Intent(mThis, ProfileActivity.class);
-                        startActivity(intent);
-                    }
-
-                }
-            });
-        }
 
 
 

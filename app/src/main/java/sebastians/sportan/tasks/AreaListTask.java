@@ -1,7 +1,6 @@
 package sebastians.sportan.tasks;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -41,7 +40,6 @@ public class AreaListTask extends SuperListTask<Area> {
                     AreaSvc.Client client = new AreaSvc.Client(mp);
                     getListList.clear();
                     getListList.addAll(client.getNearBy(thisTask.center, 10));
-                    Log.i("AreaListTask", "returned elements " + getListList.size());
                 } catch (InvalidOperation x) {
                     x.printStackTrace();
                 } catch (Exception x) {
