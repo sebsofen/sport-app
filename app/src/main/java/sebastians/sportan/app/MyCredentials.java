@@ -60,13 +60,15 @@ public class MyCredentials implements TaskFinishInterface {
     }
 
 
+    /**
+     * get myself from server and save information in Me variable
+     */
     private void getMe(){
         identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
         password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
 
         //load user details in static object
         if(Me == null){
-
             final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
             gatherInformationTask.setTaskCallBacks(
                     new TaskCallBacks() {
@@ -98,9 +100,6 @@ public class MyCredentials implements TaskFinishInterface {
                             if(myCredentialsFinishedCallBack != null){
                                 myCredentialsFinishedCallBack.onFinish();
                             }
-
-
-
                         }
                     }
             );
@@ -112,14 +111,13 @@ public class MyCredentials implements TaskFinishInterface {
         }
     }
 
+
     public MyCredentials(Context ctx){
         this(ctx,null);
-
-
     }
 
     /**
-     * will tell, if user is super admin!
+     * will tell, if user is  admin!
      * @return
      */
     public  boolean amIAdmin() {

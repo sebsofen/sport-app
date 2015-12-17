@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import sebastians.sportan.adapters.TabPagerAdapter;
+
 public class TabActivity extends AppCompatActivity {
     final TabActivity mThis = this;
 

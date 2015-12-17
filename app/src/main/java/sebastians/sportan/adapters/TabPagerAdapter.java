@@ -1,9 +1,13 @@
-package sebastians.sportan;
+package sebastians.sportan.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import sebastians.sportan.fragments.MainFriendsFragment;
+import sebastians.sportan.fragments.MainMapFragment;
+import sebastians.sportan.fragments.PageFragment;
 
 /**
  * Created by sebastian on 11/12/15.

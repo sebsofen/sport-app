@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.fragments;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.ArrayList;
 
+import sebastians.sportan.R;
 import sebastians.sportan.adapters.FriendRequestsListAdapter;
 import sebastians.sportan.adapters.FriendsListAdapter;
 import sebastians.sportan.app.MyCredentials;

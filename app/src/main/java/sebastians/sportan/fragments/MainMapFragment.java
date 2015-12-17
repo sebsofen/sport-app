@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,6 +30,8 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import sebastians.sportan.AreaDetailActivity;
+import sebastians.sportan.R;
 import sebastians.sportan.adapters.SportListAdapter;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.customviews.ButtonDialog;

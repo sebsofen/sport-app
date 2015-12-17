@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import sebastians.sportan.FriendItemFragment;
+import sebastians.sportan.fragments.FriendItemFragment;
 
 /**
  * Created by sebastian on 14/12/15.

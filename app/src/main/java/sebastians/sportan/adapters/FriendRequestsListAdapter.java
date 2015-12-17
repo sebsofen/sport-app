@@ -11,7 +11,7 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import sebastians.sportan.FriendItemFragment;
+import sebastians.sportan.fragments.FriendItemFragment;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;

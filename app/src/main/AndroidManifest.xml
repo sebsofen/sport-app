@@ -35,10 +35,6 @@
             android:label="@string/title_activity_map_overview" >
         </activity>
         <activity
-            android:name=".arealist.AreaListActivity"
-            android:label="@string/title_activity_area_list" >
-        </activity>
-        <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>

@@ -1,4 +1,4 @@
-package sebastians.sportan;
+package sebastians.sportan.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import sebastians.sportan.R;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.User;
 import sebastians.sportan.tasks.GetUserTask;
