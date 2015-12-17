@@ -52,10 +52,6 @@
             android:value="AIzaSyBoiH4lL_hK4UpogyG7PIF_w2qtkY6wgKE" />
 
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
-        </activity>
-        <activity
             android:name=".AreaDetailActivity"
             android:label="@string/title_activity_area_detail" >
         </activity>

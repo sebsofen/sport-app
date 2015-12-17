@@ -38,11 +38,11 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
         if(loadingView != null)
             loadingView.stopAnimation();
 
-        if(MyCredentials.Me.getProfile().getCity_id() != null){
+        if(MyCredentials.Me.getProfile() != null && MyCredentials.Me.getProfile().getCity_id() != null){
             Uri data = getIntent().getData();
             if(data != null) {
                 List<String> params = data.getPathSegments();
-                Intent intent = new Intent(this, FriendsActivity.class);
+                Intent intent = new Intent(this, TabActivity.class);
                 intent.putExtra("USER", params.get(params.size() - 1));
                 startActivity(intent);
             }else{

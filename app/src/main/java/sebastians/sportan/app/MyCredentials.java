@@ -12,6 +12,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
 import sebastians.sportan.R;
+import sebastians.sportan.networking.Profile;
 import sebastians.sportan.networking.ServiceConstants;
 import sebastians.sportan.networking.Token;
 import sebastians.sportan.networking.User;
@@ -20,15 +21,16 @@ import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 import sebastians.sportan.tasks.UserCreationTask;
+import sebastians.sportan.tools.TaskFinishInterface;
 
 /**
  * Created by sebastian on 29/10/15.
  */
-public class MyCredentials {
-    public static final String USERCREDENTIALS_IDENTIFIER = "identifier";
-    public static final String USERCREDENTIALS_PASSWORD = "password";
-    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity";
-    public static final String USERCREDENTIALS_TOKEN = "token";
+public class MyCredentials implements TaskFinishInterface {
+    public static final String USERCREDENTIALS_IDENTIFIER = "identifier"+ "i";
+    public static final String USERCREDENTIALS_PASSWORD = "password" + "i";
+    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity" + "i";
+    public static final String USERCREDENTIALS_TOKEN = "token" + "i";
     private String identifier;
     private String password;
     String host;
@@ -37,63 +39,76 @@ public class MyCredentials {
     private String token;
     SharedPreferences sharedPref;
     public static User Me;
+    MyCredentialsFinishedCallBack myCredentialsFinishedCallBack;
+    Context ctx;
 
     public MyCredentials(Context ctx, MyCredentialsFinishedCallBack myCredentialsFinishedCallBack){
         host = ctx.getString(R.string.host);
         port = Integer.parseInt(ctx.getString(R.string.port));
         sharedPref = ctx.getSharedPreferences(ctx.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        this.ctx = ctx;
+        this.myCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
         final MyCredentialsFinishedCallBack mMyCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
 
         if("".equals(sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"")) && "".equals(sharedPref.getString(USERCREDENTIALS_PASSWORD,""))){
             Log.i("MyCredentials", "user empty");
-            UserCreationTask userCreationTask = new UserCreationTask(ctx);
+            UserCreationTask userCreationTask = new UserCreationTask(ctx, this);
             userCreationTask.execute("");
-
-            if(mMyCredentialsFinishedCallBack != null){
-                mMyCredentialsFinishedCallBack.onFinish();
-            }
         }else{
-            identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
-            password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
+            getMe();
+        }
+    }
 
-            //load user details in static object
-            if(Me == null){
 
-                final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
-                gatherInformationTask.setTaskCallBacks(
-                        new TaskCallBacks() {
-                            User user;
-                            @Override
-                            public String doInBackground() {
-                                TMultiplexedProtocol mp = null;
-                                try {
-                                    mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_USER);
-                                    UserSvc.Client client = new UserSvc.Client(mp);
-                                    user = client.getMe(getToken());
-                                    gatherInformationTask.closeTransport();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                return null;
+    private void getMe(){
+        identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
+        password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
+
+        //load user details in static object
+        if(Me == null){
+
+            final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
+            gatherInformationTask.setTaskCallBacks(
+                    new TaskCallBacks() {
+                        User user;
+                        @Override
+                        public String doInBackground() {
+                            TMultiplexedProtocol mp = null;
+                            try {
+                                mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_USER);
+                                UserSvc.Client client = new UserSvc.Client(mp);
+                                user = client.getMe(getToken());
+                                gatherInformationTask.closeTransport();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            @Override
-                            public void onPreExecute() {
-                            }
-                            @Override
-                            public void onPostExecute() {
-                                MyCredentials.Me = user;
-                                if(mMyCredentialsFinishedCallBack != null){
-                                    mMyCredentialsFinishedCallBack.onFinish();
-                                }
-
-
-
-                            }
+                            return null;
                         }
-                );
-                gatherInformationTask.execute("");
+                        @Override
+                        public void onPreExecute() {
+                        }
+                        @Override
+                        public void onPostExecute() {
+                            MyCredentials.Me = user;
+                            //TODO ! VERIFY USER HERE!
+                            if(Me.getProfile() == null){
+                                Me.setProfile(new Profile());
+                            }
 
-            }
+                            if(myCredentialsFinishedCallBack != null){
+                                myCredentialsFinishedCallBack.onFinish();
+                            }
+
+
+
+                        }
+                    }
+            );
+            gatherInformationTask.execute("");
+
+        }else{
+            if(myCredentialsFinishedCallBack != null)
+                myCredentialsFinishedCallBack.onFinish();
         }
     }
 
@@ -170,4 +185,8 @@ public class MyCredentials {
         return this.password;
     }
 
+    @Override
+    public void onFinish(boolean success) {
+        getMe();
+    }
 }

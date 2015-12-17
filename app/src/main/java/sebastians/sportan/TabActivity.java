@@ -20,12 +20,21 @@ public class TabActivity extends AppCompatActivity {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), TabActivity.this));
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), TabActivity.this);
+        viewPager.setAdapter(tabPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+
         tabLayout.setupWithViewPager(viewPager);
 
+
+        final String receivedUserId = getIntent().getStringExtra("USER");
+        if(receivedUserId != null && !receivedUserId.equals("")) {
+            TabLayout.Tab tab = tabLayout.getTabAt(1);
+            tab.select();
+        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
