@@ -252,4 +252,9 @@ public class AreaDetailAdminFragment extends Fragment {
 
         return view;
     }
+
+    public void setImgBitmap(Bitmap image){
+        area_bitmap = image;
+        area_img.setImageBitmap(area_bitmap);
+    }
 }

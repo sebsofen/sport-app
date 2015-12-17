@@ -27,10 +27,10 @@ import sebastians.sportan.tools.TaskFinishInterface;
  * Created by sebastian on 29/10/15.
  */
 public class MyCredentials implements TaskFinishInterface {
-    public static final String USERCREDENTIALS_IDENTIFIER = "identifier"+ "i";
-    public static final String USERCREDENTIALS_PASSWORD = "password" + "i";
-    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity" + "i";
-    public static final String USERCREDENTIALS_TOKEN = "token" + "i";
+    public static final String USERCREDENTIALS_IDENTIFIER = "identifier";//+ "i";
+    public static final String USERCREDENTIALS_PASSWORD = "password";// + "i";
+    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity";// + "i";
+    public static final String USERCREDENTIALS_TOKEN = "token";// + "i";
     private String identifier;
     private String password;
     String host;

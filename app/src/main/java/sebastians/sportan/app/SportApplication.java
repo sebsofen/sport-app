@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.Sport;
+import sebastians.sportan.networking.User;
 
 /**
  * Application Object
@@ -72,6 +73,18 @@ public class SportApplication extends Application {
         }
 
         public static Image getImageById(String key) {
+            return cache.get(key);
+        }
+    }
+
+    public static class UserCache {
+        private static LruCache<String,User> cache = new LruCache<>(200);
+
+        public static void addUser(User user){
+            cache.put(user.getIdentifier(),user);
+        }
+
+        public static User getUserById(String key) {
             return cache.get(key);
         }
     }
