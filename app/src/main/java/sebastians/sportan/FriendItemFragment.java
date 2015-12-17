@@ -9,14 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.apache.thrift.protocol.TMultiplexedProtocol;
-
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.User;
-import sebastians.sportan.networking.UserSvc;
-import sebastians.sportan.tasks.CustomAsyncTask;
-import sebastians.sportan.tasks.SuperAsyncTask;
-import sebastians.sportan.tasks.TaskCallBacks;
+import sebastians.sportan.tasks.GetUserTask;
 
 /**
  * Created by sebastian on 13/12/15.
@@ -58,41 +53,17 @@ public class FriendItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend_item, container, false);
         final TextView username_txt = (TextView) view.findViewById(R.id.username_txt);
+
         myCredentials = new MyCredentials(context == null? getActivity(): context);
-        if(userId != null){
 
-
-            final CustomAsyncTask getFriendTask = new CustomAsyncTask(context == null? getActivity(): context);
-            getFriendTask.setTaskCallBacks(new TaskCallBacks() {
+            final GetUserTask getUserTask = new GetUserTask(context == null ? getActivity() : context, userId, new GetUserTask.OnPostExecute() {
                 @Override
-                public String doInBackground() {
-                    TMultiplexedProtocol mp = null;
-                    try {
-                        mp = getFriendTask.openTransport(SuperAsyncTask.SERVICE_USER);
-                        UserSvc.Client client = new UserSvc.Client(mp);
-                        friend = client.getUserById(myCredentials.getToken(),userId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                }
-
-                @Override
-                public void onPreExecute() {
-
-                }
-
-                @Override
-                public void onPostExecute() {
-                    username_txt.setText(friend.getProfile().getUsername());
+                public void onPostExectute(User user) {
+                    friend = user;
+                    username_txt.setText(user.getProfile().getUsername());
                 }
             });
-            getFriendTask.execute("");
-        }
-
-
-
-
+            getUserTask.execute();
 
 
         Button yesBtn = (Button) view.findViewById(R.id.yes_btn);

@@ -1,11 +1,14 @@
 package sebastians.sportan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
+
+import java.util.List;
 
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.app.MyCredentialsFinishedCallBack;
@@ -31,15 +34,27 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
 
     @Override
     public void onFinish() {
+        Log.i("fin", "FINISHED");
         if(loadingView != null)
             loadingView.stopAnimation();
+
         if(MyCredentials.Me.getProfile().getCity_id() != null){
-            startMainActivity();
+            Uri data = getIntent().getData();
+            if(data != null) {
+                List<String> params = data.getPathSegments();
+                Intent intent = new Intent(this, FriendsActivity.class);
+                intent.putExtra("USER", params.get(params.size() - 1));
+                startActivity(intent);
+            }else{
+                    startMainActivity();
+                }
         }else{
             loadingView.startAnimation();
             Log.i("Entry", "no city for user exists");
             getFragmentManager().beginTransaction().replace(R.id.select_city_container, new SelectCityFragment()).commit();
         }
+
+
     }
 
     @Override
@@ -70,7 +85,7 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
                 startMainActivity();
             }
         });
-        asyncTask.execute();
+            asyncTask.execute();
     }
 
     /**

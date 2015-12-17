@@ -2,6 +2,7 @@ package sebastians.sportan.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -42,9 +43,15 @@ public class MyCredentials {
         port = Integer.parseInt(ctx.getString(R.string.port));
         sharedPref = ctx.getSharedPreferences(ctx.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         final MyCredentialsFinishedCallBack mMyCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
+
         if("".equals(sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"")) && "".equals(sharedPref.getString(USERCREDENTIALS_PASSWORD,""))){
+            Log.i("MyCredentials", "user empty");
             UserCreationTask userCreationTask = new UserCreationTask(ctx);
             userCreationTask.execute("");
+
+            if(mMyCredentialsFinishedCallBack != null){
+                mMyCredentialsFinishedCallBack.onFinish();
+            }
         }else{
             identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
             password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
@@ -74,11 +81,13 @@ public class MyCredentials {
                             }
                             @Override
                             public void onPostExecute() {
-
                                 MyCredentials.Me = user;
                                 if(mMyCredentialsFinishedCallBack != null){
                                     mMyCredentialsFinishedCallBack.onFinish();
                                 }
+
+
+
                             }
                         }
                 );
