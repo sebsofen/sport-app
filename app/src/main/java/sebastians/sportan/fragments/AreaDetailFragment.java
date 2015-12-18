@@ -69,7 +69,7 @@ public class AreaDetailFragment extends Fragment {
                             try {
                                 mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                                 AreaSvc.Client client = new AreaSvc.Client(mp);
-                                area = client.getAreaById(areaid);
+                                area = client.getAreaById(myCredentials.getToken(),areaid);
                                 gatherInformationTask.closeTransport();
                                 if (area.getImageid() != null && !area.getImageid().equals("")) {
                                     GetImageTask imgTask = new GetImageTask(mActivity, area_img, area.getImageid());

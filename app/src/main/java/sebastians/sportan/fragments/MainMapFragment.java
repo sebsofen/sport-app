@@ -29,6 +29,8 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import sebastians.sportan.AreaDetailActivity;
 import sebastians.sportan.R;
@@ -41,6 +43,8 @@ import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.GetAreaTask;
+import sebastians.sportan.tasks.GetTaskFinishCallBack;
 import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
@@ -54,12 +58,15 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     private RelativeLayout sportSelectLayout;
     private Context mThis;
     protected HashMap<Marker,String> markerids = new HashMap<>();
-
+    private MyCredentials myCredentials;
     public static MainMapFragment newInstance() {
         MainMapFragment fragment = new MainMapFragment();
         return fragment;
     }
 
+    public MainMapFragment() {
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +77,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_areamapoverview, container, false);
         mThis = getActivity();
+        myCredentials = new MyCredentials(getActivity());
         mapLayout = (OuterLayout) view.findViewById(R.id.outer_layout);
         sportSelectLayout = (RelativeLayout) view.findViewById(R.id.sport_select_layout);
 
@@ -103,6 +111,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     final GoogleMap googleMap = gMap;
     LocationManager locationManager = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
     if(location != null) {
         CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
@@ -117,12 +126,11 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
     final CustomAsyncTask markerTask = new CustomAsyncTask(mThis);
     markerTask.setTaskCallBacks(new TaskCallBacks() {
-        ArrayList<Area> areas = new ArrayList<Area>();
+        ArrayList<String> areas = new ArrayList<>();
         @Override
         public String doInBackground() {
-            TMultiplexedProtocol mp = null;
             try {
-                mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
+                TMultiplexedProtocol mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                 AreaSvc.Client client = new AreaSvc.Client(mp);
                 areas.addAll(client.getAllAreasInCity(MyCredentials.Me.getProfile().getCity_id()));
 
@@ -133,27 +141,30 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         }
 
         @Override
-        public void onPreExecute() {
-
-        }
+        public void onPreExecute() {}
 
         @Override
         public void onPostExecute() {
-            for(int i = 0; i < areas.size(); i++){
-                Log.i("area", "number" + i);
-                Area area = areas.get(i);
-                Log.i("area", area.center.lat + "lon: " + area.center.lon);
-                markerids.put(
-                        googleMap.addMarker(
-                                new MarkerOptions().position(new LatLng(area.center.lat, area.center.lon))
-                                        .title(area.title)
-                                        .snippet(area.description)
-                                        .flat(true)
-                                        .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+            ExecutorService executor = Executors.newFixedThreadPool(5);
+            for(int i = 0; i < areas.size(); i++) {
+                GetAreaTask getAreaTask = new GetAreaTask(getActivity(), areas.get(i), new GetTaskFinishCallBack<Area>() {
+                    @Override
+                    public void onFinished(Area area) {
+                        if(area != null) {
+                        markerids.put(
+                                googleMap.addMarker(
+                                        new MarkerOptions().position(new LatLng(area.center.get(1), area.center.get(0)))
+                                                .title(area.title)
+                                                .snippet(area.description)
+                                                .flat(true)
+                                                .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+                                ), area.id);
 
-                        ), area.id);
+                        }
+                    }
+                });
+                getAreaTask.executeOnExecutor(executor);
             }
-
 
         }
     });
@@ -172,30 +183,26 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     @Override
     public void onMapLongClick(final LatLng latLng) {
         //open dialog! -> but only, if user is set as admin
-        //TODO IFADMIN
-        new ButtonDialog(mThis, "Create new area at this location", "Create","Abort", null, "do it") {
-            @Override
-            public void onPositiveButtonClick() {
-                Log.i("sportselectactivity", "create");
-                //start intent for new area
-                Intent intent = new Intent(mThis, AreaDetailActivity.class);
-                intent.putExtra(AreaDetailActivity.EXTRA_AREA_LAT, latLng.latitude);
-                intent.putExtra(AreaDetailActivity.EXTRA_AREA_LON, latLng.longitude);
-
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onNegativeButtonClick() {
-                Log.i("sportselectactivity", "abort");
-            }
-
-            @Override
-            public void onNeutralButtonClick() {
-                Log.i("sportselectactivity", "neutral");
-
-            }
-        };
+        if(myCredentials.amIAdmin()) {
+            new ButtonDialog(mThis, "Create new area at this location", "Create", "Abort", null, "do it") {
+                @Override
+                public void onPositiveButtonClick() {
+                    Log.i("sportselectactivity", "create");
+                    //start intent for new area
+                    Intent intent = new Intent(mThis, AreaDetailActivity.class);
+                    intent.putExtra(AreaDetailActivity.EXTRA_AREA_LAT, latLng.latitude);
+                    intent.putExtra(AreaDetailActivity.EXTRA_AREA_LON, latLng.longitude);
+                    startActivity(intent);
+                }
+                @Override
+                public void onNegativeButtonClick() {
+                }
+                @Override
+                public void onNeutralButtonClick() {
+                }
+            };
+        }
     }
+
+
 }

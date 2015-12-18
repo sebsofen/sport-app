@@ -39,6 +39,8 @@ import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.GetAreaTask;
+import sebastians.sportan.tasks.GetTaskFinishCallBack;
 import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
@@ -188,7 +190,7 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
 
         final CustomAsyncTask markerTask = new CustomAsyncTask(this);
         markerTask.setTaskCallBacks(new TaskCallBacks() {
-            ArrayList<Area> areas = new ArrayList<Area>();
+            ArrayList<String> areas = new ArrayList<>();
             @Override
             public String doInBackground() {
                 TMultiplexedProtocol mp = null;
@@ -211,19 +213,22 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onPostExecute() {
-                for(int i = 0; i < areas.size(); i++){
-                    Log.i("area", "number" + i);
-                    Area area = areas.get(i);
-                    Log.i("area", area.center.lat + "lon: " + area.center.lon);
-                    markerids.put(
-                            googleMap.addMarker(
-                                    new MarkerOptions().position(new LatLng(area.center.lat, area.center.lon))
-                                            .title(area.title)
-                                            .snippet(area.description)
-                                            .flat(true)
-                                            .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
-
-                            ), area.id);
+                for(int i = 0; i < areas.size(); i++) {
+                    GetAreaTask getAreaTask = new GetAreaTask(SportSelectActivity.this, areas.get(i), new GetTaskFinishCallBack<Area>() {
+                        @Override
+                        public void onFinished(Area area) {
+                            Log.i("area", area.center.get(0) + "lon: " + area.center.get(1));
+                            markerids.put(
+                                    googleMap.addMarker(
+                                            new MarkerOptions().position(new LatLng(area.center.get(1), area.center.get(0)))
+                                                    .title(area.title)
+                                                    .snippet(area.description)
+                                                    .flat(true)
+                                                    .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+                                    ), area.id);
+                        }
+                    });
+                    getAreaTask.execute();
                 }
 
 

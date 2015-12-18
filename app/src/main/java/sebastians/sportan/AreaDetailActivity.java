@@ -1,6 +1,5 @@
 package sebastians.sportan;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +20,7 @@ public class AreaDetailActivity extends AppCompatActivity {
     public static final String EXTRA_AREA_ID = "areaid";
     public static final String EXTRA_AREA_LAT = "arealat";
     public static final String EXTRA_AREA_LON = "arealon";
-    private static final int SELECT_PICTURE = 1;
-    Bitmap area_bitmap;
+
     AreaDetailAdminFragment areaDetailAdminFragment;
 
     @Override
@@ -68,16 +66,7 @@ public class AreaDetailActivity extends AppCompatActivity {
 
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                area_bitmap = getScaledBitmap(getPath(selectedImageUri), 640, 640);
-                areaDetailAdminFragment.setImgBitmap(area_bitmap);
-               
-            }
-        }
-    }
+
 
 
 

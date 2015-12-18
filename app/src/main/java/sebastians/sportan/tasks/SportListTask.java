@@ -8,10 +8,10 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.util.ArrayList;
 import java.util.List;
 
-import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.InvalidOperation;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.networking.SportSvc;
+import sebastians.sportan.tasks.caches.SportsCache;
 
 /**
  * Get List of available sports
@@ -27,7 +27,7 @@ public class SportListTask extends SuperListTask<Sport> {
                 new GetListInterface<Sport>() {
                     @Override
                     public List<Sport> getList(int limit) {
-                        ArrayList<Sport> getListList = SportApplication.SportsCache.getSportList();
+                        ArrayList<Sport> getListList = SportsCache.getSportsList();
                         if(getListList.size() == 0){
                                                     try {
                                 TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_SPORT);
@@ -38,7 +38,7 @@ public class SportListTask extends SuperListTask<Sport> {
                                     Log.i("SportListTask", "sport: " + sports.get(i).getName());
                                 }
                                 getListList.addAll(sports);
-                                SportApplication.SportsCache.setSportList(getListList);
+                                SportsCache.setSportsList(getListList);
 
                             } catch (InvalidOperation x) {
                                 x.printStackTrace();

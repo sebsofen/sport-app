@@ -2,9 +2,15 @@ package sebastians.sportan.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +68,19 @@ public class AreaDetailAdminFragment extends Fragment {
     HashMap<String,Integer> selectedSports = new HashMap<>();
 
     public AreaDetailAdminFragment() {
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("AreaDetailActivity", "hiiI");
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                Uri selectedImageUri = data.getData();
+                area_bitmap = getScaledBitmap(getPath(selectedImageUri), 640, 640);
+                this.setImgBitmap(area_bitmap);
+
+            }
+        }
     }
 
     @Override
@@ -132,7 +151,7 @@ public class AreaDetailAdminFragment extends Fragment {
                             try {
                                 mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                                 AreaSvc.Client client = new AreaSvc.Client(mp);
-                                area = client.getAreaById(areaid);
+                                area = client.getAreaById(myCredentials.getToken(),areaid);
                                 gatherInformationTask.closeTransport();
                                 if(area.getImageid() != null && !area.getImageid().equals("")){
                                     GetImageTask imgTask = new GetImageTask(mActivity,area_img,area.getImageid());
@@ -256,5 +275,54 @@ public class AreaDetailAdminFragment extends Fragment {
     public void setImgBitmap(Bitmap image){
         area_bitmap = image;
         area_img.setImageBitmap(area_bitmap);
+    }
+
+    public String getPath(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
+
+    private Bitmap getScaledBitmap(String picturePath, int width, int height) {
+        BitmapFactory.Options sizeOptions = new BitmapFactory.Options();
+        sizeOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(picturePath, sizeOptions);
+
+        int inSampleSize = calculateInSampleSize(sizeOptions, width, height);
+
+        sizeOptions.inJustDecodeBounds = false;
+        sizeOptions.inSampleSize = inSampleSize;
+
+        return BitmapFactory.decodeFile(picturePath, sizeOptions);
+    }
+
+    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and
+            // width
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will
+            // guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+
+        return inSampleSize;
     }
 }

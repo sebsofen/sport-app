@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import sebastians.sportan.app.MyCredentials;
-import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.InvalidOperation;
+import sebastians.sportan.tasks.caches.ImagesCache;
 
 /**
  * //TODO TRY TO CACHE IMAGE IN FILE SYSTEM! 
@@ -60,40 +60,9 @@ public class GetImageTask extends SuperAsyncTask {
                 e.printStackTrace();
             }
         }
-        /*
-        File file = new File(this.ctx.getCacheDir(),imageid);
 
-        if(file.exists()){
-            image = new Image();
-            image.id = imageid;
-            byte[] bytes = new byte[(int)file.length()];
-            Log.i("GetImageTask", "file length " + file.length());
-            FileInputStream in = null;
-            Log.i("GetImageTask", "Reading Image");
-            try {
-                Log.i("GetImageTask", "Starting input stream");
-                in = new FileInputStream(file);
-
-                in.read(bytes);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.i("GetImageTask", "error");
-            } finally {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            Log.i("GetImageTask", "setting bytes");
-            image.setBcontent(ByteBuffer.wrap(bytes));
-            return null;
-        }
-        */
-        if(SportApplication.ImageCache.getImageById(imageid) != null){
-            image = SportApplication.ImageCache.getImageById(imageid);
+        if(ImagesCache.get(imageid) != null){
+            image = ImagesCache.get(imageid);
             return null;
         }
 
@@ -101,17 +70,7 @@ public class GetImageTask extends SuperAsyncTask {
             TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_IMAGE);
             ImageSvc.Client client = new ImageSvc.Client(mp);
             image = client.getImageById(imageid);
-            SportApplication.ImageCache.addImage(image);
-            /*
-            FileOutputStream stream = new FileOutputStream(file);
-
-            try {
-                stream.write(image.bcontent.array());
-            } finally {
-                stream.close();
-            }
-            */
-
+            ImagesCache.add(imageid,image);
         } catch (InvalidOperation x) {
             x.printStackTrace();
         } catch (Exception x) {

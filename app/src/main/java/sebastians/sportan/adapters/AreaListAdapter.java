@@ -13,17 +13,19 @@ import java.util.List;
 
 import sebastians.sportan.R;
 import sebastians.sportan.networking.Area;
+import sebastians.sportan.tasks.GetAreaTask;
+import sebastians.sportan.tasks.GetTaskFinishCallBack;
 
 /**
  * Created by sebastian on 01/11/15.
  */
-public class AreaListAdapter extends ArrayAdapter<Area> {
+public class AreaListAdapter extends ArrayAdapter<String> {
     Context context;
-    ArrayList<Area> areaList;
-    public AreaListAdapter(Context context, int resource, List<Area> objects) {
+    ArrayList<String> areaList;
+    public AreaListAdapter(Context context, int resource, List<String> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.areaList = (ArrayList<Area>) objects;
+        this.areaList = (ArrayList<String>) objects;
     }
 
     @Override
@@ -31,11 +33,18 @@ public class AreaListAdapter extends ArrayAdapter<Area> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View areaView = inflater.inflate(R.layout.area_list_item, parent, false);
-        TextView title = (TextView) areaView.findViewById(R.id.area_title);
+        final TextView title = (TextView) areaView.findViewById(R.id.area_title);
 
-        Area area = areaList.get(position);
-        title.setText(area.getTitle());
-        Log.i("AREAADAPTER", "called");
+        String areaid = areaList.get(position);
+        GetAreaTask getAreaTask = new GetAreaTask(context, areaid, new GetTaskFinishCallBack<Area>() {
+            @Override
+            public void onFinished(Area area) {
+                title.setText(area.getTitle());
+                Log.i("AREAADAPTER", "called");
+            }
+        });
+        getAreaTask.execute();
+
 
         return areaView;
     }

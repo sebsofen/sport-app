@@ -5,12 +5,9 @@ import android.content.Context;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import sebastians.sportan.app.MyCredentials;
-import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.User;
 import sebastians.sportan.networking.UserSvc;
-
-
-
+import sebastians.sportan.tasks.caches.UsersCache;
 
 
 /**
@@ -32,15 +29,15 @@ public class GetUserTask extends SuperAsyncTask {
 
 
     protected String doInBackground(String... strings) {
-        if(SportApplication.UserCache.getUserById(userid) != null){
-            user = SportApplication.UserCache.getUserById(userid);
+        if(UsersCache.get(userid) != null){
+            user = UsersCache.get(userid);
             return null;
         }
         try {
             TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_USER);
             UserSvc.Client client = new UserSvc.Client(mp);
             user = client.getUserById(myCredentials.getToken(),this.userid);
-            SportApplication.UserCache.addUser(user);
+            UsersCache.add(userid,user);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -2,13 +2,6 @@ package sebastians.sportan.app;
 
 import android.app.Application;
 import android.content.res.Configuration;
-import android.util.LruCache;
-
-import java.util.ArrayList;
-
-import sebastians.sportan.networking.Image;
-import sebastians.sportan.networking.Sport;
-import sebastians.sportan.networking.User;
 
 /**
  * Application Object
@@ -43,50 +36,6 @@ public class SportApplication extends Application {
         super.onTerminate();
     }
 
-    /**
-     * Cache Class for Sport application
-     */
-    public static class SportsCache {
-        private static ArrayList<Sport> sportList = new ArrayList<>();
 
-
-        public static ArrayList<Sport> getSportList(){
-            return SportsCache.sportList;
-        }
-
-        public static void setSportList(ArrayList<Sport> sports){
-            SportsCache.sportList = sports;
-        }
-    }
-
-    /**
-     * image cache
-     * limit in cache has to be set wisely
-     *
-     * TODO ADD DISK CACHE IF POSSIBLE
-     */
-    public static class ImageCache {
-        private static LruCache<String,Image> cache = new LruCache<>(100);
-
-        public static void addImage(Image image){
-            cache.put(image.getId(),image);
-        }
-
-        public static Image getImageById(String key) {
-            return cache.get(key);
-        }
-    }
-
-    public static class UserCache {
-        private static LruCache<String,User> cache = new LruCache<>(200);
-
-        public static void addUser(User user){
-            cache.put(user.getIdentifier(),user);
-        }
-
-        public static User getUserById(String key) {
-            return cache.get(key);
-        }
-    }
 
 }

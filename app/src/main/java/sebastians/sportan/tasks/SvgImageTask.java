@@ -16,10 +16,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import sebastians.sportan.app.SportApplication;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.InvalidOperation;
+import sebastians.sportan.tasks.caches.ImagesCache;
 
 /**
  * Created by sebastian on 21/11/15.
@@ -45,8 +45,8 @@ public class SvgImageTask extends SuperAsyncTask{
         //see, if cached files are availble
 
 
-        if(SportApplication.ImageCache.getImageById(imageid) != null){
-            image = SportApplication.ImageCache.getImageById(imageid);
+        if(ImagesCache.get(imageid) != null){
+            image = ImagesCache.get(imageid);
             return null;
         }
 
@@ -80,7 +80,7 @@ public class SvgImageTask extends SuperAsyncTask{
             ImageSvc.Client client = new ImageSvc.Client(mp);
             image = client.getImageById(imageid);
             FileOutputStream stream = new FileOutputStream(file);
-            SportApplication.ImageCache.addImage(image);
+            ImagesCache.add(imageid,image);
             try {
                 stream.write(image.content.getBytes());
             } finally {

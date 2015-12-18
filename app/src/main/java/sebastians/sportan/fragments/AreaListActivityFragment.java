@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import sebastians.sportan.R;
 import sebastians.sportan.adapters.AreaListAdapter;
-import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.Coordinate;
 import sebastians.sportan.tasks.AreaListTask;
 
@@ -35,7 +34,7 @@ public class AreaListActivityFragment extends Fragment  {
 
         //connect listview to adapter and task!
         final ListView areaListView = (ListView) view.findViewById(R.id.area_list);
-        final ArrayList<Area> areaArrayList = new ArrayList<Area>();
+        final ArrayList<String> areaArrayList = new ArrayList<>();
         final AreaListAdapter areaListAdapter = new AreaListAdapter(this.getActivity(),R.id.area_list,areaArrayList);
         areaListView.setAdapter(areaListAdapter);
 
@@ -43,8 +42,6 @@ public class AreaListActivityFragment extends Fragment  {
 
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.area_list_refresh);
-
-
 
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
