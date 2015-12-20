@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -31,6 +32,8 @@ public class MainFriendsFragment extends Fragment {
         MainFriendsFragment fragment = new MainFriendsFragment();
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,10 +107,33 @@ public class MainFriendsFragment extends Fragment {
         final FriendsListAdapter friendsListAdapter = new FriendsListAdapter(getActivity(),R.id.friends_list,friendsList);
         friends_lst.setAdapter(friendsListAdapter);
 
-
+        ListUtils.setDynamicHeight(friends_lst);
+        ListUtils.setDynamicHeight(friend_requests_lst);
 
 
 
         return view;
+    }
+
+
+    public static class ListUtils {
+        public static void setDynamicHeight(ListView mListView) {
+            ListAdapter mListAdapter = mListView.getAdapter();
+            if (mListAdapter == null) {
+                // when adapter is null
+                return;
+            }
+            int height = 0;
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(mListView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+            for (int i = 0; i < mListAdapter.getCount(); i++) {
+                View listItem = mListAdapter.getView(i, null, mListView);
+                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                height += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = mListView.getLayoutParams();
+            params.height = height + (mListView.getDividerHeight() * (mListAdapter.getCount() - 1));
+            mListView.setLayoutParams(params);
+            mListView.requestLayout();
+        }
     }
 }

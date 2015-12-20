@@ -101,9 +101,6 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                             public String doInBackground() {
                                 try {
                                     MyCredentials myCredentials = new MyCredentials(mThis);
-                                    if (myCredentials.isTokenExpired()) {
-                                        myCredentials.renewToken();
-                                    }
                                     TMultiplexedProtocol mp = transmit.openTransport(SuperAsyncTask.SERVICE_USER);
                                     UserSvc.Client client = new UserSvc.Client(mp);
                                     Profile profile = new Profile();

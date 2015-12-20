@@ -5,17 +5,8 @@
     tools:context="sebastians.sportan.TabActivity">
 
     <!-- Add toolbar to activity -->
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp"
-        />
+    <include layout="@layout/toolbar"/>
+
 
     <!-- Logic for ViewPager is behind tablayout-->
     <android.support.design.widget.TabLayout
@@ -24,7 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_alignLeft="@+id/pager"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:theme="@style/AppTheme"
+        android:background="@color/colorSecond"
+
         />
 
     <!-- Loads Views (is connected to tab layout-->

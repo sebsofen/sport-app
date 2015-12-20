@@ -38,7 +38,9 @@ import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.GetAreaTask;
 import sebastians.sportan.tasks.GetImageTask;
+import sebastians.sportan.tasks.GetTaskFinishCallBack;
 import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
@@ -64,7 +66,7 @@ public class AreaDetailAdminFragment extends Fragment {
     public MyCredentials myCredentials;
     Bitmap area_bitmap;
     Area area;
-
+    String areaid;
     HashMap<String,Integer> selectedSports = new HashMap<>();
 
     public AreaDetailAdminFragment() {
@@ -103,12 +105,11 @@ public class AreaDetailAdminFragment extends Fragment {
 
         //created from intent
         Intent intent = mActivity.getIntent();
-        final String areaid = intent.getStringExtra(EXTRA_AREA_ID);
+        areaid = intent.getStringExtra(EXTRA_AREA_ID);
 
-        if(areaid == null || areaid.equals("")){
-            final double lat = intent.getDoubleExtra(EXTRA_AREA_LAT,Double.MAX_VALUE);
-            final double lon = intent.getDoubleExtra(EXTRA_AREA_LON,Double.MAX_VALUE);
-        }
+        final double lat = intent.getDoubleExtra(EXTRA_AREA_LAT,Double.MAX_VALUE);
+        final double lon = intent.getDoubleExtra(EXTRA_AREA_LON,Double.MAX_VALUE);
+
 
         final ArrayList<Sport> sportList = new ArrayList<>();
 
@@ -139,61 +140,48 @@ public class AreaDetailAdminFragment extends Fragment {
             }
         });
 
-        areaid_txt.setText(areaid);
+
         if(areaid != null &&  !areaid.equals("")){
-            final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(mActivity);
-            gatherInformationTask.setTaskCallBacks(
-                    new TaskCallBacks() {
-                        Bitmap bMap;
-                        @Override
-                        public String doInBackground() {
-                            TMultiplexedProtocol mp = null;
-                            try {
-                                mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_AREA);
-                                AreaSvc.Client client = new AreaSvc.Client(mp);
-                                area = client.getAreaById(myCredentials.getToken(),areaid);
-                                gatherInformationTask.closeTransport();
-                                if(area.getImageid() != null && !area.getImageid().equals("")){
-                                    GetImageTask imgTask = new GetImageTask(mActivity,area_img,area.getImageid());
-                                    imgTask.execute();
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            return null;
-                        }
-
-                        @Override
-                        public void onPreExecute() {
-
-                        }
-
-                        @Override
-                        public void onPostExecute() {
-                            description_edit.setText(area.getDescription());
-                            title_edit.setText(area.getTitle());
-                            if (area.getSports() != null) {
-                                ArrayList<String> asports = (ArrayList<String>) area.getSports();
-                                for (int i = 0; i < asports.size(); i++) {
-                                    selectedSports.put(asports.get(i), 1);
-                                }
-                                sportListAdapter.notifyDataSetChanged();
-
-
-
-                            }
-
-                        }
+            areaid_txt.setText(areaid);
+            GetAreaTask getAreaTask = new GetAreaTask(mActivity, areaid, new GetTaskFinishCallBack<Area>() {
+                @Override
+                public void onFinished(Area gArea) {
+                    area = gArea;
+                    if(area.getImageid() != null && !area.getImageid().equals("")){
+                        GetImageTask imgTask = new GetImageTask(mActivity,area_img,area.getImageid());
+                        imgTask.execute();
                     }
-            );
-            gatherInformationTask.execute("");
+
+                    description_edit.setText(area.getDescription());
+                    title_edit.setText(area.getTitle());
+                    if (area.getSports() != null) {
+                        ArrayList<String> asports = (ArrayList<String>) area.getSports();
+                        for (int i = 0; i < asports.size(); i++) {
+                            selectedSports.put(asports.get(i), 1);
+                        }
+                        sportListAdapter.notifyDataSetChanged();
+
+
+
+                    }
+                }
+            });
+            getAreaTask.execute();
         }
+
+
 
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(area == null) {
+                    area = new Area();
+                    ArrayList<Double> arr = new ArrayList<>();
+                    arr.add(lon);
+                    arr.add(lat);
+                    area.setCenter(arr);
+                    area.setCityid(MyCredentials.Me.getProfile().getCity_id());
+                }
                 //send information to server!
                 area.setTitle(title_edit.getText().toString());
                 area.setDescription(description_edit.getText().toString());

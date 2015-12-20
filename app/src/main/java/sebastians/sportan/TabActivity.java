@@ -11,26 +11,59 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sebastians.sportan.adapters.TabPagerAdapter;
+import sebastians.sportan.app.MyCredentials;
 
 public class TabActivity extends AppCompatActivity {
     final TabActivity mThis = this;
-
+    TabPagerAdapter tabPagerAdapter;
+    MyCredentials myCredentials;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
-
+        myCredentials = new MyCredentials(this);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), TabActivity.this);
+        if(tabPagerAdapter == null)
+            tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), TabActivity.this);
         viewPager.setAdapter(tabPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Give the TabLayout the ViewPager
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+
+                        @Override
+                        public void onPageSelected(int position) {
+                            toolbar.getMenu().clear();
+                            switch (position) {
+                                case 0:
+                                    toolbar.inflateMenu(R.menu.menu_main);
+                                    break;
+                                case 1:
+                                    toolbar.inflateMenu(R.menu.menu_friends);
+                                    break;
+                            }
+                        }
+
+
+
+
+
+
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
-
+        //depending on selected tab, inflate menu in toolbar!
 
         final String receivedUserId = getIntent().getStringExtra("USER");
         if(receivedUserId != null && !receivedUserId.equals("")) {
@@ -39,15 +72,10 @@ public class TabActivity extends AppCompatActivity {
         }
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
 
             toolbar.setTitle(R.string.app_name);
             setSupportActionBar(toolbar);
 
-            getSupportActionBar().setHomeButtonEnabled(true);
-
-        }
 
 
 
@@ -58,25 +86,29 @@ public class TabActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        Log.i("toolbar", "opions");
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        Log.i("Sportselect", "selected actionbarstuff");
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            //launch profile activity!
-
-            Log.i("Sportselect", "selected settings");
-            Intent intent = new Intent(mThis, ProfileActivity.class);
-            startActivity(intent);
+        switch (id) {
+            case R.id.action_settings:
+                Log.i("Sportselect", "selected settings");
+                Intent intent = new Intent(mThis, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_share_id:
+                Intent intent2 = new Intent();
+                intent2.setAction(Intent.ACTION_SEND);
+                intent2.setType("text/plain");
+                String link = getResources().getString(R.string.webhost) + getResources().getString(R.string.apppref) + "users/" +  myCredentials.getIdentifier();
+                intent2.putExtra(Intent.EXTRA_TEXT, "Hey Hey, Sport Informell: " + link);
+                startActivity(Intent.createChooser(intent2, "Share via"));
+                break;
         }
 
         return super.onOptionsItemSelected(item);

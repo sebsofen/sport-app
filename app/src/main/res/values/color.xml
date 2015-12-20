@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ColorPrimary">#FF5722</color>
-    <color name="ColorPrimaryDark">#E64A19</color>
+    <color name="colorMain">#96CA2D</color>
+    <color name="colorSecond">#B5E655</color>
+    <color name="colorThird">#EDF7F2</color>
+    <color name="colorFourth">#4BB5C1</color>
+    <color name="colorFifth">#7FC6BC</color>
+
+    <!-- Greys -->
+    <color name="greyBlack">#2E302F</color>
+    <color name="greyMedium">#B5BDB9</color>
+    <color name="greyLight">#F5FFFA</color>
 </resources>

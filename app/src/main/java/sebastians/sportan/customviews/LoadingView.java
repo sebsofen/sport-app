@@ -27,7 +27,7 @@ public class LoadingView extends View {
     }
 
     private void init() {
-        ballPaint.setColor(getResources().getColor(R.color.ColorPrimary));
+        ballPaint.setColor(getResources().getColor(R.color.colorMain));
         ballPaint.setStyle(Paint.Style.FILL);
     }
 

@@ -1,8 +1,8 @@
 package sebastians.sportan.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -41,6 +41,7 @@ import sebastians.sportan.graphics.RoundMarker;
 import sebastians.sportan.layouts.OuterLayout;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
+import sebastians.sportan.networking.Coordinate;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.GetAreaTask;
@@ -75,6 +76,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.activity_areamapoverview, container, false);
         mThis = getActivity();
         myCredentials = new MyCredentials(getActivity());
@@ -109,17 +111,26 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     @Override
     public void onMapReady(GoogleMap gMap){
     final GoogleMap googleMap = gMap;
-    LocationManager locationManager = (LocationManager) getActivity().getSystemService(Activity.LOCATION_SERVICE);
-    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+        // Create a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+        // Get the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location location = locationManager.getLastKnownLocation(provider);
+        final double lat = location.getLatitude();
+        final double lon = location.getLongitude();
+        gMap.setMyLocationEnabled(true);
+        if(location != null) {
+            Log.i("MainMap", "location not null");
+            CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+            gMap.moveCamera(center);
+            gMap.animateCamera(zoom);
+        }else{
+            Log.i("MainMap", "location  null");
+        }
 
-    if(location != null) {
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
-        gMap.moveCamera(center);
-        gMap.animateCamera(zoom);
-    }
 
-    gMap.setMyLocationEnabled(true);
     gMap.setOnMarkerClickListener(this);
     gMap.setOnMapLongClickListener(this);
 
@@ -132,8 +143,8 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
             try {
                 TMultiplexedProtocol mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                 AreaSvc.Client client = new AreaSvc.Client(mp);
-                areas.addAll(client.getAllAreasInCity(MyCredentials.Me.getProfile().getCity_id()));
-
+                //areas.addAll(client.getAllAreasInCity(MyCredentials.Me.getProfile().getCity_id()));
+                areas.addAll(client.getNearBy(myCredentials.getToken(),new Coordinate(lat,lon),250));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -142,22 +153,28 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
         @Override
         public void onPreExecute() {}
-
         @Override
         public void onPostExecute() {
             ExecutorService executor = Executors.newFixedThreadPool(5);
-            for(int i = 0; i < areas.size(); i++) {
+            for(int i = 0; i < (areas.size() > 250 ? 250 : areas.size()) ; i++) {
                 GetAreaTask getAreaTask = new GetAreaTask(getActivity(), areas.get(i), new GetTaskFinishCallBack<Area>() {
                     @Override
                     public void onFinished(Area area) {
                         if(area != null) {
+                            int j = 0;
+                            for(int i = 0; i < areas.size(); i++){
+                                if(areas.get(i).equals(area.id)) {
+                                    j = i;
+                                    break;
+                                }
+                            }
                         markerids.put(
                                 googleMap.addMarker(
                                         new MarkerOptions().position(new LatLng(area.center.get(1), area.center.get(0)))
                                                 .title(area.title)
                                                 .snippet(area.description)
                                                 .flat(true)
-                                                .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(255, 0, 0)))
+                                                .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(j,j,j)))
                                 ), area.id);
 
                         }
@@ -168,7 +185,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
         }
     });
-    markerTask.execute("");
+    markerTask.execute();
 }
 
     @Override

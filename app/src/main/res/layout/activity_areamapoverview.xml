@@ -16,7 +16,7 @@
     android:id="@+id/sport_select_layout"
     android:orientation="vertical"
     android:clickable="true"
-    android:background="@android:color/holo_blue_dark"
+    android:background="@color/colorSecond"
     android:elevation="1dp"
     >
 

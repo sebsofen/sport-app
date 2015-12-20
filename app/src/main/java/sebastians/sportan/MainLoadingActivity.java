@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -23,18 +24,26 @@ import sebastians.sportan.tasks.TaskCallBacks;
 public class MainLoadingActivity extends ActionBarActivity implements MyCredentialsFinishedCallBack, SelectCityFragment.SelectedCityListener {
     LoadingView loadingView;
     MyCredentials myCredentials;
+    TextView msg_txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_loading);
         loadingView = (LoadingView) findViewById(R.id.loading_view);
-
+        msg_txt = (TextView) findViewById(R.id.msg_txt);
         myCredentials = new MyCredentials(this,this);
     }
 
     @Override
     public void onFinish() {
-        Log.i("fin", "FINISHED");
+        if(MyCredentials.Me == null){
+            //this can only happen, if user is not connected to the internet:
+            msg_txt.setText(getResources().getString(R.string.no_connection));
+            return;
+        }
+
+
+
         if(loadingView != null)
             loadingView.stopAnimation();
 

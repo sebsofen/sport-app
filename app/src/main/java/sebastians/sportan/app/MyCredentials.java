@@ -27,17 +27,17 @@ import sebastians.sportan.tools.TaskFinishInterface;
  * Created by sebastian on 29/10/15.
  */
 public class MyCredentials implements TaskFinishInterface {
-    public static final String USERCREDENTIALS_IDENTIFIER = "identifier";//+ "i";
-    public static final String USERCREDENTIALS_PASSWORD = "password";// + "i";
-    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity";// + "i";
-    public static final String USERCREDENTIALS_TOKEN = "token";// + "i";
+    public static final String USERCREDENTIALS_IDENTIFIER = "identifier";// + "j";
+    public static final String USERCREDENTIALS_PASSWORD = "password";// + "j";
+    public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity";// + "j";
+    public static final String USERCREDENTIALS_TOKEN = "token";// + "j";
     private String identifier;
     private String password;
     String host;
     int port;
-    private long tokenValidity;
-    private String token;
-    SharedPreferences sharedPref;
+    private static long tokenValidity;
+    private static String token;
+    static SharedPreferences sharedPref;
     public static User Me;
     MyCredentialsFinishedCallBack myCredentialsFinishedCallBack;
     Context ctx;
@@ -45,7 +45,11 @@ public class MyCredentials implements TaskFinishInterface {
     public MyCredentials(Context ctx, MyCredentialsFinishedCallBack myCredentialsFinishedCallBack){
         host = ctx.getString(R.string.host);
         port = Integer.parseInt(ctx.getString(R.string.port));
-        sharedPref = ctx.getSharedPreferences(ctx.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        if(sharedPref == null)
+            sharedPref = ctx.getSharedPreferences(ctx.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+
         this.ctx = ctx;
         this.myCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
         final MyCredentialsFinishedCallBack mMyCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
@@ -93,7 +97,7 @@ public class MyCredentials implements TaskFinishInterface {
                         public void onPostExecute() {
                             MyCredentials.Me = user;
                             //TODO ! VERIFY USER HERE!
-                            if(Me.getProfile() == null){
+                            if(Me != null && Me.getProfile() == null){
                                 Me.setProfile(new Profile());
                             }
 
@@ -131,7 +135,8 @@ public class MyCredentials implements TaskFinishInterface {
 
     //TODO change to more realistic thing!
     public boolean isTokenExpired(){
-        return true;
+        return System.currentTimeMillis() - 5000 > this.tokenValidity;
+
     }
 
     public String getToken(){
@@ -149,7 +154,6 @@ public class MyCredentials implements TaskFinishInterface {
 
         TTransport transport= new TFramedTransport(new TSocket(host,port));
         try {
-
             transport.open();
             TProtocol protocol = new TBinaryProtocol(transport);
             TMultiplexedProtocol mp = new TMultiplexedProtocol(protocol, "User");
@@ -161,6 +165,7 @@ public class MyCredentials implements TaskFinishInterface {
             edit.putString(MyCredentials.USERCREDENTIALS_TOKEN, token);
             edit.putLong(MyCredentials.USERCREDENTIALS_TOKENVALIDITY, validity);
             edit.apply();
+            Log.i("MyCredentials", "calc token from" + validity);
             this.tokenValidity = validity;
             this.token = token;
         } catch (Exception x) {
