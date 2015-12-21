@@ -9,12 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
+import java.util.ArrayList;
+
 import sebastians.sportan.AreaDetailActivity;
 import sebastians.sportan.R;
+import sebastians.sportan.adapters.SportStringListAdapter;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
@@ -32,6 +36,7 @@ public class AreaDetailFragment extends Fragment {
     TextView area_name_txt;
     TextView area_description_txt;
     Area area;
+    ListView sport_list;
     public AreaDetailFragment(){
 
     }
@@ -56,6 +61,10 @@ public class AreaDetailFragment extends Fragment {
         area_img = (ImageView) view.findViewById(R.id.area_img);
         area_name_txt = (TextView) view.findViewById(R.id.area_name_txt);
         area_description_txt = (TextView) view.findViewById(R.id.area_description_txt);
+        sport_list = (ListView) view.findViewById(R.id.sports);
+        final ArrayList<String> sportList = new ArrayList<>();
+        final SportStringListAdapter sportListAdapter = new SportStringListAdapter(getActivity(),R.id.sports,sportList);
+        sport_list.setAdapter(sportListAdapter);
         //get image for area;
         if(areaid != null &&  !areaid.equals("")) {
             final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(mActivity);
@@ -92,20 +101,17 @@ public class AreaDetailFragment extends Fragment {
                         public void onPostExecute() {
                             area_name_txt.setText(area.getTitle());
                             area_description_txt.setText(area.getDescription());
-                            /*
-                            description_edit.setText(area.getDescription());
-                            title_edit.setText(area.getTitle());
+
                             if (area.getSports() != null) {
                                 ArrayList<String> asports = (ArrayList<String>) area.getSports();
-                                for (int i = 0; i < asports.size(); i++) {
-                                    selectedSports.put(asports.get(i), 1);
-                                }
-                                sportListAdapter.notifyDataSetChanged();
+                                sportList.clear();
+                                sportList.addAll(asports);
+                                sportListAdapter.notifyDataSetInvalidated();
 
 
 
                             }
-                               */
+
                         }
                     }
             );

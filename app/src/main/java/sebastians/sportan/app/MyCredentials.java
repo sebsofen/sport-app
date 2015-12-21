@@ -52,8 +52,6 @@ public class MyCredentials implements TaskFinishInterface {
 
         this.ctx = ctx;
         this.myCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
-        final MyCredentialsFinishedCallBack mMyCredentialsFinishedCallBack = myCredentialsFinishedCallBack;
-
         if("".equals(sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"")) && "".equals(sharedPref.getString(USERCREDENTIALS_PASSWORD,""))){
             Log.i("MyCredentials", "user empty");
             UserCreationTask userCreationTask = new UserCreationTask(ctx, this);

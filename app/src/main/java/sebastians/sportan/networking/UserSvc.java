@@ -61,7 +61,7 @@ public class UserSvc {
 
     public Token requestToken(String username, String plain_pw) throws org.apache.thrift.TException;
 
-    public void setAdmin(String token, String userid) throws org.apache.thrift.TException;
+    public void setAdmin(String token, String userid, boolean admin) throws org.apache.thrift.TException;
 
   }
 
@@ -87,7 +87,7 @@ public class UserSvc {
 
     public void requestToken(String username, String plain_pw, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void setAdmin(String token, String userid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void setAdmin(String token, String userid, boolean admin, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -338,17 +338,18 @@ public class UserSvc {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "requestToken failed: unknown result");
     }
 
-    public void setAdmin(String token, String userid) throws org.apache.thrift.TException
+    public void setAdmin(String token, String userid, boolean admin) throws org.apache.thrift.TException
     {
-      send_setAdmin(token, userid);
+      send_setAdmin(token, userid, admin);
       recv_setAdmin();
     }
 
-    public void send_setAdmin(String token, String userid) throws org.apache.thrift.TException
+    public void send_setAdmin(String token, String userid, boolean admin) throws org.apache.thrift.TException
     {
       setAdmin_args args = new setAdmin_args();
       args.setToken(token);
       args.setUserid(userid);
+      args.setAdmin(admin);
       sendBase("setAdmin", args);
     }
 
@@ -715,9 +716,9 @@ public class UserSvc {
       }
     }
 
-    public void setAdmin(String token, String userid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void setAdmin(String token, String userid, boolean admin, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      setAdmin_call method_call = new setAdmin_call(token, userid, resultHandler, this, ___protocolFactory, ___transport);
+      setAdmin_call method_call = new setAdmin_call(token, userid, admin, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -725,10 +726,12 @@ public class UserSvc {
     public static class setAdmin_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String token;
       private String userid;
-      public setAdmin_call(String token, String userid, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private boolean admin;
+      public setAdmin_call(String token, String userid, boolean admin, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.token = token;
         this.userid = userid;
+        this.admin = admin;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
@@ -736,6 +739,7 @@ public class UserSvc {
         setAdmin_args args = new setAdmin_args();
         args.setToken(token);
         args.setUserid(userid);
+        args.setAdmin(admin);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -996,7 +1000,7 @@ public class UserSvc {
 
       public setAdmin_result getResult(I iface, setAdmin_args args) throws org.apache.thrift.TException {
         setAdmin_result result = new setAdmin_result();
-        iface.setAdmin(args.token, args.userid);
+        iface.setAdmin(args.token, args.userid, args.admin);
         return result;
       }
     }
@@ -1586,7 +1590,7 @@ public class UserSvc {
       }
 
       public void start(I iface, setAdmin_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
-        iface.setAdmin(args.token, args.userid,resultHandler);
+        iface.setAdmin(args.token, args.userid, args.admin,resultHandler);
       }
     }
 
@@ -9235,6 +9239,7 @@ public class UserSvc {
 
     private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField USERID_FIELD_DESC = new org.apache.thrift.protocol.TField("userid", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField ADMIN_FIELD_DESC = new org.apache.thrift.protocol.TField("admin", org.apache.thrift.protocol.TType.BOOL, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -9244,11 +9249,13 @@ public class UserSvc {
 
     public String token; // required
     public String userid; // required
+    public boolean admin; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       TOKEN((short)1, "token"),
-      USERID((short)2, "userid");
+      USERID((short)2, "userid"),
+      ADMIN((short)3, "admin");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -9267,6 +9274,8 @@ public class UserSvc {
             return TOKEN;
           case 2: // USERID
             return USERID;
+          case 3: // ADMIN
+            return ADMIN;
           default:
             return null;
         }
@@ -9307,6 +9316,8 @@ public class UserSvc {
     }
 
     // isset id assignments
+    private static final int __ADMIN_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -9314,6 +9325,8 @@ public class UserSvc {
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.USERID, new org.apache.thrift.meta_data.FieldMetaData("userid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ADMIN, new org.apache.thrift.meta_data.FieldMetaData("admin", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(setAdmin_args.class, metaDataMap);
     }
@@ -9323,23 +9336,28 @@ public class UserSvc {
 
     public setAdmin_args(
       String token,
-      String userid)
+      String userid,
+      boolean admin)
     {
       this();
       this.token = token;
       this.userid = userid;
+      this.admin = admin;
+      setAdminIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public setAdmin_args(setAdmin_args other) {
+      __isset_bitfield = other.__isset_bitfield;
       if (other.isSetToken()) {
         this.token = other.token;
       }
       if (other.isSetUserid()) {
         this.userid = other.userid;
       }
+      this.admin = other.admin;
     }
 
     public setAdmin_args deepCopy() {
@@ -9350,6 +9368,8 @@ public class UserSvc {
     public void clear() {
       this.token = null;
       this.userid = null;
+      setAdminIsSet(false);
+      this.admin = false;
     }
 
     public String getToken() {
@@ -9400,6 +9420,29 @@ public class UserSvc {
       }
     }
 
+    public boolean isAdmin() {
+      return this.admin;
+    }
+
+    public setAdmin_args setAdmin(boolean admin) {
+      this.admin = admin;
+      setAdminIsSet(true);
+      return this;
+    }
+
+    public void unsetAdmin() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ADMIN_ISSET_ID);
+    }
+
+    /** Returns true if field admin is set (has been assigned a value) and false otherwise */
+    public boolean isSetAdmin() {
+      return EncodingUtils.testBit(__isset_bitfield, __ADMIN_ISSET_ID);
+    }
+
+    public void setAdminIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __ADMIN_ISSET_ID, value);
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case TOKEN:
@@ -9418,6 +9461,14 @@ public class UserSvc {
         }
         break;
 
+      case ADMIN:
+        if (value == null) {
+          unsetAdmin();
+        } else {
+          setAdmin((Boolean)value);
+        }
+        break;
+
       }
     }
 
@@ -9428,6 +9479,9 @@ public class UserSvc {
 
       case USERID:
         return getUserid();
+
+      case ADMIN:
+        return isAdmin();
 
       }
       throw new IllegalStateException();
@@ -9444,6 +9498,8 @@ public class UserSvc {
         return isSetToken();
       case USERID:
         return isSetUserid();
+      case ADMIN:
+        return isSetAdmin();
       }
       throw new IllegalStateException();
     }
@@ -9479,6 +9535,15 @@ public class UserSvc {
           return false;
       }
 
+      boolean this_present_admin = true;
+      boolean that_present_admin = true;
+      if (this_present_admin || that_present_admin) {
+        if (!(this_present_admin && that_present_admin))
+          return false;
+        if (this.admin != that.admin)
+          return false;
+      }
+
       return true;
     }
 
@@ -9495,6 +9560,11 @@ public class UserSvc {
       list.add(present_userid);
       if (present_userid)
         list.add(userid);
+
+      boolean present_admin = true;
+      list.add(present_admin);
+      if (present_admin)
+        list.add(admin);
 
       return list.hashCode();
     }
@@ -9523,6 +9593,16 @@ public class UserSvc {
       }
       if (isSetUserid()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.userid, other.userid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAdmin()).compareTo(other.isSetAdmin());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAdmin()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.admin, other.admin);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -9562,6 +9642,10 @@ public class UserSvc {
         sb.append(this.userid);
       }
       first = false;
+      if (!first) sb.append(", ");
+      sb.append("admin:");
+      sb.append(this.admin);
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -9581,6 +9665,8 @@ public class UserSvc {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
@@ -9621,6 +9707,14 @@ public class UserSvc {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 3: // ADMIN
+              if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+                struct.admin = iprot.readBool();
+                struct.setAdminIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -9646,6 +9740,9 @@ public class UserSvc {
           oprot.writeString(struct.userid);
           oprot.writeFieldEnd();
         }
+        oprot.writeFieldBegin(ADMIN_FIELD_DESC);
+        oprot.writeBool(struct.admin);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -9670,19 +9767,25 @@ public class UserSvc {
         if (struct.isSetUserid()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetAdmin()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetToken()) {
           oprot.writeString(struct.token);
         }
         if (struct.isSetUserid()) {
           oprot.writeString(struct.userid);
         }
+        if (struct.isSetAdmin()) {
+          oprot.writeBool(struct.admin);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, setAdmin_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
+        BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           struct.token = iprot.readString();
           struct.setTokenIsSet(true);
@@ -9690,6 +9793,10 @@ public class UserSvc {
         if (incoming.get(1)) {
           struct.userid = iprot.readString();
           struct.setUseridIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.admin = iprot.readBool();
+          struct.setAdminIsSet(true);
         }
       }
     }

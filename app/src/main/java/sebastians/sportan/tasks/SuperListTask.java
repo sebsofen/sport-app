@@ -58,7 +58,7 @@ public class SuperListTask<T> extends SuperAsyncTask {
         super.onPostExecute(s);
         if(connectedAdapter != null) {
             Log.i("logg", "datasetchange");
-            connectedAdapter.notifyDataSetInvalidated();
+            Log.i("logg", "listsize " + connectedList.size());
             connectedAdapter.notifyDataSetChanged();
         }else{
             Log.i("logg", "was ist hier lows");

@@ -143,7 +143,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
             try {
                 TMultiplexedProtocol mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                 AreaSvc.Client client = new AreaSvc.Client(mp);
-                //areas.addAll(client.getAllAreasInCity(MyCredentials.Me.getProfile().getCity_id()));
+                areas.clear();
                 areas.addAll(client.getNearBy(myCredentials.getToken(),new Coordinate(lat,lon),250));
             } catch (Exception e) {
                 e.printStackTrace();

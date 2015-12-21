@@ -132,8 +132,6 @@ public class AreaDetailAdminFragment extends Fragment {
                 } else {
                     selectedSports.remove(sportid);
                 }
-                //TODO this can be reset to direct update in views (will improve performance)
-                //TODO for this it is necessary to user recyclerview
                 sportListAdapter.notifyDataSetChanged();
 
 

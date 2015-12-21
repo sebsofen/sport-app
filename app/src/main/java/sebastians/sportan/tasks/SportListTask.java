@@ -29,10 +29,9 @@ public class SportListTask extends SuperListTask<Sport> {
                     public List<Sport> getList(int limit) {
                         ArrayList<Sport> getListList = SportsCache.getSportsList();
                         if(getListList.size() == 0){
-                                                    try {
+                            try {
                                 TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_SPORT);
                                 SportSvc.Client client = new SportSvc.Client(mp);
-                                getListList.clear();
                                 ArrayList<Sport> sports = (ArrayList<Sport>) client.getAllSports("");
                                 for (int i = 0; i < sports.size(); i++) {
                                     Log.i("SportListTask", "sport: " + sports.get(i).getName());
@@ -48,7 +47,7 @@ public class SportListTask extends SuperListTask<Sport> {
                                 transport.close();
                             }
                         }
-                        Log.i("AreaListTask", "returned elements " + getListList.size());
+                        Log.i("SportListTask", "returned elements " + getListList.size());
                         return getListList;
                     }
                 });

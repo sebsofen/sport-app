@@ -28,4 +28,12 @@
         android:id="@+id/area_description_txt"
         android:layout_below="@+id/area_img"
         android:layout_alignParentLeft="true" />
+
+    <ListView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/sports"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/area_img" />
 </RelativeLayout>

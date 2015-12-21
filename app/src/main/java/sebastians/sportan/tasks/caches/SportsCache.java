@@ -18,14 +18,16 @@ public class SportsCache {
     public static Sport get(String id) {
         return lruCache.get(id);
     }
+    public static void add(Sport sport) {
+        lruCache.put(sport.id, sport);
+    }
 
     public static ArrayList<Sport> getSportsList() {
         return sportArrayList;
     }
 
     public static void setSportsList(ArrayList<Sport> sports) {
-        sportArrayList.clear();
-        sportArrayList.addAll(sports);
+        sportArrayList = sports;
     }
 
 }

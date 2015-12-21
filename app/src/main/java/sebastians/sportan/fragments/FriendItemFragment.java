@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import sebastians.sportan.R;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.User;
 import sebastians.sportan.tasks.GetUserTask;
+import sebastians.sportan.tasks.SetUserTask;
 
 /**
  * Created by sebastian on 13/12/15.
@@ -54,7 +57,7 @@ public class FriendItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend_item, container, false);
         final TextView username_txt = (TextView) view.findViewById(R.id.username_txt);
-
+        final Switch adm = (Switch) view.findViewById(R.id.friend_adm);
         myCredentials = new MyCredentials(context == null? getActivity(): context);
 
             final GetUserTask getUserTask = new GetUserTask(context == null ? getActivity() : context, userId, new GetUserTask.OnPostExecute() {
@@ -62,6 +65,8 @@ public class FriendItemFragment extends Fragment {
                 public void onPostExectute(User user) {
                     friend = user;
                     username_txt.setText(user.getProfile().getUsername());
+                        adm.setChecked((myCredentials.amISuperAdmin() && user.getRole() != null && ( user.getRole().equals("admin"))));
+
                 }
             });
             getUserTask.execute();
@@ -69,6 +74,20 @@ public class FriendItemFragment extends Fragment {
 
         Button yesBtn = (Button) view.findViewById(R.id.yes_btn);
         Button noBtn = (Button) view.findViewById(R.id.no_btn);
+
+
+        if(!myCredentials.amISuperAdmin() || myCredentials.Me.getIdentifier().equals(userId)){
+            adm.setVisibility(View.GONE);
+        }else{
+            adm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    SetUserTask setUserTask = new SetUserTask(context, userId);
+                    setUserTask.setIsAdmin(isChecked);
+                    setUserTask.execute();
+                }
+            });
+        }
 
         if(yesBtnTxt == null){
             yesBtn.setVisibility(View.GONE);
