@@ -62,15 +62,19 @@ public class MyCredentials implements TaskFinishInterface {
     }
 
 
+    public void getMe() {
+        getMe(false);
+    }
+
     /**
      * get myself from server and save information in Me variable
      */
-    private void getMe(){
+    public void getMe(boolean force){
         identifier = sharedPref.getString(USERCREDENTIALS_IDENTIFIER,"");
         password = sharedPref.getString(USERCREDENTIALS_PASSWORD,"");
 
         //load user details in static object
-        if(Me == null){
+        if(Me == null || force){
             final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(ctx);
             gatherInformationTask.setTaskCallBacks(
                     new TaskCallBacks() {

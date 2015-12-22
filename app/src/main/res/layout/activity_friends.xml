@@ -15,6 +15,11 @@
         android:id="@+id/friend_container"
         android:background="@color/colorSecond"
         android:elevation="5dp"></FrameLayout>
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refresh"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -41,4 +46,5 @@
         </LinearLayout>
     </ScrollView>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package sebastians.sportan.fragments;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import sebastians.sportan.R;
 import sebastians.sportan.adapters.FriendRequestsListAdapter;
 import sebastians.sportan.adapters.FriendsListAdapter;
 import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.app.MyCredentialsFinishedCallBack;
 import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
@@ -26,8 +28,12 @@ import sebastians.sportan.tasks.TaskCallBacks;
 /**
  *
  */
-public class MainFriendsFragment extends Fragment {
-
+public class MainFriendsFragment extends Fragment implements MyCredentialsFinishedCallBack{
+    FriendRequestsListAdapter friendRequestsListAdapter;
+    FriendsListAdapter friendsListAdapter;
+    SwipeRefreshLayout refreshLayout;
+    final ArrayList<String> friendsList = new ArrayList<>();
+    final ArrayList<String> friendRequestsList = new ArrayList<>();
     public static MainFriendsFragment newInstance() {
         MainFriendsFragment fragment = new MainFriendsFragment();
         return fragment;
@@ -42,8 +48,16 @@ public class MainFriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final MyCredentials myCredentials = new MyCredentials(getActivity(), this);
         final String receivedUserId = getActivity().getIntent().getStringExtra("USER");
         View view = inflater.inflate(R.layout.activity_friends, container, false);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                myCredentials.getMe(true);
+            }
+        });
         if(receivedUserId != null && !receivedUserId.equals("")){
             if((MyCredentials.Me.friends == null || !MyCredentials.Me.friends.contains(receivedUserId)) && (MyCredentials.Me.friendrequests == null || !MyCredentials.Me.friendrequests.contains(receivedUserId))) {
                 final FriendItemFragment friendItemFragment = new FriendItemFragment();
@@ -75,12 +89,14 @@ public class MainFriendsFragment extends Fragment {
 
                             @Override
                             public void onPreExecute() {
-
+                                refreshLayout.setRefreshing(true);
                             }
 
                             @Override
                             public void onPostExecute() {
                                 getActivity().getFragmentManager().beginTransaction().remove(friendItemFragment).commit();
+                                myCredentials.getMe(true);
+
                             }
                         });
                         requestFriendTask.execute();
@@ -97,14 +113,11 @@ public class MainFriendsFragment extends Fragment {
         ListView friends_lst = (ListView) view.findViewById(R.id.friends_list);
         ListView friend_requests_lst = (ListView) view.findViewById(R.id.friend_requests_list);
         //set adapter for list!
-        final ArrayList<String> friendRequestsList = new ArrayList<>();
-        friendRequestsList.addAll(MyCredentials.Me.friendrequests != null ? MyCredentials.Me.friendrequests : new ArrayList<String>());
-        final FriendRequestsListAdapter friendRequestsListAdapter = new FriendRequestsListAdapter(getActivity(),R.id.friend_requests_list,friendRequestsList);
+
+        friendRequestsListAdapter = new FriendRequestsListAdapter(getActivity(),R.id.friend_requests_list,friendRequestsList);
         friend_requests_lst.setAdapter(friendRequestsListAdapter);
 
-        final ArrayList<String> friendsList = new ArrayList<>();
-        friendsList.addAll(MyCredentials.Me.friends != null ? MyCredentials.Me.friends : new ArrayList<String>());
-        final FriendsListAdapter friendsListAdapter = new FriendsListAdapter(getActivity(),R.id.friends_list,friendsList);
+        friendsListAdapter = new FriendsListAdapter(getActivity(),R.id.friends_list,friendsList);
         friends_lst.setAdapter(friendsListAdapter);
 
         ListUtils.setDynamicHeight(friends_lst);
@@ -113,6 +126,22 @@ public class MainFriendsFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onFinish() {
+        friendRequestsList.clear();
+        friendRequestsList.addAll(MyCredentials.Me.friendrequests != null ? MyCredentials.Me.friendrequests : new ArrayList<String>());
+        friendsList.clear();
+        friendsList.addAll(MyCredentials.Me.friends != null ? MyCredentials.Me.friends : new ArrayList<String>());
+
+        if(friendRequestsListAdapter != null)
+            friendRequestsListAdapter.notifyDataSetInvalidated();
+        if(friendsListAdapter != null)
+            friendsListAdapter.notifyDataSetInvalidated();
+        if(refreshLayout != null)
+            refreshLayout.setRefreshing(false);
+
     }
 
 
