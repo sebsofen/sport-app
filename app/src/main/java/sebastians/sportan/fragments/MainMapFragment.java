@@ -118,10 +118,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         // Get the name of the best provider
         String provider = locationManager.getBestProvider(criteria, true);
         Location location = locationManager.getLastKnownLocation(provider);
-        final double lat = location.getLatitude();
-        final double lon = location.getLongitude();
         gMap.setMyLocationEnabled(true);
-
         locationManager.requestLocationUpdates(provider,LOCATION_UPDATE_INTERVAL,LOCATION_UPDATE_DISTANCE,this);
 
 

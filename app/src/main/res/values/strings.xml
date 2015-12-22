@@ -27,4 +27,7 @@
 
     <!-- TODO : APP LANGUAGE -->
     <string name="no_connection">No Connection to Internet, try again later.</string>
+    <string name="no_location">Please turn on Location service.</string>
+
+    <string name="retry">retry</string>
 </resources>

@@ -1,10 +1,14 @@
 package sebastians.sportan;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -25,20 +29,57 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
     LoadingView loadingView;
     MyCredentials myCredentials;
     TextView msg_txt;
+    Button retry_btn;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main_loading);
+        guiInit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_loading);
+        guiInit();
+
+    }
+
+    private void guiInit() {
         loadingView = (LoadingView) findViewById(R.id.loading_view);
         msg_txt = (TextView) findViewById(R.id.msg_txt);
+
+        retry_btn = (Button) findViewById(R.id.retry_btn);
+        retry_btn.setVisibility(View.GONE);
+        retry_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myCredentials.getMe(true);
+                retry_btn.setActivated(false);
+            }
+        });
+
         myCredentials = new MyCredentials(this,this);
     }
+
+
 
     @Override
     public void onFinish() {
         if(MyCredentials.Me == null){
             //this can only happen, if user is not connected to the internet:
             msg_txt.setText(getResources().getString(R.string.no_connection));
+            retry_btn.setVisibility(View.VISIBLE);
+            retry_btn.setActivated(true);
+            return;
+        }
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(!service.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            msg_txt.setText(getResources().getString(R.string.no_location));
+            retry_btn.setVisibility(View.VISIBLE);
+            retry_btn.setActivated(true);
             return;
         }
 
@@ -58,7 +99,8 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
                     startMainActivity();
                 }
         }else{
-            loadingView.startAnimation();
+            if(loadingView != null)
+                loadingView.startAnimation();
             Log.i("Entry", "no city for user exists");
             getFragmentManager().beginTransaction().replace(R.id.select_city_container, new SelectCityFragment()).commit();
         }
