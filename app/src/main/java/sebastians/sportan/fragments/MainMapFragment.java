@@ -115,9 +115,23 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
         // Create a criteria object to retrieve provider
         Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.NO_REQUIREMENT);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+        criteria.setCostAllowed(true);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
+        String provider = locationManager.getBestProvider(criteria, false);
+        Log.i("onMapReady", "provider"  + provider);
         Location location = locationManager.getLastKnownLocation(provider);
+        if(location != null) {
+            Log.i("onMapReady", "lat "+ location.getLatitude() + "lon " + location.getLongitude());
+            this.onLocationChanged(location);
+        }else{
+            Log.i("onMapReady", "location not provided");
+        }
+
+
         gMap.setMyLocationEnabled(true);
         locationManager.requestLocationUpdates(provider,LOCATION_UPDATE_INTERVAL,LOCATION_UPDATE_DISTANCE,this);
 
@@ -242,6 +256,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.i("onLocationChanged", "New Location");
         fetchAndDisplayMarkers(location);
         if(!locationSet) {
             CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));

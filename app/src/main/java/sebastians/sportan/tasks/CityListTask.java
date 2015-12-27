@@ -1,6 +1,7 @@
 package sebastians.sportan.tasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -10,7 +11,6 @@ import java.util.List;
 import sebastians.sportan.networking.City;
 import sebastians.sportan.networking.CitySvc;
 import sebastians.sportan.networking.Coordinate;
-import sebastians.sportan.networking.InvalidOperation;
 
 /**
  * Created by sebastian on 07/11/15.
@@ -34,15 +34,19 @@ public class CityListTask extends SuperListTask<City> {
             @Override
             public List<City> getList(int limit) {
                 ArrayList<City> getListList = new ArrayList<City>();
-                if(thisTask.getCoordinate() == null)
-                    return null;
+
+                if(thisTask.getCoordinate() == null) {
+                   thisTask.setCoordinate(new Coordinate(1.0,1.0));
+                }
+
                 try {
                     TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_CITY);
                     CitySvc.Client client = new CitySvc.Client(mp);
+                    Log.i("CityList", "lat: " + thisTask.getCoordinate().getLat());
+                    Log.i("CityList", "lon: " + thisTask.getCoordinate().getLon());
                     getListList.addAll(client.getNearBy(thisTask.getCoordinate(), limit));
-                } catch (InvalidOperation x) {
-                    x.printStackTrace();
                 } catch (Exception x) {
+                    Log.i("CityList", x.getMessage());
                     x.printStackTrace();
                 } finally {
                     transport.close();

@@ -41,7 +41,9 @@ public class SuperListTask<T> extends SuperAsyncTask {
     @Override
     protected String doInBackground(String... strings) {
         connectedList.clear();
-        connectedList.addAll(getListInterface.getList(10));
+        ArrayList<T> list = (ArrayList) getListInterface.getList(10);
+        if(list != null)
+            connectedList.addAll(list);
 
         return null;
     }

@@ -27,7 +27,7 @@ public class LoadingView extends View {
     }
 
     private void init() {
-        ballPaint.setColor(getResources().getColor(R.color.colorMain));
+        ballPaint.setColor(getResources().getColor(R.color.colorFourth));
         ballPaint.setStyle(Paint.Style.FILL);
     }
 
@@ -37,6 +37,7 @@ public class LoadingView extends View {
             super.onDraw(canvas);
             float h = canvas.getHeight();
             float w = canvas.getWidth();
+            increments = 10 * (h / 1000);
             float ballYPos = 0.0f;
             if (ballLeftDirection) {
                 //ball is going in left direction

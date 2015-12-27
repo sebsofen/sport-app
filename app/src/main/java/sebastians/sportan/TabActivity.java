@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import sebastians.sportan.adapters.TabPagerAdapter;
 import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.customviews.LoadingView;
 
 public class TabActivity extends AppCompatActivity {
     final TabActivity mThis = this;
@@ -30,6 +31,8 @@ public class TabActivity extends AppCompatActivity {
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        LoadingView loadingView = (LoadingView) toolbar.findViewById(R.id.loading_view);
+        loadingView.startAnimation();
         // Give the TabLayout the ViewPager
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
