@@ -1,0 +1,19 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment"
+    android:name="sebastians.sportan.fragments.MainActivityFragment" tools:layout="@layout/remove_fragment_main"
+    android:layout_width="match_parent" android:layout_height="match_parent" />
+
+<FrameLayout android:id="@+id/overlay_fragment_container"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_gravity="center" />
+</FrameLayout>
+    </merge>

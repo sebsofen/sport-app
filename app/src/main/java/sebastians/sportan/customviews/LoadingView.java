@@ -37,7 +37,7 @@ public class LoadingView extends View {
             super.onDraw(canvas);
             float h = canvas.getHeight();
             float w = canvas.getWidth();
-            increments = 10 * (h / 1000);
+            increments = 10 * (h / 500);
             float ballYPos = 0.0f;
             if (ballLeftDirection) {
                 //ball is going in left direction

@@ -10,6 +10,9 @@
     tools:context="sebastians.sportan.ProfileActivity"
     android:weightSum="1">
 
+    <!-- Add toolbar to activity -->
+    <include layout="@layout/toolbar"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
