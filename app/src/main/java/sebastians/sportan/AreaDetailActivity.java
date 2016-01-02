@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import sebastians.sportan.app.MyCredentials;
+import sebastians.sportan.customviews.LoadingView;
 import sebastians.sportan.fragments.AreaDetailAdminFragment;
 import sebastians.sportan.fragments.AreaDetailFragment;
 
@@ -22,7 +24,7 @@ public class AreaDetailActivity extends AppCompatActivity {
     public static final String EXTRA_AREA_LON = "arealon";
 
     AreaDetailAdminFragment areaDetailAdminFragment;
-
+    public LoadingView loadingView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +32,8 @@ public class AreaDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_area_detail);
 
         MyCredentials myCredentials = new MyCredentials(this);
+        loadingView = (LoadingView) findViewById(R.id.loading_view);
 
-        //depending on user information, load admin fragement or user fragment
-        //getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SelectCityFragment()).commit();
         Switch toggleAdmin = (Switch) findViewById(R.id.adm_swtch);
         if(myCredentials.amIAdmin()) {
             Log.i("AreaDetailActivity", "This is the admin");
@@ -59,7 +60,14 @@ public class AreaDetailActivity extends AppCompatActivity {
 
 
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 

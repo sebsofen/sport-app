@@ -6,26 +6,31 @@
  */
 package sebastians.sportan.networking;
 
-import org.apache.thrift.EncodingUtils;
-import org.apache.thrift.TException;
-import org.apache.thrift.async.AsyncMethodCallback;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
+
 import org.apache.thrift.scheme.TupleScheme;
-import org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
 public class UserSvc {
@@ -108,7 +113,7 @@ public class UserSvc {
 
     public UserCredentials createUser(String password) throws InvalidOperation, org.apache.thrift.TException
     {
-       send_createUser(password);
+      send_createUser(password);
       return recv_createUser();
     }
 
@@ -4661,14 +4666,14 @@ public class UserSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list56 = iprot.readListBegin();
-                  struct.success = new ArrayList<User>(_list56.size);
-                  User _elem57;
-                  for (int _i58 = 0; _i58 < _list56.size; ++_i58)
+                  org.apache.thrift.protocol.TList _list66 = iprot.readListBegin();
+                  struct.success = new ArrayList<User>(_list66.size);
+                  User _elem67;
+                  for (int _i68 = 0; _i68 < _list66.size; ++_i68)
                   {
-                    _elem57 = new User();
-                    _elem57.read(iprot);
-                    struct.success.add(_elem57);
+                    _elem67 = new User();
+                    _elem67.read(iprot);
+                    struct.success.add(_elem67);
                   }
                   iprot.readListEnd();
                 }
@@ -4696,9 +4701,9 @@ public class UserSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (User _iter59 : struct.success)
+            for (User _iter69 : struct.success)
             {
-              _iter59.write(oprot);
+              _iter69.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -4729,9 +4734,9 @@ public class UserSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (User _iter60 : struct.success)
+            for (User _iter70 : struct.success)
             {
-              _iter60.write(oprot);
+              _iter70.write(oprot);
             }
           }
         }
@@ -4743,14 +4748,14 @@ public class UserSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list61 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<User>(_list61.size);
-            User _elem62;
-            for (int _i63 = 0; _i63 < _list61.size; ++_i63)
+            org.apache.thrift.protocol.TList _list71 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<User>(_list71.size);
+            User _elem72;
+            for (int _i73 = 0; _i73 < _list71.size; ++_i73)
             {
-              _elem62 = new User();
-              _elem62.read(iprot);
-              struct.success.add(_elem62);
+              _elem72 = new User();
+              _elem72.read(iprot);
+              struct.success.add(_elem72);
             }
           }
           struct.setSuccessIsSet(true);
@@ -5437,14 +5442,14 @@ public class UserSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list64 = iprot.readListBegin();
-                  struct.success = new ArrayList<User>(_list64.size);
-                  User _elem65;
-                  for (int _i66 = 0; _i66 < _list64.size; ++_i66)
+                  org.apache.thrift.protocol.TList _list74 = iprot.readListBegin();
+                  struct.success = new ArrayList<User>(_list74.size);
+                  User _elem75;
+                  for (int _i76 = 0; _i76 < _list74.size; ++_i76)
                   {
-                    _elem65 = new User();
-                    _elem65.read(iprot);
-                    struct.success.add(_elem65);
+                    _elem75 = new User();
+                    _elem75.read(iprot);
+                    struct.success.add(_elem75);
                   }
                   iprot.readListEnd();
                 }
@@ -5472,9 +5477,9 @@ public class UserSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (User _iter67 : struct.success)
+            for (User _iter77 : struct.success)
             {
-              _iter67.write(oprot);
+              _iter77.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -5505,9 +5510,9 @@ public class UserSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (User _iter68 : struct.success)
+            for (User _iter78 : struct.success)
             {
-              _iter68.write(oprot);
+              _iter78.write(oprot);
             }
           }
         }
@@ -5519,14 +5524,14 @@ public class UserSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list69 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<User>(_list69.size);
-            User _elem70;
-            for (int _i71 = 0; _i71 < _list69.size; ++_i71)
+            org.apache.thrift.protocol.TList _list79 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<User>(_list79.size);
+            User _elem80;
+            for (int _i81 = 0; _i81 < _list79.size; ++_i81)
             {
-              _elem70 = new User();
-              _elem70.read(iprot);
-              struct.success.add(_elem70);
+              _elem80 = new User();
+              _elem80.read(iprot);
+              struct.success.add(_elem80);
             }
           }
           struct.setSuccessIsSet(true);

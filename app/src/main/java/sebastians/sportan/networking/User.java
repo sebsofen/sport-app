@@ -43,6 +43,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRUCT, (short)5);
   private static final org.apache.thrift.protocol.TField FRIENDS_FIELD_DESC = new org.apache.thrift.protocol.TField("friends", org.apache.thrift.protocol.TType.LIST, (short)6);
   private static final org.apache.thrift.protocol.TField FRIENDREQUESTS_FIELD_DESC = new org.apache.thrift.protocol.TField("friendrequests", org.apache.thrift.protocol.TType.LIST, (short)7);
+  private static final org.apache.thrift.protocol.TField AREASVISITS_FIELD_DESC = new org.apache.thrift.protocol.TField("areasvisits", org.apache.thrift.protocol.TType.MAP, (short)8);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -57,6 +58,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   public Token token; // optional
   public List<String> friends; // optional
   public List<String> friendrequests; // optional
+  public Map<Long,String> areasvisits; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -66,7 +68,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     PROFILE((short)4, "profile"),
     TOKEN((short)5, "token"),
     FRIENDS((short)6, "friends"),
-    FRIENDREQUESTS((short)7, "friendrequests");
+    FRIENDREQUESTS((short)7, "friendrequests"),
+    AREASVISITS((short)8, "areasvisits");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -95,6 +98,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
           return FRIENDS;
         case 7: // FRIENDREQUESTS
           return FRIENDREQUESTS;
+        case 8: // AREASVISITS
+          return AREASVISITS;
         default:
           return null;
       }
@@ -135,7 +140,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.PASSWORD,_Fields.ROLE,_Fields.PROFILE,_Fields.TOKEN,_Fields.FRIENDS,_Fields.FRIENDREQUESTS};
+  private static final _Fields optionals[] = {_Fields.IDENTIFIER,_Fields.PASSWORD,_Fields.ROLE,_Fields.PROFILE,_Fields.TOKEN,_Fields.FRIENDS,_Fields.FRIENDREQUESTS,_Fields.AREASVISITS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -154,6 +159,10 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
             new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     tmpMap.put(_Fields.FRIENDREQUESTS, new org.apache.thrift.meta_data.FieldMetaData("friendrequests", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+    tmpMap.put(_Fields.AREASVISITS, new org.apache.thrift.meta_data.FieldMetaData("areasvisits", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64), 
             new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(User.class, metaDataMap);
@@ -189,6 +198,10 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       List<String> __this__friendrequests = new ArrayList<String>(other.friendrequests);
       this.friendrequests = __this__friendrequests;
     }
+    if (other.isSetAreasvisits()) {
+      Map<Long,String> __this__areasvisits = new HashMap<Long,String>(other.areasvisits);
+      this.areasvisits = __this__areasvisits;
+    }
   }
 
   public User deepCopy() {
@@ -204,6 +217,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     this.token = null;
     this.friends = null;
     this.friendrequests = null;
+    this.areasvisits = null;
   }
 
   public String getIdentifier() {
@@ -404,6 +418,41 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     }
   }
 
+  public int getAreasvisitsSize() {
+    return (this.areasvisits == null) ? 0 : this.areasvisits.size();
+  }
+
+  public void putToAreasvisits(long key, String val) {
+    if (this.areasvisits == null) {
+      this.areasvisits = new HashMap<Long,String>();
+    }
+    this.areasvisits.put(key, val);
+  }
+
+  public Map<Long,String> getAreasvisits() {
+    return this.areasvisits;
+  }
+
+  public User setAreasvisits(Map<Long,String> areasvisits) {
+    this.areasvisits = areasvisits;
+    return this;
+  }
+
+  public void unsetAreasvisits() {
+    this.areasvisits = null;
+  }
+
+  /** Returns true if field areasvisits is set (has been assigned a value) and false otherwise */
+  public boolean isSetAreasvisits() {
+    return this.areasvisits != null;
+  }
+
+  public void setAreasvisitsIsSet(boolean value) {
+    if (!value) {
+      this.areasvisits = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case IDENTIFIER:
@@ -462,6 +511,14 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
       break;
 
+    case AREASVISITS:
+      if (value == null) {
+        unsetAreasvisits();
+      } else {
+        setAreasvisits((Map<Long,String>)value);
+      }
+      break;
+
     }
   }
 
@@ -488,6 +545,9 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     case FRIENDREQUESTS:
       return getFriendrequests();
 
+    case AREASVISITS:
+      return getAreasvisits();
+
     }
     throw new IllegalStateException();
   }
@@ -513,6 +573,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       return isSetFriends();
     case FRIENDREQUESTS:
       return isSetFriendrequests();
+    case AREASVISITS:
+      return isSetAreasvisits();
     }
     throw new IllegalStateException();
   }
@@ -593,6 +655,15 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         return false;
     }
 
+    boolean this_present_areasvisits = true && this.isSetAreasvisits();
+    boolean that_present_areasvisits = true && that.isSetAreasvisits();
+    if (this_present_areasvisits || that_present_areasvisits) {
+      if (!(this_present_areasvisits && that_present_areasvisits))
+        return false;
+      if (!this.areasvisits.equals(that.areasvisits))
+        return false;
+    }
+
     return true;
   }
 
@@ -634,6 +705,11 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     list.add(present_friendrequests);
     if (present_friendrequests)
       list.add(friendrequests);
+
+    boolean present_areasvisits = true && (isSetAreasvisits());
+    list.add(present_areasvisits);
+    if (present_areasvisits)
+      list.add(areasvisits);
 
     return list.hashCode();
   }
@@ -712,6 +788,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     }
     if (isSetFriendrequests()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.friendrequests, other.friendrequests);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetAreasvisits()).compareTo(other.isSetAreasvisits());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetAreasvisits()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.areasvisits, other.areasvisits);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -802,6 +888,16 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
         sb.append("null");
       } else {
         sb.append(this.friendrequests);
+      }
+      first = false;
+    }
+    if (isSetAreasvisits()) {
+      if (!first) sb.append(", ");
+      sb.append("areasvisits:");
+      if (this.areasvisits == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.areasvisits);
       }
       first = false;
     }
@@ -932,6 +1028,26 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 8: // AREASVISITS
+            if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
+              {
+                org.apache.thrift.protocol.TMap _map6 = iprot.readMapBegin();
+                struct.areasvisits = new HashMap<Long,String>(2*_map6.size);
+                long _key7;
+                String _val8;
+                for (int _i9 = 0; _i9 < _map6.size; ++_i9)
+                {
+                  _key7 = iprot.readI64();
+                  _val8 = iprot.readString();
+                  struct.areasvisits.put(_key7, _val8);
+                }
+                iprot.readMapEnd();
+              }
+              struct.setAreasvisitsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -987,9 +1103,9 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
           oprot.writeFieldBegin(FRIENDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.friends.size()));
-            for (String _iter6 : struct.friends)
+            for (String _iter10 : struct.friends)
             {
-              oprot.writeString(_iter6);
+              oprot.writeString(_iter10);
             }
             oprot.writeListEnd();
           }
@@ -1001,11 +1117,26 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
           oprot.writeFieldBegin(FRIENDREQUESTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.friendrequests.size()));
-            for (String _iter7 : struct.friendrequests)
+            for (String _iter11 : struct.friendrequests)
             {
-              oprot.writeString(_iter7);
+              oprot.writeString(_iter11);
             }
             oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.areasvisits != null) {
+        if (struct.isSetAreasvisits()) {
+          oprot.writeFieldBegin(AREASVISITS_FIELD_DESC);
+          {
+            oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRING, struct.areasvisits.size()));
+            for (Map.Entry<Long, String> _iter12 : struct.areasvisits.entrySet())
+            {
+              oprot.writeI64(_iter12.getKey());
+              oprot.writeString(_iter12.getValue());
+            }
+            oprot.writeMapEnd();
           }
           oprot.writeFieldEnd();
         }
@@ -1049,7 +1180,10 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (struct.isSetFriendrequests()) {
         optionals.set(6);
       }
-      oprot.writeBitSet(optionals, 7);
+      if (struct.isSetAreasvisits()) {
+        optionals.set(7);
+      }
+      oprot.writeBitSet(optionals, 8);
       if (struct.isSetIdentifier()) {
         oprot.writeString(struct.identifier);
       }
@@ -1068,18 +1202,28 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       if (struct.isSetFriends()) {
         {
           oprot.writeI32(struct.friends.size());
-          for (String _iter8 : struct.friends)
+          for (String _iter13 : struct.friends)
           {
-            oprot.writeString(_iter8);
+            oprot.writeString(_iter13);
           }
         }
       }
       if (struct.isSetFriendrequests()) {
         {
           oprot.writeI32(struct.friendrequests.size());
-          for (String _iter9 : struct.friendrequests)
+          for (String _iter14 : struct.friendrequests)
           {
-            oprot.writeString(_iter9);
+            oprot.writeString(_iter14);
+          }
+        }
+      }
+      if (struct.isSetAreasvisits()) {
+        {
+          oprot.writeI32(struct.areasvisits.size());
+          for (Map.Entry<Long, String> _iter15 : struct.areasvisits.entrySet())
+          {
+            oprot.writeI64(_iter15.getKey());
+            oprot.writeString(_iter15.getValue());
           }
         }
       }
@@ -1088,7 +1232,7 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, User struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(7);
+      BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
         struct.identifier = iprot.readString();
         struct.setIdentifierIsSet(true);
@@ -1113,29 +1257,44 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
       if (incoming.get(5)) {
         {
-          org.apache.thrift.protocol.TList _list10 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.friends = new ArrayList<String>(_list10.size);
-          String _elem11;
-          for (int _i12 = 0; _i12 < _list10.size; ++_i12)
+          org.apache.thrift.protocol.TList _list16 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.friends = new ArrayList<String>(_list16.size);
+          String _elem17;
+          for (int _i18 = 0; _i18 < _list16.size; ++_i18)
           {
-            _elem11 = iprot.readString();
-            struct.friends.add(_elem11);
+            _elem17 = iprot.readString();
+            struct.friends.add(_elem17);
           }
         }
         struct.setFriendsIsSet(true);
       }
       if (incoming.get(6)) {
         {
-          org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.friendrequests = new ArrayList<String>(_list13.size);
-          String _elem14;
-          for (int _i15 = 0; _i15 < _list13.size; ++_i15)
+          org.apache.thrift.protocol.TList _list19 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.friendrequests = new ArrayList<String>(_list19.size);
+          String _elem20;
+          for (int _i21 = 0; _i21 < _list19.size; ++_i21)
           {
-            _elem14 = iprot.readString();
-            struct.friendrequests.add(_elem14);
+            _elem20 = iprot.readString();
+            struct.friendrequests.add(_elem20);
           }
         }
         struct.setFriendrequestsIsSet(true);
+      }
+      if (incoming.get(7)) {
+        {
+          org.apache.thrift.protocol.TMap _map22 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.areasvisits = new HashMap<Long,String>(2*_map22.size);
+          long _key23;
+          String _val24;
+          for (int _i25 = 0; _i25 < _map22.size; ++_i25)
+          {
+            _key23 = iprot.readI64();
+            _val24 = iprot.readString();
+            struct.areasvisits.put(_key23, _val24);
+          }
+        }
+        struct.setAreasvisitsIsSet(true);
       }
     }
   }

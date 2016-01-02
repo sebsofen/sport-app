@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,7 +42,7 @@ import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
-public class SportSelectActivity extends AppCompatActivity implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
+public class SportSelectActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
     private OuterLayout mOuterLayout;
     private RelativeLayout mMainLayout;
@@ -58,7 +55,6 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
         mOuterLayout = (OuterLayout) findViewById(R.id.outer_layout);
         mMainLayout = (RelativeLayout) findViewById(R.id.sport_select_layout);
 
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.list_refresh);
         final GridView sportListView = (GridView) findViewById(R.id.sport_list);
         Log.i("SportSelectActivity", "" + sportListView);
         final ArrayList<Sport> sportList = new ArrayList<>();
@@ -68,7 +64,6 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
 
         SportListTask sportListTask = new SportListTask(mThis);
         //get last known location
-        sportListTask.setConnectedRefreshLayout(refreshLayout);
         sportListTask.setConnectedAdapter(sportListAdapter);
         sportListTask.connectArrayList(sportList);
         sportListTask.execute("");
@@ -164,12 +159,7 @@ public class SportSelectActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    @Override
-    public void onClick(View v) {
-        Button b = (Button) v;
-        Toast t = Toast.makeText(this, b.getText() + " clicked", Toast.LENGTH_SHORT);
-        t.show();
-    }
+
 
     @Override
     public void onMapReady(GoogleMap gMap) {

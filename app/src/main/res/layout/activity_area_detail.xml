@@ -24,6 +24,11 @@
             android:layout_alignParentLeft="true"
             android:checked="false" />
 
+        <sebastians.sportan.customviews.LoadingView
+            android:layout_width="56dp"
+            android:layout_height="45dp"
+            android:id="@+id/loading_view" />
+
         </android.support.v7.widget.Toolbar>
 
     <RelativeLayout

@@ -45,6 +45,8 @@ public class AreaSvc {
 
     public Area getAreaById(String token, String areaid) throws org.apache.thrift.TException;
 
+    public void wasHere(String token, String areaid, long date) throws org.apache.thrift.TException;
+
     public List<String> getNearBy(String token, Coordinate coordinate, int limit) throws org.apache.thrift.TException;
 
     public List<String> getAllAreasInCity(String cityid) throws org.apache.thrift.TException;
@@ -60,6 +62,8 @@ public class AreaSvc {
     public void deleteArea(String token, Area area, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void getAreaById(String token, String areaid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void wasHere(String token, String areaid, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void getNearBy(String token, Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -172,6 +176,28 @@ public class AreaSvc {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAreaById failed: unknown result");
+    }
+
+    public void wasHere(String token, String areaid, long date) throws org.apache.thrift.TException
+    {
+      send_wasHere(token, areaid, date);
+      recv_wasHere();
+    }
+
+    public void send_wasHere(String token, String areaid, long date) throws org.apache.thrift.TException
+    {
+      wasHere_args args = new wasHere_args();
+      args.setToken(token);
+      args.setAreaid(areaid);
+      args.setDate(date);
+      sendBase("wasHere", args);
+    }
+
+    public void recv_wasHere() throws org.apache.thrift.TException
+    {
+      wasHere_result result = new wasHere_result();
+      receiveBase(result, "wasHere");
+      return;
     }
 
     public List<String> getNearBy(String token, Coordinate coordinate, int limit) throws org.apache.thrift.TException
@@ -380,6 +406,44 @@ public class AreaSvc {
       }
     }
 
+    public void wasHere(String token, String areaid, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      wasHere_call method_call = new wasHere_call(token, areaid, date, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class wasHere_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String token;
+      private String areaid;
+      private long date;
+      public wasHere_call(String token, String areaid, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.token = token;
+        this.areaid = areaid;
+        this.date = date;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("wasHere", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        wasHere_args args = new wasHere_args();
+        args.setToken(token);
+        args.setAreaid(areaid);
+        args.setDate(date);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_wasHere();
+      }
+    }
+
     public void getNearBy(String token, Coordinate coordinate, int limit, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       getNearBy_call method_call = new getNearBy_call(token, coordinate, limit, resultHandler, this, ___protocolFactory, ___transport);
@@ -467,6 +531,7 @@ public class AreaSvc {
       processMap.put("updateArea", new updateArea());
       processMap.put("deleteArea", new deleteArea());
       processMap.put("getAreaById", new getAreaById());
+      processMap.put("wasHere", new wasHere());
       processMap.put("getNearBy", new getNearBy());
       processMap.put("getAllAreasInCity", new getAllAreasInCity());
       return processMap;
@@ -552,6 +617,26 @@ public class AreaSvc {
       }
     }
 
+    public static class wasHere<I extends Iface> extends org.apache.thrift.ProcessFunction<I, wasHere_args> {
+      public wasHere() {
+        super("wasHere");
+      }
+
+      public wasHere_args getEmptyArgsInstance() {
+        return new wasHere_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public wasHere_result getResult(I iface, wasHere_args args) throws org.apache.thrift.TException {
+        wasHere_result result = new wasHere_result();
+        iface.wasHere(args.token, args.areaid, args.date);
+        return result;
+      }
+    }
+
     public static class getNearBy<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getNearBy_args> {
       public getNearBy() {
         super("getNearBy");
@@ -609,6 +694,7 @@ public class AreaSvc {
       processMap.put("updateArea", new updateArea());
       processMap.put("deleteArea", new deleteArea());
       processMap.put("getAreaById", new getAreaById());
+      processMap.put("wasHere", new wasHere());
       processMap.put("getNearBy", new getNearBy());
       processMap.put("getAllAreasInCity", new getAllAreasInCity());
       return processMap;
@@ -812,6 +898,56 @@ public class AreaSvc {
 
       public void start(I iface, getAreaById_args args, org.apache.thrift.async.AsyncMethodCallback<Area> resultHandler) throws TException {
         iface.getAreaById(args.token, args.areaid,resultHandler);
+      }
+    }
+
+    public static class wasHere<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, wasHere_args, Void> {
+      public wasHere() {
+        super("wasHere");
+      }
+
+      public wasHere_args getEmptyArgsInstance() {
+        return new wasHere_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            wasHere_result result = new wasHere_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            wasHere_result result = new wasHere_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, wasHere_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.wasHere(args.token, args.areaid, args.date,resultHandler);
       }
     }
 
@@ -3908,6 +4044,823 @@ public class AreaSvc {
 
   }
 
+  public static class wasHere_args implements org.apache.thrift.TBase<wasHere_args, wasHere_args._Fields>, java.io.Serializable, Cloneable, Comparable<wasHere_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("wasHere_args");
+
+    private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField AREAID_FIELD_DESC = new org.apache.thrift.protocol.TField("areaid", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new wasHere_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new wasHere_argsTupleSchemeFactory());
+    }
+
+    public String token; // required
+    public String areaid; // required
+    public long date; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TOKEN((short)1, "token"),
+      AREAID((short)2, "areaid"),
+      DATE((short)3, "date");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TOKEN
+            return TOKEN;
+          case 2: // AREAID
+            return AREAID;
+          case 3: // DATE
+            return DATE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __DATE_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.AREAID, new org.apache.thrift.meta_data.FieldMetaData("areaid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(wasHere_args.class, metaDataMap);
+    }
+
+    public wasHere_args() {
+    }
+
+    public wasHere_args(
+      String token,
+      String areaid,
+      long date)
+    {
+      this();
+      this.token = token;
+      this.areaid = areaid;
+      this.date = date;
+      setDateIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public wasHere_args(wasHere_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetToken()) {
+        this.token = other.token;
+      }
+      if (other.isSetAreaid()) {
+        this.areaid = other.areaid;
+      }
+      this.date = other.date;
+    }
+
+    public wasHere_args deepCopy() {
+      return new wasHere_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.token = null;
+      this.areaid = null;
+      setDateIsSet(false);
+      this.date = 0;
+    }
+
+    public String getToken() {
+      return this.token;
+    }
+
+    public wasHere_args setToken(String token) {
+      this.token = token;
+      return this;
+    }
+
+    public void unsetToken() {
+      this.token = null;
+    }
+
+    /** Returns true if field token is set (has been assigned a value) and false otherwise */
+    public boolean isSetToken() {
+      return this.token != null;
+    }
+
+    public void setTokenIsSet(boolean value) {
+      if (!value) {
+        this.token = null;
+      }
+    }
+
+    public String getAreaid() {
+      return this.areaid;
+    }
+
+    public wasHere_args setAreaid(String areaid) {
+      this.areaid = areaid;
+      return this;
+    }
+
+    public void unsetAreaid() {
+      this.areaid = null;
+    }
+
+    /** Returns true if field areaid is set (has been assigned a value) and false otherwise */
+    public boolean isSetAreaid() {
+      return this.areaid != null;
+    }
+
+    public void setAreaidIsSet(boolean value) {
+      if (!value) {
+        this.areaid = null;
+      }
+    }
+
+    public long getDate() {
+      return this.date;
+    }
+
+    public wasHere_args setDate(long date) {
+      this.date = date;
+      setDateIsSet(true);
+      return this;
+    }
+
+    public void unsetDate() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __DATE_ISSET_ID);
+    }
+
+    /** Returns true if field date is set (has been assigned a value) and false otherwise */
+    public boolean isSetDate() {
+      return EncodingUtils.testBit(__isset_bitfield, __DATE_ISSET_ID);
+    }
+
+    public void setDateIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __DATE_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case TOKEN:
+        if (value == null) {
+          unsetToken();
+        } else {
+          setToken((String)value);
+        }
+        break;
+
+      case AREAID:
+        if (value == null) {
+          unsetAreaid();
+        } else {
+          setAreaid((String)value);
+        }
+        break;
+
+      case DATE:
+        if (value == null) {
+          unsetDate();
+        } else {
+          setDate((Long)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TOKEN:
+        return getToken();
+
+      case AREAID:
+        return getAreaid();
+
+      case DATE:
+        return getDate();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TOKEN:
+        return isSetToken();
+      case AREAID:
+        return isSetAreaid();
+      case DATE:
+        return isSetDate();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof wasHere_args)
+        return this.equals((wasHere_args)that);
+      return false;
+    }
+
+    public boolean equals(wasHere_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_token = true && this.isSetToken();
+      boolean that_present_token = true && that.isSetToken();
+      if (this_present_token || that_present_token) {
+        if (!(this_present_token && that_present_token))
+          return false;
+        if (!this.token.equals(that.token))
+          return false;
+      }
+
+      boolean this_present_areaid = true && this.isSetAreaid();
+      boolean that_present_areaid = true && that.isSetAreaid();
+      if (this_present_areaid || that_present_areaid) {
+        if (!(this_present_areaid && that_present_areaid))
+          return false;
+        if (!this.areaid.equals(that.areaid))
+          return false;
+      }
+
+      boolean this_present_date = true;
+      boolean that_present_date = true;
+      if (this_present_date || that_present_date) {
+        if (!(this_present_date && that_present_date))
+          return false;
+        if (this.date != that.date)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_token = true && (isSetToken());
+      list.add(present_token);
+      if (present_token)
+        list.add(token);
+
+      boolean present_areaid = true && (isSetAreaid());
+      list.add(present_areaid);
+      if (present_areaid)
+        list.add(areaid);
+
+      boolean present_date = true;
+      list.add(present_date);
+      if (present_date)
+        list.add(date);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(wasHere_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetToken()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAreaid()).compareTo(other.isSetAreaid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAreaid()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.areaid, other.areaid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetDate()).compareTo(other.isSetDate());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDate()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.date, other.date);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("wasHere_args(");
+      boolean first = true;
+
+      sb.append("token:");
+      if (this.token == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.token);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("areaid:");
+      if (this.areaid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.areaid);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("date:");
+      sb.append(this.date);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class wasHere_argsStandardSchemeFactory implements SchemeFactory {
+      public wasHere_argsStandardScheme getScheme() {
+        return new wasHere_argsStandardScheme();
+      }
+    }
+
+    private static class wasHere_argsStandardScheme extends StandardScheme<wasHere_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, wasHere_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TOKEN
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.token = iprot.readString();
+                struct.setTokenIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // AREAID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.areaid = iprot.readString();
+                struct.setAreaidIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // DATE
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.date = iprot.readI64();
+                struct.setDateIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, wasHere_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.token != null) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          oprot.writeString(struct.token);
+          oprot.writeFieldEnd();
+        }
+        if (struct.areaid != null) {
+          oprot.writeFieldBegin(AREAID_FIELD_DESC);
+          oprot.writeString(struct.areaid);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(DATE_FIELD_DESC);
+        oprot.writeI64(struct.date);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class wasHere_argsTupleSchemeFactory implements SchemeFactory {
+      public wasHere_argsTupleScheme getScheme() {
+        return new wasHere_argsTupleScheme();
+      }
+    }
+
+    private static class wasHere_argsTupleScheme extends TupleScheme<wasHere_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, wasHere_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetToken()) {
+          optionals.set(0);
+        }
+        if (struct.isSetAreaid()) {
+          optionals.set(1);
+        }
+        if (struct.isSetDate()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetToken()) {
+          oprot.writeString(struct.token);
+        }
+        if (struct.isSetAreaid()) {
+          oprot.writeString(struct.areaid);
+        }
+        if (struct.isSetDate()) {
+          oprot.writeI64(struct.date);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, wasHere_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.token = iprot.readString();
+          struct.setTokenIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.areaid = iprot.readString();
+          struct.setAreaidIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.date = iprot.readI64();
+          struct.setDateIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class wasHere_result implements org.apache.thrift.TBase<wasHere_result, wasHere_result._Fields>, java.io.Serializable, Cloneable, Comparable<wasHere_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("wasHere_result");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new wasHere_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new wasHere_resultTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(wasHere_result.class, metaDataMap);
+    }
+
+    public wasHere_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public wasHere_result(wasHere_result other) {
+    }
+
+    public wasHere_result deepCopy() {
+      return new wasHere_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof wasHere_result)
+        return this.equals((wasHere_result)that);
+      return false;
+    }
+
+    public boolean equals(wasHere_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(wasHere_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("wasHere_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class wasHere_resultStandardSchemeFactory implements SchemeFactory {
+      public wasHere_resultStandardScheme getScheme() {
+        return new wasHere_resultStandardScheme();
+      }
+    }
+
+    private static class wasHere_resultStandardScheme extends StandardScheme<wasHere_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, wasHere_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, wasHere_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class wasHere_resultTupleSchemeFactory implements SchemeFactory {
+      public wasHere_resultTupleScheme getScheme() {
+        return new wasHere_resultTupleScheme();
+      }
+    }
+
+    private static class wasHere_resultTupleScheme extends TupleScheme<wasHere_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, wasHere_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, wasHere_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+      }
+    }
+
+  }
+
   public static class getNearBy_args implements org.apache.thrift.TBase<getNearBy_args, getNearBy_args._Fields>, java.io.Serializable, Cloneable, Comparable<getNearBy_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getNearBy_args");
 
@@ -4795,13 +5748,13 @@ public class AreaSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list72 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list72.size);
-                  String _elem73;
-                  for (int _i74 = 0; _i74 < _list72.size; ++_i74)
+                  org.apache.thrift.protocol.TList _list82 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list82.size);
+                  String _elem83;
+                  for (int _i84 = 0; _i84 < _list82.size; ++_i84)
                   {
-                    _elem73 = iprot.readString();
-                    struct.success.add(_elem73);
+                    _elem83 = iprot.readString();
+                    struct.success.add(_elem83);
                   }
                   iprot.readListEnd();
                 }
@@ -4829,9 +5782,9 @@ public class AreaSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter75 : struct.success)
+            for (String _iter85 : struct.success)
             {
-              oprot.writeString(_iter75);
+              oprot.writeString(_iter85);
             }
             oprot.writeListEnd();
           }
@@ -4862,9 +5815,9 @@ public class AreaSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter76 : struct.success)
+            for (String _iter86 : struct.success)
             {
-              oprot.writeString(_iter76);
+              oprot.writeString(_iter86);
             }
           }
         }
@@ -4876,13 +5829,13 @@ public class AreaSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list77 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list77.size);
-            String _elem78;
-            for (int _i79 = 0; _i79 < _list77.size; ++_i79)
+            org.apache.thrift.protocol.TList _list87 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list87.size);
+            String _elem88;
+            for (int _i89 = 0; _i89 < _list87.size; ++_i89)
             {
-              _elem78 = iprot.readString();
-              struct.success.add(_elem78);
+              _elem88 = iprot.readString();
+              struct.success.add(_elem88);
             }
           }
           struct.setSuccessIsSet(true);
@@ -5566,13 +6519,13 @@ public class AreaSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list80 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list80.size);
-                  String _elem81;
-                  for (int _i82 = 0; _i82 < _list80.size; ++_i82)
+                  org.apache.thrift.protocol.TList _list90 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list90.size);
+                  String _elem91;
+                  for (int _i92 = 0; _i92 < _list90.size; ++_i92)
                   {
-                    _elem81 = iprot.readString();
-                    struct.success.add(_elem81);
+                    _elem91 = iprot.readString();
+                    struct.success.add(_elem91);
                   }
                   iprot.readListEnd();
                 }
@@ -5600,9 +6553,9 @@ public class AreaSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter83 : struct.success)
+            for (String _iter93 : struct.success)
             {
-              oprot.writeString(_iter83);
+              oprot.writeString(_iter93);
             }
             oprot.writeListEnd();
           }
@@ -5633,9 +6586,9 @@ public class AreaSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter84 : struct.success)
+            for (String _iter94 : struct.success)
             {
-              oprot.writeString(_iter84);
+              oprot.writeString(_iter94);
             }
           }
         }
@@ -5647,13 +6600,13 @@ public class AreaSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list85 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list85.size);
-            String _elem86;
-            for (int _i87 = 0; _i87 < _list85.size; ++_i87)
+            org.apache.thrift.protocol.TList _list95 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list95.size);
+            String _elem96;
+            for (int _i97 = 0; _i97 < _list95.size; ++_i97)
             {
-              _elem86 = iprot.readString();
-              struct.success.add(_elem86);
+              _elem96 = iprot.readString();
+              struct.success.add(_elem96);
             }
           }
           struct.setSuccessIsSet(true);

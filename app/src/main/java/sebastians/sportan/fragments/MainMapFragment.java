@@ -8,7 +8,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +28,6 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,7 +57,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     protected HashMap<String,Marker> areamarkers = new HashMap<>();
     private MyCredentials myCredentials;
     private boolean locationSet = false;
-    public final long LOCATION_UPDATE_INTERVAL = 20 * 1000;
+    public final long LOCATION_UPDATE_INTERVAL = 30 * 1000;
     public final float LOCATION_UPDATE_DISTANCE = 0.0f;
     GoogleMap googleMap;
     public static MainMapFragment newInstance() {
@@ -84,7 +81,6 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         mThis = getActivity();
         myCredentials = new MyCredentials(getActivity());
 
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.list_refresh);
         final GridView sportListView = (GridView) view.findViewById(R.id.sport_list);
 
         final ArrayList<Sport> sportList = new ArrayList<>();
@@ -92,7 +88,6 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         sportListView.setAdapter(sportListAdapter);
 
         SportListTask sportListTask = new SportListTask(mThis);
-        sportListTask.setConnectedRefreshLayout(refreshLayout);
         sportListTask.setConnectedAdapter(sportListAdapter);
         sportListTask.connectArrayList(sportList);
         sportListTask.execute();
@@ -170,7 +165,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
             public void onPreExecute() {}
             @Override
             public void onPostExecute() {
-                ExecutorService executor = Executors.newFixedThreadPool(5);
+                ExecutorService executor = Executors.newFixedThreadPool(1);
                 for(int i = 0; i < (areas.size() > 250 ? 250 : areas.size()) ; i++) {
                     if(areamarkers.get(areas.get(i)) != null){
                         continue;
@@ -202,7 +197,10 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
                     });
                     getAreaTask.executeOnExecutor(executor);
                 }
+
                 //remove obsolete markers from map
+                //there is a race condition here, when the tasks are still executing
+                /*
                 Iterator it = markerids.entrySet().iterator();
                 while (it.hasNext()){
                     Map.Entry pair = (Map.Entry)it.next();
@@ -214,6 +212,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
                         areamarkers.remove(areaid);
                     }
                 }
+                */
 
             }
         });
@@ -226,7 +225,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         Intent intent = new Intent(mThis, AreaDetailActivity.class);
         intent.putExtra(AreaDetailActivity.EXTRA_AREA_ID, areaid);
         startActivity(intent);
-        return true;
+        return false;
     }
 
     @Override

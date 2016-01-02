@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dates">
+        <item>Today</item>
+        <item>Yesterday</item>
+        <item>Few Days Ago</item>
+        <item>Week Ago</item>
+        <item>Long long time ago</item>
+
+    </string-array>
+</resources>

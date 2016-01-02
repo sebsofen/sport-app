@@ -21,16 +21,31 @@ public class LoadingView extends View {
     float rightMargin = 25;
     float increments = 10;
     boolean animate = true;
+
+    int animationCounter = 0;
+
+    /**
+     * constructor, of course
+     * @param context
+     * @param attrs
+     */
     public LoadingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.init();
     }
 
+    /**
+     * initialize paints that are used in onDraw
+     */
     private void init() {
         ballPaint.setColor(getResources().getColor(R.color.colorFourth));
         ballPaint.setStyle(Paint.Style.FILL);
     }
 
+    /**
+     * logic for drawing ball on canvas
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         if(animate) {
@@ -79,20 +94,31 @@ public class LoadingView extends View {
 
     }
 
-    public void redraw() {
-
-
+    private void redraw() {
             invalidate();
             requestLayout();
-
     }
 
 
+    /**
+     * send command to stop loading animation
+     * will only stop, if loading counter is set to zero
+     */
     public void stopAnimation(){
-        animate = false;
+        if(animationCounter > 1){
+            animationCounter--;
+        }else {
+            if(animationCounter > 0)
+                animationCounter--;
+            animate = false;
+        }
     }
 
+    /**
+     * will always run animation, and increment counter
+     */
     public void startAnimation() {
+        animationCounter++;
         animate = true;
     }
 
