@@ -42,19 +42,21 @@ import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
-public class SportSelectActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
+public class SportSelectActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
     private OuterLayout mOuterLayout;
     private RelativeLayout mMainLayout;
     private Context mThis;
+    private int counter = 0;
     protected HashMap<Marker,String> markerids = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_areamapoverview);
-        mOuterLayout = (OuterLayout) findViewById(R.id.outer_layout);
-        mMainLayout = (RelativeLayout) findViewById(R.id.sport_select_layout);
 
+        mMainLayout = (RelativeLayout) findViewById(R.id.sport_select_layout);
+        getLayoutInflater().in
         final GridView sportListView = (GridView) findViewById(R.id.sport_list);
         Log.i("SportSelectActivity", "" + sportListView);
         final ArrayList<Sport> sportList = new ArrayList<>();
@@ -67,8 +69,7 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
         sportListTask.setConnectedAdapter(sportListAdapter);
         sportListTask.connectArrayList(sportList);
         sportListTask.execute("");
-
-
+        sportListAdapter.setOuterLayout(mOuterLayout);
 
 
 
@@ -106,45 +107,6 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
 
 
 
-
-        /*
-
-        Button mButten = (Button)mMainLayout.findViewById(R.id.button2);
-
-        mButten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Animation anim= new TranslateAnimation(0, 0, 0, 200);
-                anim.setDuration(200);
-                anim.setFillAfter(false);
-                mMainLayout.startAnimation(anim);
-                anim.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        mMainLayout.postInvalidateOnAnimation();
-                        mMainLayout.clearAnimation();
-                        mMainLayout.setTop(0);
-                        mMainLayout.setTop(200);
-                        mMainLayout.setBottom(mMainLayout.getBottom() + 200);
-                        mMainLayout.setBottom(mMainLayout.getBottom() + 200);
-                        //
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-            }
-        });
-        */
         mMainLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -158,6 +120,7 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
         });
 
     }
+
 
 
 
@@ -187,8 +150,8 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
                 try {
                     mp = markerTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                     AreaSvc.Client client = new AreaSvc.Client(mp);
+                    //TODO remove this junk
                     areas.addAll(client.getAllAreasInCity("798a9d13-89f0-48d4-7a9b-5320237dbd11"));
-                    //areas.addAll(client.getAllAreasInCity("5d298a64-fed9-4d54-6ce9-3b78e24c1a82"));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -249,12 +212,9 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        Log.i("Sportselect", "selected actionbarstuff");
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            //launch profile activity!
-
-            Log.i("Sportselect", "selected settings");
             Intent intent = new Intent(mThis, ProfileActivity.class);
             startActivity(intent);
         }
@@ -290,5 +250,10 @@ public class SportSelectActivity extends AppCompatActivity implements OnMapReady
 
             }
         };
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.i("OuterLayout", "CLicky Kalcky");
     }
 }

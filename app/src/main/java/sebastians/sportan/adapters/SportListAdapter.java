@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import sebastians.sportan.R;
+import sebastians.sportan.layouts.OuterLayout;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.SvgImageTask;
 
@@ -25,6 +26,13 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
     Context context;
     ArrayList<Sport> sportList;
     HashMap<String,Integer> selectedSports;
+    private OuterLayout outerLayout;
+    int counter = 0;
+
+    public void setOuterLayout(OuterLayout outerLayout){
+        this.outerLayout = outerLayout;
+    }
+
     public SportListAdapter(Context context, int resource, List<Sport> objects) {
         super(context, resource, objects);
         this.context = context;
@@ -59,6 +67,15 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
             elementView.setBackgroundColor(Color.parseColor("#00ffffff"));
         }
+
+        iconView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("OuterLayout", "onClick");
+                if(outerLayout != null)
+                outerLayout.flyToDivision(counter++ % 3);
+            }
+        });
         return elementView;
     }
 }

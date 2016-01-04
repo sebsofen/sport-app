@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<sebastians.sportan.layouts.OuterLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<sebastians.sportan.layouts.OuterLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:id="@+id/outer_layout"
-    android:elevation="-1dp"
-    >
+    android:id="@+id/outer_layout">
+
     <include layout="@layout/sport_select_content"/>
 
 
@@ -17,17 +21,8 @@
     android:orientation="vertical"
     android:clickable="true"
     android:background="@color/colorSecond"
-    android:elevation="1dp"
     >
 
-
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.MapFragment"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/dragg" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -42,9 +37,19 @@
             android:elevation="4dp"
             />
 
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/dragg" />
+
 
     </RelativeLayout>
 
 
 
 </sebastians.sportan.layouts.OuterLayout>
+
+</RelativeLayout>

@@ -32,41 +32,35 @@ public class TabActivity extends AppCompatActivity {
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         LoadingView loadingView = (LoadingView) toolbar.findViewById(R.id.loading_view);
-        loadingView.startAnimation();
         // Give the TabLayout the ViewPager
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
+            @Override
+            public void onPageSelected(int position) {
 
-                        @Override
-                        public void onPageSelected(int position) {
-                            toolbar.getMenu().clear();
-                            switch (position) {
-                                case 0:
-                                    toolbar.inflateMenu(R.menu.menu_main);
-                                    break;
-                                case 1:
-                                    toolbar.inflateMenu(R.menu.menu_friends);
-                                    break;
-                            }
-                        }
-
-
-
-
-
-
+                toolbar.getMenu().clear();
+                switch (position) {
+                    case 0:
+                        toolbar.inflateMenu(R.menu.menu_main);
+                        break;
+                    case 1:
+                        toolbar.inflateMenu(R.menu.menu_friends);
+                        break;
+                }
+            }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
+
         tabLayout.setupWithViewPager(viewPager);
-        //depending on selected tab, inflate menu in toolbar!
 
         final String receivedUserId = getIntent().getStringExtra("USER");
         if(receivedUserId != null && !receivedUserId.equals("")) {
