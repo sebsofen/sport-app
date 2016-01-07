@@ -1,12 +1,7 @@
 package sebastians.sportan.tasks;
 
 import android.content.Context;
-import android.graphics.drawable.PictureDrawable;
-import android.view.View;
 import android.widget.ImageView;
-
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -28,6 +23,7 @@ public class SvgImageTask extends SuperAsyncTask{
     ImageView view;
     Image image;
     Context context;
+    ImageReady imageReady;
     public SvgImageTask(Context ctx) {
         super(ctx);
         this.context = ctx;
@@ -35,6 +31,10 @@ public class SvgImageTask extends SuperAsyncTask{
 
     public void setImageView(ImageView view){
         this.view = view;
+    }
+
+    public void onImageReady(ImageReady imageReady) {
+        this.imageReady = imageReady;
     }
 
 
@@ -101,21 +101,14 @@ public class SvgImageTask extends SuperAsyncTask{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        if(image.content != null) {
+        if(imageReady != null)
+            imageReady.ready(image);
 
-            try {
-                SVG iconsvg = SVG.getFromString(image.content);
-                view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                view.setAdjustViewBounds(true);
-                view.setImageDrawable(new PictureDrawable(iconsvg.renderToPicture()));
-            } catch (SVGParseException e) {
-                e.printStackTrace();
-            }
-           /*  */
-        }
+
 
     }
 
 
 }
+
+

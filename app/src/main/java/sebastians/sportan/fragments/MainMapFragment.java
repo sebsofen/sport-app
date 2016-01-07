@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -94,6 +95,11 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
         final MapFragment map = (MapFragment)getActivity().getFragmentManager().findFragmentById(R.id.map);
         map.getMapAsync(this);
+
+        //sliding panel layout!
+        SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+        slidingUpPanelLayout.setDragView(R.id.dragg);
+        sportListAdapter.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
         return view;
     }

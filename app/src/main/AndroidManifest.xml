@@ -31,10 +31,6 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile" >
         </activity>
-        <activity
-            android:name=".SportSelectActivity"
-            android:label="@string/title_activity_sport_select" >
-        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

@@ -5,6 +5,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import java.util.ArrayList;
 
 /**
@@ -17,10 +19,10 @@ public class SuperListTask<T> extends SuperAsyncTask {
     private SwipeRefreshLayout connectedRefreshLayout;
     private ArrayList<T> connectedList = new ArrayList<>();
 
-
     public void connectArrayList(ArrayList<T> list){
         connectedList = list;
     }
+
 
     public void setConnectedRefreshLayout(SwipeRefreshLayout layout){
         this.connectedRefreshLayout = layout;
