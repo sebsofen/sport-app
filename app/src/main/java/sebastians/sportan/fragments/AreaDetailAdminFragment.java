@@ -1,13 +1,13 @@
 package sebastians.sportan.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,8 +26,6 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import sebastians.sportan.R;
 import sebastians.sportan.adapters.SportListAdapter;
@@ -67,7 +65,7 @@ public class AreaDetailAdminFragment extends Fragment {
     Bitmap area_bitmap;
     Area area;
     String areaid;
-    HashMap<String,Integer> selectedSports = new HashMap<>();
+    ArrayList<String> selectedSports = new ArrayList<>();
 
     public AreaDetailAdminFragment() {
     }
@@ -127,8 +125,8 @@ public class AreaDetailAdminFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String sportid = sportList.get(position).getId();
-                if (selectedSports.get(sportid) == null) {
-                    selectedSports.put(sportid, 1);
+                if (!selectedSports.contains(sportid)) {
+                    selectedSports.add(sportid);
                 } else {
                     selectedSports.remove(sportid);
                 }
@@ -155,7 +153,7 @@ public class AreaDetailAdminFragment extends Fragment {
                     if (area.getSports() != null) {
                         ArrayList<String> asports = (ArrayList<String>) area.getSports();
                         for (int i = 0; i < asports.size(); i++) {
-                            selectedSports.put(asports.get(i), 1);
+                            selectedSports.add(asports.get(i));
                         }
                         sportListAdapter.notifyDataSetChanged();
 
@@ -184,12 +182,7 @@ public class AreaDetailAdminFragment extends Fragment {
                 area.setTitle(title_edit.getText().toString());
                 area.setDescription(description_edit.getText().toString());
 
-                ArrayList<String> areaSportList = new ArrayList<String>();
-                Iterator<String> it = selectedSports.keySet().iterator();
-                while (it.hasNext()) {
-                    areaSportList.add(it.next());
-                }
-                area.setSports(areaSportList);
+                area.setSports(selectedSports);
 
 
 

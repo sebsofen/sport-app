@@ -35,6 +35,7 @@ import java.util.concurrent.Executors;
 import sebastians.sportan.AreaDetailActivity;
 import sebastians.sportan.R;
 import sebastians.sportan.adapters.SportListAdapter;
+import sebastians.sportan.adapters.SportListSelectedFilter;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.customviews.ButtonDialog;
 import sebastians.sportan.graphics.RoundMarker;
@@ -52,11 +53,13 @@ import sebastians.sportan.tasks.TaskCallBacks;
 /**
  * Created by sebastian on 11/12/15.
  */
-public class MainMapFragment extends Fragment implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, LocationListener {
+public class MainMapFragment extends Fragment implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, LocationListener, SportListSelectedFilter {
+    ExecutorService executor = Executors.newFixedThreadPool(1);
     private Context mThis;
     protected HashMap<Marker,String> markerids = new HashMap<>();
     protected HashMap<String,Marker> areamarkers = new HashMap<>();
     private MyCredentials myCredentials;
+    private ArrayList<String> areas = new ArrayList<>();
     private boolean locationSet = false;
     public final long LOCATION_UPDATE_INTERVAL = 30 * 1000;
     public final float LOCATION_UPDATE_DISTANCE = 0.0f;
@@ -87,7 +90,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         final ArrayList<Sport> sportList = new ArrayList<>();
         final SportListAdapter sportListAdapter = new SportListAdapter(mThis,R.id.sport_select_layout,sportList);
         sportListView.setAdapter(sportListAdapter);
-
+        sportListAdapter.setSportListSelectedFilter(this);
         SportListTask sportListTask = new SportListTask(mThis);
         sportListTask.setConnectedAdapter(sportListAdapter);
         sportListTask.connectArrayList(sportList);
@@ -153,7 +156,6 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
         final CustomAsyncTask markerTask = new CustomAsyncTask(mThis);
         markerTask.setTaskCallBacks(new TaskCallBacks() {
-            ArrayList<String> areas = new ArrayList<>();
             @Override
             public String doInBackground() {
                 try {
@@ -171,7 +173,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
             public void onPreExecute() {}
             @Override
             public void onPostExecute() {
-                ExecutorService executor = Executors.newFixedThreadPool(1);
+
                 for(int i = 0; i < (areas.size() > 250 ? 250 : areas.size()) ; i++) {
                     if(areamarkers.get(areas.get(i)) != null){
                         continue;
@@ -188,15 +190,8 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
                                         break;
                                     }
                                 }
-                                Marker marker = googleMap.addMarker(
-                                        new MarkerOptions().position(new LatLng(area.center.get(1), area.center.get(0)))
-                                                .title(area.title)
-                                                .snippet(area.description)
-                                                .flat(true)
-                                                .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(j,j,j)))
-                                );
-                                markerids.put(marker, area.id);
-                                areamarkers.put(area.id,marker);
+                                //TODO add marker eventually
+                                addToMap(area,null);
 
                             }
                         }
@@ -289,4 +284,74 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     }
 
 
-}
+    @Override
+    public void filterChanged(final ArrayList<String> filters) {
+        Log.i("MainMap", "filterChanged");
+        final ArrayList<String> mfilters = filters;
+        for(int i = 0; i < areas.size(); i++){
+            final String areaid = areas.get(i);
+            Log.i("MainMap", "marker" + areaid);
+            GetAreaTask getAreaTask = new GetAreaTask(getActivity(), areaid, new GetTaskFinishCallBack<Area>() {
+                @Override
+                public void onFinished(Area area) {
+                    if(area != null) {
+
+                        ArrayList<String> matchingSports = new ArrayList<>(mfilters);
+                        if(area.getSports() != null) {
+                            if(area.getSports().size() > 0)
+                            Log.i("MainMap", "Sports " + area.getSports().size() );
+                            matchingSports.retainAll(area.getSports());
+
+                            if(matchingSports.size() > 0){
+                                //we have some elements left
+                                Log.e("MainMap", "MArker exists?");
+                                addToMap(area,filters);
+
+                            }else{
+                                removeFromMap(areaid);
+                            }
+
+                        }else {
+                            removeFromMap(areaid);
+                        }
+                    }
+                }
+            });
+            getAreaTask.executeOnExecutor(executor);
+
+
+
+
+            }
+        }
+
+    public synchronized void addToMap(Area area, ArrayList<String> filters){
+        if(areamarkers.get(area.id) != null)
+            return;
+
+        Marker marker = googleMap.addMarker(
+                new MarkerOptions().position(new LatLng(area.center.get(1), area.center.get(0)))
+                        .title(area.title)
+                        .snippet(area.description)
+                        .flat(true)
+                        .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(0,255,0)))
+        );
+        markerids.put(marker, area.id);
+        areamarkers.put(area.id,marker);
+    }
+
+    public synchronized void removeFromMap(String areaid) {
+        if(areamarkers.get(areaid) != null){
+            Marker marker = areamarkers.get(areaid);
+            markerids.remove(marker);
+            marker.remove();
+            areamarkers.remove(areaid);
+        }
+    }
+
+    public synchronized boolean isOnMap(String areaid) {
+        return areamarkers.get(areaid) != null;
+    }
+
+    }
+

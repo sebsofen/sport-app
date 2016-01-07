@@ -3,7 +3,6 @@ package sebastians.sportan.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.util.Log;
@@ -19,11 +18,9 @@ import com.caverock.androidsvg.SVGParseException;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import sebastians.sportan.R;
-import sebastians.sportan.layouts.OuterLayout;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.ImageReady;
@@ -35,18 +32,17 @@ import sebastians.sportan.tasks.SvgImageTask;
 public class SportListAdapter extends ArrayAdapter<Sport> {
     Context context;
     ArrayList<Sport> sportList;
-    HashMap<String,Integer> selectedSports;
-    private OuterLayout outerLayout;
-    int counter = 0;
+    ArrayList<String> selectedSportsList = new ArrayList<>();
     private SlidingUpPanelLayout slidingUpPanelLayout;
+    private SportListSelectedFilter sportListSelectedFilter;
     boolean filtered = false;
 
     public void setSlidingUpPanelLayout(SlidingUpPanelLayout panelLayout) {
         this.slidingUpPanelLayout = panelLayout;
     }
 
-    public void setOuterLayout(OuterLayout outerLayout){
-        this.outerLayout = outerLayout;
+    public void setSportListSelectedFilter(SportListSelectedFilter sportListSelectedFilter){
+        this.sportListSelectedFilter = sportListSelectedFilter;
     }
 
     public SportListAdapter(Context context, int resource, List<Sport> objects) {
@@ -55,8 +51,8 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         this.sportList = (ArrayList<Sport>) objects;
     }
 
-    public void setSelectedList(HashMap<String,Integer> selectedSports) {
-        this.selectedSports = selectedSports;
+    public void setSelectedList(ArrayList<String> selectedSports) {
+        this.selectedSportsList = selectedSports;
     }
 
     @Override
@@ -84,7 +80,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
 
         iconView.setColorFilter(grayFilter);
-        Sport sport = sportList.get(position);
+        final Sport sport = sportList.get(position);
         imageTask.onImageReady(new ImageReady(){
             @Override
             public void ready(Image image) {
@@ -104,23 +100,34 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         title.setText(sport.getName().toUpperCase());
 
         Log.i("AREAADAPTER", "called");
-        if( this.selectedSports != null && this.selectedSports.get(sport.getId()) != null){
-
-            elementView.setBackgroundColor(Color.parseColor("#0000ff"));
+        if( selectedSportsList.contains(sport.getId())){
+            iconView.setColorFilter(colorFilter);
         }else {
-
-            elementView.setBackgroundColor(Color.parseColor("#00ffffff"));
+            iconView.setColorFilter(grayFilter);
         }
 
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ImageView) v).setColorFilter(colorFilter);
-                Log.i("OuterLayout", "onClick");
+
+                //logic stuff
+                if(selectedSportsList.contains(sport.getId())){
+                    selectedSportsList.remove(sport.getId());
+                    ((ImageView) v).setColorFilter(grayFilter);
+
+                }else{
+                    selectedSportsList.add(sport.getId());
+                    ((ImageView) v).setColorFilter(colorFilter);
+                }
+
                 if(slidingUpPanelLayout != null && filtered == false){
                     filtered = true;
                     slidingUpPanelLayout.setAnchorPoint(.3f);
                     slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+                }
+
+                if(SportListAdapter.this.sportListSelectedFilter != null){
+                    SportListAdapter.this.sportListSelectedFilter.filterChanged(selectedSportsList);
                 }
             }
         });
