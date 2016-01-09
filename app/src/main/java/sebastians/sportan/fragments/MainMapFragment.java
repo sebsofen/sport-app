@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +39,7 @@ import sebastians.sportan.adapters.SportListAdapter;
 import sebastians.sportan.adapters.SportListSelectedFilter;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.customviews.ButtonDialog;
+import sebastians.sportan.customviews.LoadingView;
 import sebastians.sportan.graphics.RoundMarker;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
@@ -49,12 +51,14 @@ import sebastians.sportan.tasks.GetTaskFinishCallBack;
 import sebastians.sportan.tasks.SportListTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
+import sebastians.sportan.tasks.caches.AreasCache;
 
 /**
  * Created by sebastian on 11/12/15.
  */
-public class MainMapFragment extends Fragment implements View.OnClickListener,OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, LocationListener, SportListSelectedFilter {
-    ExecutorService executor = Executors.newFixedThreadPool(1);
+public class MainMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, LocationListener, SportListSelectedFilter {
+    ExecutorService executor = Executors.newFixedThreadPool(10);
+
     private Context mThis;
     protected HashMap<Marker,String> markerids = new HashMap<>();
     protected HashMap<String,Marker> areamarkers = new HashMap<>();
@@ -63,7 +67,11 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     private boolean locationSet = false;
     public final long LOCATION_UPDATE_INTERVAL = 30 * 1000;
     public final float LOCATION_UPDATE_DISTANCE = 0.0f;
+    SportListAdapter sportListAdapter;
     GoogleMap googleMap;
+    ImageButton noFilterButton;
+    LoadingView loadingView;
+    private boolean noFilter = true;
     public static MainMapFragment newInstance() {
         MainMapFragment fragment = new MainMapFragment();
         return fragment;
@@ -75,6 +83,9 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loadingView = (LoadingView)getActivity().findViewById(R.id.loading_view);
+
 
     }
 
@@ -88,7 +99,26 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         final GridView sportListView = (GridView) view.findViewById(R.id.sport_list);
 
         final ArrayList<Sport> sportList = new ArrayList<>();
-        final SportListAdapter sportListAdapter = new SportListAdapter(mThis,R.id.sport_select_layout,sportList);
+        sportListAdapter = new SportListAdapter(mThis,R.id.sport_select_layout,sportList);
+
+        noFilterButton = (ImageButton) view.findViewById(R.id.no_filter_btn);
+        noFilterButton.setVisibility(View.GONE);
+        noFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MainMapFragment.this.noFilter == false) {
+                    MainMapFragment.this.noFilter = true;
+                    sportListAdapter.resetFilter();
+                    for(int i = 0; i < areas.size(); i++) {
+                        final String areaid = areas.get(i);
+                        Area area = AreasCache.get(areaid);
+                        addToMap(area, null);
+                    };
+                }
+                v.setVisibility(View.GONE);
+
+            }
+        });
         sportListView.setAdapter(sportListAdapter);
         sportListAdapter.setSportListSelectedFilter(this);
         SportListTask sportListTask = new SportListTask(mThis);
@@ -107,10 +137,6 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 
 
     @Override
@@ -149,7 +175,7 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
 
 }
 
-    private void fetchAndDisplayMarkers(Location loc) {
+    private void fetchAndDisplayMarkers(final Location loc) {
         final Location location = loc;
         if (googleMap == null)
             return;
@@ -170,51 +196,44 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
             }
 
             @Override
-            public void onPreExecute() {}
+            public void onPreExecute() {
+                if(loadingView != null)
+                    loadingView.startAnimation();
+            }
             @Override
             public void onPostExecute() {
+                if(loadingView != null)
+                    loadingView.stopAnimation();
+                //wait for next update, if execution is still running
+                if(executor.isTerminated())
+                    executor = Executors.newFixedThreadPool(10);
+                else if(executor.isShutdown())
+                    return;
 
-                for(int i = 0; i < (areas.size() > 250 ? 250 : areas.size()) ; i++) {
+
+                for(int i = 0; i < (areas.size()) ; i++) {
+                    if(loadingView != null)
+                        loadingView.startAnimation();
                     if(areamarkers.get(areas.get(i)) != null){
                         continue;
                     }
 
+
                     GetAreaTask getAreaTask = new GetAreaTask(getActivity(), areas.get(i), new GetTaskFinishCallBack<Area>() {
                         @Override
                         public void onFinished(Area area) {
+                            if(loadingView != null)
+                                loadingView.stopAnimation();
+
                             if(area != null) {
-                                int j = 0;
-                                for(int i = 0; i < areas.size(); i++){
-                                    if(areas.get(i).equals(area.id)) {
-                                        j = i;
-                                        break;
-                                    }
-                                }
-                                //TODO add marker eventually
-                                addToMap(area,null);
+                                MainMapFragment.this.displayArea(MainMapFragment.this.sportListAdapter.getSelectedSportsList(),area);
 
                             }
                         }
                     });
                     getAreaTask.executeOnExecutor(executor);
                 }
-
-                //remove obsolete markers from map
-                //there is a race condition here, when the tasks are still executing
-                /*
-                Iterator it = markerids.entrySet().iterator();
-                while (it.hasNext()){
-                    Map.Entry pair = (Map.Entry)it.next();
-                    Marker marker = (Marker) pair.getKey();
-                    String areaid = (String) pair.getValue();
-                    if(!areas.contains(areaid)){
-                        marker.remove();
-                        markerids.remove(marker);
-                        areamarkers.remove(areaid);
-                    }
-                }
-                */
-
+                executor.shutdown();
             }
         });
         markerTask.execute();
@@ -257,7 +276,9 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     @Override
     public void onLocationChanged(Location location) {
         Log.i("onLocationChanged", "New Location");
+
         fetchAndDisplayMarkers(location);
+
         if(!locationSet) {
             CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
             CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
@@ -284,48 +305,42 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
     }
 
 
+
+
     @Override
     public void filterChanged(final ArrayList<String> filters) {
-        Log.i("MainMap", "filterChanged");
-        final ArrayList<String> mfilters = filters;
-        for(int i = 0; i < areas.size(); i++){
+        noFilter = false;
+        noFilterButton.setVisibility(View.VISIBLE);
+        //display no filter icon!
+        for(int i = 0; i < areas.size(); i++) {
             final String areaid = areas.get(i);
-            Log.i("MainMap", "marker" + areaid);
-            GetAreaTask getAreaTask = new GetAreaTask(getActivity(), areaid, new GetTaskFinishCallBack<Area>() {
-                @Override
-                public void onFinished(Area area) {
-                    if(area != null) {
+            Area area = AreasCache.get(areaid);
+            displayArea(filters,area);
+        };
 
-                        ArrayList<String> matchingSports = new ArrayList<>(mfilters);
-                        if(area.getSports() != null) {
-                            if(area.getSports().size() > 0)
-                            Log.i("MainMap", "Sports " + area.getSports().size() );
-                            matchingSports.retainAll(area.getSports());
+    }
 
-                            if(matchingSports.size() > 0){
-                                //we have some elements left
-                                Log.e("MainMap", "MArker exists?");
-                                addToMap(area,filters);
+    public void displayArea(final ArrayList<String> mfilters, Area area) {
+        if (area != null) {
 
-                            }else{
-                                removeFromMap(areaid);
-                            }
+            ArrayList<String> matchingSports = new ArrayList<>(mfilters);
+            if (area.getSports() != null)
+                matchingSports.retainAll(area.getSports());
+            else
+                matchingSports = new ArrayList<>();
+            if (noFilter || matchingSports.size() > 0) {
+                addToMap(area, mfilters);
 
-                        }else {
-                            removeFromMap(areaid);
-                        }
-                    }
-                }
-            });
-            getAreaTask.executeOnExecutor(executor);
-
-
-
-
+            } else {
+                removeFromMap(area.getId());
             }
+
+
         }
+    }
 
     public synchronized void addToMap(Area area, ArrayList<String> filters){
+
         if(areamarkers.get(area.id) != null)
             return;
 
@@ -338,13 +353,15 @@ public class MainMapFragment extends Fragment implements View.OnClickListener,On
         );
         markerids.put(marker, area.id);
         areamarkers.put(area.id,marker);
+
     }
 
     public synchronized void removeFromMap(String areaid) {
+
         if(areamarkers.get(areaid) != null){
             Marker marker = areamarkers.get(areaid);
-            markerids.remove(marker);
             marker.remove();
+            markerids.remove(marker);
             areamarkers.remove(areaid);
         }
     }

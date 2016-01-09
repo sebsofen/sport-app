@@ -36,11 +36,21 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private SportListSelectedFilter sportListSelectedFilter;
     boolean filtered = false;
+    private boolean onClickLock = false;
+
+
+    public void resetFilter(){
+        this.selectedSportsList.clear();
+        notifyDataSetInvalidated();
+    }
 
     public void setSlidingUpPanelLayout(SlidingUpPanelLayout panelLayout) {
         this.slidingUpPanelLayout = panelLayout;
     }
 
+    public ArrayList<String> getSelectedSportsList() {
+        return this.selectedSportsList;
+    }
     public void setSportListSelectedFilter(SportListSelectedFilter sportListSelectedFilter){
         this.sportListSelectedFilter = sportListSelectedFilter;
     }
@@ -109,6 +119,8 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(onClickLock)
+                    return;
 
                 //logic stuff
                 if(selectedSportsList.contains(sport.getId())){
@@ -117,7 +129,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
                 }else{
                     selectedSportsList.add(sport.getId());
-                    ((ImageView) v).setColorFilter(colorFilter);
+                     ((ImageView) v).setColorFilter(colorFilter);
                 }
 
                 if(slidingUpPanelLayout != null && filtered == false){

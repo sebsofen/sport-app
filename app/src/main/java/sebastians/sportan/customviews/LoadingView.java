@@ -20,7 +20,7 @@ public class LoadingView extends View {
     float leftMargin = 25;
     float rightMargin = 25;
     float increments = 10;
-    boolean animate = true;
+    boolean animate = false;
 
     int animationCounter = 0;
 

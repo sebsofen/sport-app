@@ -49,6 +49,7 @@ public class MainLoadingActivity extends ActionBarActivity implements MyCredenti
 
     private void guiInit() {
         loadingView = (LoadingView) findViewById(R.id.loading_view);
+        loadingView.startAnimation();
         msg_txt = (TextView) findViewById(R.id.msg_txt);
 
         retry_btn = (Button) findViewById(R.id.retry_btn);

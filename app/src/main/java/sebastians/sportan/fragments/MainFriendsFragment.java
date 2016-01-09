@@ -56,6 +56,7 @@ public class MainFriendsFragment extends Fragment implements MyCredentialsFinish
             @Override
             public void onRefresh() {
                 myCredentials.getMe(true);
+
             }
         });
         if(receivedUserId != null && !receivedUserId.equals("")){
