@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,14 +36,16 @@ import sebastians.sportan.tools.DateCalculations;
 /**
  * Created by sebastian on 06/12/15.
  */
-public class AreaDetailFragment extends Fragment {
+public class AreaDetailFragment extends Fragment{
     MyCredentials myCredentials;
     ImageView area_img;
     TextView area_name_txt;
     TextView area_description_txt;
+    EditText number_participants_txt;
     Area area;
     ListView sport_list;
     Button been_here_btn;
+    Button announce_activity_btn;
     LoadingView loadingView;
     public AreaDetailFragment(){
 
@@ -66,11 +69,14 @@ public class AreaDetailFragment extends Fragment {
         area_description_txt = (TextView) view.findViewById(R.id.area_description_txt);
         sport_list = (ListView) view.findViewById(R.id.sports);
         been_here_btn = (Button) view.findViewById(R.id.been_here_btn);
-
+        announce_activity_btn = (Button) view.findViewById(R.id.announce_activity_btn);
+        number_participants_txt = (EditText) view.findViewById(R.id.number_participants_txt);
 
         final ArrayList<String> sportList = new ArrayList<>();
         final SportStringListAdapter sportListAdapter = new SportStringListAdapter(getActivity(),R.id.sports,sportList);
         sport_list.setAdapter(sportListAdapter);
+
+
         //get image for area;
         if(areaid != null &&  !areaid.equals("")) {
             final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(mActivity);
@@ -124,6 +130,14 @@ public class AreaDetailFragment extends Fragment {
             gatherInformationTask.execute("");
 
         }
+
+        announce_activity_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateSportActivityFragment createSportActivityFragment = new CreateSportActivityFragment();
+                getFragmentManager().beginTransaction().replace(R.id.placeholder, createSportActivityFragment).commit();
+            }
+        });
 
         been_here_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,5 +207,6 @@ public class AreaDetailFragment extends Fragment {
 
         return view;
     }
+
 
 }

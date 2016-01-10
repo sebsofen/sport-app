@@ -33,25 +33,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class SportSvc {
+public class SportActivitySvc {
 
   public interface Iface {
 
-    public Sport createSport(String token, Sport sport) throws org.apache.thrift.TException;
+    public SportActivity createActivity(String token, SportActivity sportactivity) throws org.apache.thrift.TException;
 
-    public List<Sport> getAllSports(String bla) throws org.apache.thrift.TException;
+    public List<String> getAvailableActivityList(String token) throws org.apache.thrift.TException;
 
-    public Sport getSportById(String token, String sportid) throws org.apache.thrift.TException;
+    public SportActivity getActivity(String token, String acitivityid) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void createSport(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void createActivity(String token, SportActivity sportactivity, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void getAllSports(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void getAvailableActivityList(String token, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void getSportById(String token, String sportid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void getActivity(String token, String acitivityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -75,75 +75,75 @@ public class SportSvc {
       super(iprot, oprot);
     }
 
-    public Sport createSport(String token, Sport sport) throws org.apache.thrift.TException
+    public SportActivity createActivity(String token, SportActivity sportactivity) throws org.apache.thrift.TException
     {
-      send_createSport(token, sport);
-      return recv_createSport();
+      send_createActivity(token, sportactivity);
+      return recv_createActivity();
     }
 
-    public void send_createSport(String token, Sport sport) throws org.apache.thrift.TException
+    public void send_createActivity(String token, SportActivity sportactivity) throws org.apache.thrift.TException
     {
-      createSport_args args = new createSport_args();
+      createActivity_args args = new createActivity_args();
       args.setToken(token);
-      args.setSport(sport);
-      sendBase("createSport", args);
+      args.setSportactivity(sportactivity);
+      sendBase("createActivity", args);
     }
 
-    public Sport recv_createSport() throws org.apache.thrift.TException
+    public SportActivity recv_createActivity() throws org.apache.thrift.TException
     {
-      createSport_result result = new createSport_result();
-      receiveBase(result, "createSport");
+      createActivity_result result = new createActivity_result();
+      receiveBase(result, "createActivity");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "createSport failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "createActivity failed: unknown result");
     }
 
-    public List<Sport> getAllSports(String bla) throws org.apache.thrift.TException
+    public List<String> getAvailableActivityList(String token) throws org.apache.thrift.TException
     {
-      send_getAllSports(bla);
-      return recv_getAllSports();
+      send_getAvailableActivityList(token);
+      return recv_getAvailableActivityList();
     }
 
-    public void send_getAllSports(String bla) throws org.apache.thrift.TException
+    public void send_getAvailableActivityList(String token) throws org.apache.thrift.TException
     {
-      getAllSports_args args = new getAllSports_args();
-      args.setBla(bla);
-      sendBase("getAllSports", args);
-    }
-
-    public List<Sport> recv_getAllSports() throws org.apache.thrift.TException
-    {
-      getAllSports_result result = new getAllSports_result();
-      receiveBase(result, "getAllSports");
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAllSports failed: unknown result");
-    }
-
-    public Sport getSportById(String token, String sportid) throws org.apache.thrift.TException
-    {
-      send_getSportById(token, sportid);
-      return recv_getSportById();
-    }
-
-    public void send_getSportById(String token, String sportid) throws org.apache.thrift.TException
-    {
-      getSportById_args args = new getSportById_args();
+      getAvailableActivityList_args args = new getAvailableActivityList_args();
       args.setToken(token);
-      args.setSportid(sportid);
-      sendBase("getSportById", args);
+      sendBase("getAvailableActivityList", args);
     }
 
-    public Sport recv_getSportById() throws org.apache.thrift.TException
+    public List<String> recv_getAvailableActivityList() throws org.apache.thrift.TException
     {
-      getSportById_result result = new getSportById_result();
-      receiveBase(result, "getSportById");
+      getAvailableActivityList_result result = new getAvailableActivityList_result();
+      receiveBase(result, "getAvailableActivityList");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getSportById failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getAvailableActivityList failed: unknown result");
+    }
+
+    public SportActivity getActivity(String token, String acitivityid) throws org.apache.thrift.TException
+    {
+      send_getActivity(token, acitivityid);
+      return recv_getActivity();
+    }
+
+    public void send_getActivity(String token, String acitivityid) throws org.apache.thrift.TException
+    {
+      getActivity_args args = new getActivity_args();
+      args.setToken(token);
+      args.setAcitivityid(acitivityid);
+      sendBase("getActivity", args);
+    }
+
+    public SportActivity recv_getActivity() throws org.apache.thrift.TException
+    {
+      getActivity_result result = new getActivity_result();
+      receiveBase(result, "getActivity");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getActivity failed: unknown result");
     }
 
   }
@@ -164,105 +164,105 @@ public class SportSvc {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void createSport(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void createActivity(String token, SportActivity sportactivity, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createSport_call method_call = new createSport_call(token, sport, resultHandler, this, ___protocolFactory, ___transport);
+      createActivity_call method_call = new createActivity_call(token, sportactivity, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class createSport_call extends org.apache.thrift.async.TAsyncMethodCall {
+    public static class createActivity_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String token;
-      private Sport sport;
-      public createSport_call(String token, Sport sport, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private SportActivity sportactivity;
+      public createActivity_call(String token, SportActivity sportactivity, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.token = token;
-        this.sport = sport;
+        this.sportactivity = sportactivity;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createSport", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        createSport_args args = new createSport_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createActivity", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createActivity_args args = new createActivity_args();
         args.setToken(token);
-        args.setSport(sport);
+        args.setSportactivity(sportactivity);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public Sport getResult() throws org.apache.thrift.TException {
+      public SportActivity getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_createSport();
+        return (new Client(prot)).recv_createActivity();
       }
     }
 
-    public void getAllSports(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void getAvailableActivityList(String token, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getAllSports_call method_call = new getAllSports_call(bla, resultHandler, this, ___protocolFactory, ___transport);
+      getAvailableActivityList_call method_call = new getAvailableActivityList_call(token, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getAllSports_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private String bla;
-      public getAllSports_call(String bla, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-        this.bla = bla;
-      }
-
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getAllSports", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getAllSports_args args = new getAllSports_args();
-        args.setBla(bla);
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public List<Sport> getResult() throws org.apache.thrift.TException {
-        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
-        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getAllSports();
-      }
-    }
-
-    public void getSportById(String token, String sportid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
-      checkReady();
-      getSportById_call method_call = new getSportById_call(token, sportid, resultHandler, this, ___protocolFactory, ___transport);
-      this.___currentMethod = method_call;
-      ___manager.call(method_call);
-    }
-
-    public static class getSportById_call extends org.apache.thrift.async.TAsyncMethodCall {
+    public static class getAvailableActivityList_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String token;
-      private String sportid;
-      public getSportById_call(String token, String sportid, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public getAvailableActivityList_call(String token, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.token = token;
-        this.sportid = sportid;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getSportById", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getSportById_args args = new getSportById_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getAvailableActivityList", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getAvailableActivityList_args args = new getAvailableActivityList_args();
         args.setToken(token);
-        args.setSportid(sportid);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public Sport getResult() throws org.apache.thrift.TException {
+      public List<String> getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getSportById();
+        return (new Client(prot)).recv_getAvailableActivityList();
+      }
+    }
+
+    public void getActivity(String token, String acitivityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      getActivity_call method_call = new getActivity_call(token, acitivityid, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getActivity_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String token;
+      private String acitivityid;
+      public getActivity_call(String token, String acitivityid, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.token = token;
+        this.acitivityid = acitivityid;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getActivity", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getActivity_args args = new getActivity_args();
+        args.setToken(token);
+        args.setAcitivityid(acitivityid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public SportActivity getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getActivity();
       }
     }
 
@@ -279,68 +279,68 @@ public class SportSvc {
     }
 
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("createSport", new createSport());
-      processMap.put("getAllSports", new getAllSports());
-      processMap.put("getSportById", new getSportById());
+      processMap.put("createActivity", new createActivity());
+      processMap.put("getAvailableActivityList", new getAvailableActivityList());
+      processMap.put("getActivity", new getActivity());
       return processMap;
     }
 
-    public static class createSport<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createSport_args> {
-      public createSport() {
-        super("createSport");
+    public static class createActivity<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createActivity_args> {
+      public createActivity() {
+        super("createActivity");
       }
 
-      public createSport_args getEmptyArgsInstance() {
-        return new createSport_args();
+      public createActivity_args getEmptyArgsInstance() {
+        return new createActivity_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public createSport_result getResult(I iface, createSport_args args) throws org.apache.thrift.TException {
-        createSport_result result = new createSport_result();
-        result.success = iface.createSport(args.token, args.sport);
+      public createActivity_result getResult(I iface, createActivity_args args) throws org.apache.thrift.TException {
+        createActivity_result result = new createActivity_result();
+        result.success = iface.createActivity(args.token, args.sportactivity);
         return result;
       }
     }
 
-    public static class getAllSports<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getAllSports_args> {
-      public getAllSports() {
-        super("getAllSports");
+    public static class getAvailableActivityList<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getAvailableActivityList_args> {
+      public getAvailableActivityList() {
+        super("getAvailableActivityList");
       }
 
-      public getAllSports_args getEmptyArgsInstance() {
-        return new getAllSports_args();
+      public getAvailableActivityList_args getEmptyArgsInstance() {
+        return new getAvailableActivityList_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public getAllSports_result getResult(I iface, getAllSports_args args) throws org.apache.thrift.TException {
-        getAllSports_result result = new getAllSports_result();
-        result.success = iface.getAllSports(args.bla);
+      public getAvailableActivityList_result getResult(I iface, getAvailableActivityList_args args) throws org.apache.thrift.TException {
+        getAvailableActivityList_result result = new getAvailableActivityList_result();
+        result.success = iface.getAvailableActivityList(args.token);
         return result;
       }
     }
 
-    public static class getSportById<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getSportById_args> {
-      public getSportById() {
-        super("getSportById");
+    public static class getActivity<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getActivity_args> {
+      public getActivity() {
+        super("getActivity");
       }
 
-      public getSportById_args getEmptyArgsInstance() {
-        return new getSportById_args();
+      public getActivity_args getEmptyArgsInstance() {
+        return new getActivity_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public getSportById_result getResult(I iface, getSportById_args args) throws org.apache.thrift.TException {
-        getSportById_result result = new getSportById_result();
-        result.success = iface.getSportById(args.token, args.sportid);
+      public getActivity_result getResult(I iface, getActivity_args args) throws org.apache.thrift.TException {
+        getActivity_result result = new getActivity_result();
+        result.success = iface.getActivity(args.token, args.acitivityid);
         return result;
       }
     }
@@ -358,26 +358,26 @@ public class SportSvc {
     }
 
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
-      processMap.put("createSport", new createSport());
-      processMap.put("getAllSports", new getAllSports());
-      processMap.put("getSportById", new getSportById());
+      processMap.put("createActivity", new createActivity());
+      processMap.put("getAvailableActivityList", new getAvailableActivityList());
+      processMap.put("getActivity", new getActivity());
       return processMap;
     }
 
-    public static class createSport<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, createSport_args, Sport> {
-      public createSport() {
-        super("createSport");
+    public static class createActivity<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, createActivity_args, SportActivity> {
+      public createActivity() {
+        super("createActivity");
       }
 
-      public createSport_args getEmptyArgsInstance() {
-        return new createSport_args();
+      public createActivity_args getEmptyArgsInstance() {
+        return new createActivity_args();
       }
 
-      public AsyncMethodCallback<Sport> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<SportActivity> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<Sport>() { 
-          public void onComplete(Sport o) {
-            createSport_result result = new createSport_result();
+        return new AsyncMethodCallback<SportActivity>() { 
+          public void onComplete(SportActivity o) {
+            createActivity_result result = new createActivity_result();
             result.success = o;
             try {
               fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -390,7 +390,7 @@ public class SportSvc {
           public void onError(Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TBase msg;
-            createSport_result result = new createSport_result();
+            createActivity_result result = new createActivity_result();
             {
               msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
               msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -410,25 +410,25 @@ public class SportSvc {
         return false;
       }
 
-      public void start(I iface, createSport_args args, org.apache.thrift.async.AsyncMethodCallback<Sport> resultHandler) throws TException {
-        iface.createSport(args.token, args.sport,resultHandler);
+      public void start(I iface, createActivity_args args, org.apache.thrift.async.AsyncMethodCallback<SportActivity> resultHandler) throws TException {
+        iface.createActivity(args.token, args.sportactivity,resultHandler);
       }
     }
 
-    public static class getAllSports<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAllSports_args, List<Sport>> {
-      public getAllSports() {
-        super("getAllSports");
+    public static class getAvailableActivityList<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getAvailableActivityList_args, List<String>> {
+      public getAvailableActivityList() {
+        super("getAvailableActivityList");
       }
 
-      public getAllSports_args getEmptyArgsInstance() {
-        return new getAllSports_args();
+      public getAvailableActivityList_args getEmptyArgsInstance() {
+        return new getAvailableActivityList_args();
       }
 
-      public AsyncMethodCallback<List<Sport>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<List<String>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<List<Sport>>() { 
-          public void onComplete(List<Sport> o) {
-            getAllSports_result result = new getAllSports_result();
+        return new AsyncMethodCallback<List<String>>() { 
+          public void onComplete(List<String> o) {
+            getAvailableActivityList_result result = new getAvailableActivityList_result();
             result.success = o;
             try {
               fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -441,7 +441,7 @@ public class SportSvc {
           public void onError(Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TBase msg;
-            getAllSports_result result = new getAllSports_result();
+            getAvailableActivityList_result result = new getAvailableActivityList_result();
             {
               msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
               msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -461,25 +461,25 @@ public class SportSvc {
         return false;
       }
 
-      public void start(I iface, getAllSports_args args, org.apache.thrift.async.AsyncMethodCallback<List<Sport>> resultHandler) throws TException {
-        iface.getAllSports(args.bla,resultHandler);
+      public void start(I iface, getAvailableActivityList_args args, org.apache.thrift.async.AsyncMethodCallback<List<String>> resultHandler) throws TException {
+        iface.getAvailableActivityList(args.token,resultHandler);
       }
     }
 
-    public static class getSportById<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getSportById_args, Sport> {
-      public getSportById() {
-        super("getSportById");
+    public static class getActivity<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getActivity_args, SportActivity> {
+      public getActivity() {
+        super("getActivity");
       }
 
-      public getSportById_args getEmptyArgsInstance() {
-        return new getSportById_args();
+      public getActivity_args getEmptyArgsInstance() {
+        return new getActivity_args();
       }
 
-      public AsyncMethodCallback<Sport> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<SportActivity> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<Sport>() { 
-          public void onComplete(Sport o) {
-            getSportById_result result = new getSportById_result();
+        return new AsyncMethodCallback<SportActivity>() { 
+          public void onComplete(SportActivity o) {
+            getActivity_result result = new getActivity_result();
             result.success = o;
             try {
               fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -492,7 +492,7 @@ public class SportSvc {
           public void onError(Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TBase msg;
-            getSportById_result result = new getSportById_result();
+            getActivity_result result = new getActivity_result();
             {
               msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
               msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
@@ -512,32 +512,32 @@ public class SportSvc {
         return false;
       }
 
-      public void start(I iface, getSportById_args args, org.apache.thrift.async.AsyncMethodCallback<Sport> resultHandler) throws TException {
-        iface.getSportById(args.token, args.sportid,resultHandler);
+      public void start(I iface, getActivity_args args, org.apache.thrift.async.AsyncMethodCallback<SportActivity> resultHandler) throws TException {
+        iface.getActivity(args.token, args.acitivityid,resultHandler);
       }
     }
 
   }
 
-  public static class createSport_args implements org.apache.thrift.TBase<createSport_args, createSport_args._Fields>, java.io.Serializable, Cloneable, Comparable<createSport_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createSport_args");
+  public static class createActivity_args implements org.apache.thrift.TBase<createActivity_args, createActivity_args._Fields>, java.io.Serializable, Cloneable, Comparable<createActivity_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createActivity_args");
 
     private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField SPORT_FIELD_DESC = new org.apache.thrift.protocol.TField("sport", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField SPORTACTIVITY_FIELD_DESC = new org.apache.thrift.protocol.TField("sportactivity", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new createSport_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createSport_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new createActivity_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createActivity_argsTupleSchemeFactory());
     }
 
     public String token; // required
-    public Sport sport; // required
+    public SportActivity sportactivity; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       TOKEN((short)1, "token"),
-      SPORT((short)2, "sport");
+      SPORTACTIVITY((short)2, "sportactivity");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -554,8 +554,8 @@ public class SportSvc {
         switch(fieldId) {
           case 1: // TOKEN
             return TOKEN;
-          case 2: // SPORT
-            return SPORT;
+          case 2: // SPORTACTIVITY
+            return SPORTACTIVITY;
           default:
             return null;
         }
@@ -601,51 +601,51 @@ public class SportSvc {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.SPORT, new org.apache.thrift.meta_data.FieldMetaData("sport", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class)));
+      tmpMap.put(_Fields.SPORTACTIVITY, new org.apache.thrift.meta_data.FieldMetaData("sportactivity", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SportActivity.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createSport_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createActivity_args.class, metaDataMap);
     }
 
-    public createSport_args() {
+    public createActivity_args() {
     }
 
-    public createSport_args(
+    public createActivity_args(
       String token,
-      Sport sport)
+      SportActivity sportactivity)
     {
       this();
       this.token = token;
-      this.sport = sport;
+      this.sportactivity = sportactivity;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public createSport_args(createSport_args other) {
+    public createActivity_args(createActivity_args other) {
       if (other.isSetToken()) {
         this.token = other.token;
       }
-      if (other.isSetSport()) {
-        this.sport = new Sport(other.sport);
+      if (other.isSetSportactivity()) {
+        this.sportactivity = new SportActivity(other.sportactivity);
       }
     }
 
-    public createSport_args deepCopy() {
-      return new createSport_args(this);
+    public createActivity_args deepCopy() {
+      return new createActivity_args(this);
     }
 
     @Override
     public void clear() {
       this.token = null;
-      this.sport = null;
+      this.sportactivity = null;
     }
 
     public String getToken() {
       return this.token;
     }
 
-    public createSport_args setToken(String token) {
+    public createActivity_args setToken(String token) {
       this.token = token;
       return this;
     }
@@ -665,27 +665,27 @@ public class SportSvc {
       }
     }
 
-    public Sport getSport() {
-      return this.sport;
+    public SportActivity getSportactivity() {
+      return this.sportactivity;
     }
 
-    public createSport_args setSport(Sport sport) {
-      this.sport = sport;
+    public createActivity_args setSportactivity(SportActivity sportactivity) {
+      this.sportactivity = sportactivity;
       return this;
     }
 
-    public void unsetSport() {
-      this.sport = null;
+    public void unsetSportactivity() {
+      this.sportactivity = null;
     }
 
-    /** Returns true if field sport is set (has been assigned a value) and false otherwise */
-    public boolean isSetSport() {
-      return this.sport != null;
+    /** Returns true if field sportactivity is set (has been assigned a value) and false otherwise */
+    public boolean isSetSportactivity() {
+      return this.sportactivity != null;
     }
 
-    public void setSportIsSet(boolean value) {
+    public void setSportactivityIsSet(boolean value) {
       if (!value) {
-        this.sport = null;
+        this.sportactivity = null;
       }
     }
 
@@ -699,11 +699,11 @@ public class SportSvc {
         }
         break;
 
-      case SPORT:
+      case SPORTACTIVITY:
         if (value == null) {
-          unsetSport();
+          unsetSportactivity();
         } else {
-          setSport((Sport)value);
+          setSportactivity((SportActivity)value);
         }
         break;
 
@@ -715,8 +715,8 @@ public class SportSvc {
       case TOKEN:
         return getToken();
 
-      case SPORT:
-        return getSport();
+      case SPORTACTIVITY:
+        return getSportactivity();
 
       }
       throw new IllegalStateException();
@@ -731,8 +731,8 @@ public class SportSvc {
       switch (field) {
       case TOKEN:
         return isSetToken();
-      case SPORT:
-        return isSetSport();
+      case SPORTACTIVITY:
+        return isSetSportactivity();
       }
       throw new IllegalStateException();
     }
@@ -741,12 +741,12 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof createSport_args)
-        return this.equals((createSport_args)that);
+      if (that instanceof createActivity_args)
+        return this.equals((createActivity_args)that);
       return false;
     }
 
-    public boolean equals(createSport_args that) {
+    public boolean equals(createActivity_args that) {
       if (that == null)
         return false;
 
@@ -759,12 +759,12 @@ public class SportSvc {
           return false;
       }
 
-      boolean this_present_sport = true && this.isSetSport();
-      boolean that_present_sport = true && that.isSetSport();
-      if (this_present_sport || that_present_sport) {
-        if (!(this_present_sport && that_present_sport))
+      boolean this_present_sportactivity = true && this.isSetSportactivity();
+      boolean that_present_sportactivity = true && that.isSetSportactivity();
+      if (this_present_sportactivity || that_present_sportactivity) {
+        if (!(this_present_sportactivity && that_present_sportactivity))
           return false;
-        if (!this.sport.equals(that.sport))
+        if (!this.sportactivity.equals(that.sportactivity))
           return false;
       }
 
@@ -780,16 +780,16 @@ public class SportSvc {
       if (present_token)
         list.add(token);
 
-      boolean present_sport = true && (isSetSport());
-      list.add(present_sport);
-      if (present_sport)
-        list.add(sport);
+      boolean present_sportactivity = true && (isSetSportactivity());
+      list.add(present_sportactivity);
+      if (present_sportactivity)
+        list.add(sportactivity);
 
       return list.hashCode();
     }
 
     @Override
-    public int compareTo(createSport_args other) {
+    public int compareTo(createActivity_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -806,12 +806,12 @@ public class SportSvc {
           return lastComparison;
         }
       }
-      lastComparison = Boolean.valueOf(isSetSport()).compareTo(other.isSetSport());
+      lastComparison = Boolean.valueOf(isSetSportactivity()).compareTo(other.isSetSportactivity());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetSport()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sport, other.sport);
+      if (isSetSportactivity()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sportactivity, other.sportactivity);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -833,7 +833,7 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("createSport_args(");
+      StringBuilder sb = new StringBuilder("createActivity_args(");
       boolean first = true;
 
       sb.append("token:");
@@ -844,11 +844,11 @@ public class SportSvc {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("sport:");
-      if (this.sport == null) {
+      sb.append("sportactivity:");
+      if (this.sportactivity == null) {
         sb.append("null");
       } else {
-        sb.append(this.sport);
+        sb.append(this.sportactivity);
       }
       first = false;
       sb.append(")");
@@ -858,8 +858,8 @@ public class SportSvc {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
-      if (sport != null) {
-        sport.validate();
+      if (sportactivity != null) {
+        sportactivity.validate();
       }
     }
 
@@ -879,15 +879,15 @@ public class SportSvc {
       }
     }
 
-    private static class createSport_argsStandardSchemeFactory implements SchemeFactory {
-      public createSport_argsStandardScheme getScheme() {
-        return new createSport_argsStandardScheme();
+    private static class createActivity_argsStandardSchemeFactory implements SchemeFactory {
+      public createActivity_argsStandardScheme getScheme() {
+        return new createActivity_argsStandardScheme();
       }
     }
 
-    private static class createSport_argsStandardScheme extends StandardScheme<createSport_args> {
+    private static class createActivity_argsStandardScheme extends StandardScheme<createActivity_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createSport_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createActivity_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -905,11 +905,11 @@ public class SportSvc {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // SPORT
+            case 2: // SPORTACTIVITY
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.sport = new Sport();
-                struct.sport.read(iprot);
-                struct.setSportIsSet(true);
+                struct.sportactivity = new SportActivity();
+                struct.sportactivity.read(iprot);
+                struct.setSportactivityIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -925,7 +925,7 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createSport_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createActivity_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -934,9 +934,9 @@ public class SportSvc {
           oprot.writeString(struct.token);
           oprot.writeFieldEnd();
         }
-        if (struct.sport != null) {
-          oprot.writeFieldBegin(SPORT_FIELD_DESC);
-          struct.sport.write(oprot);
+        if (struct.sportactivity != null) {
+          oprot.writeFieldBegin(SPORTACTIVITY_FIELD_DESC);
+          struct.sportactivity.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -945,35 +945,35 @@ public class SportSvc {
 
     }
 
-    private static class createSport_argsTupleSchemeFactory implements SchemeFactory {
-      public createSport_argsTupleScheme getScheme() {
-        return new createSport_argsTupleScheme();
+    private static class createActivity_argsTupleSchemeFactory implements SchemeFactory {
+      public createActivity_argsTupleScheme getScheme() {
+        return new createActivity_argsTupleScheme();
       }
     }
 
-    private static class createSport_argsTupleScheme extends TupleScheme<createSport_args> {
+    private static class createActivity_argsTupleScheme extends TupleScheme<createActivity_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createSport_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, createActivity_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetToken()) {
           optionals.set(0);
         }
-        if (struct.isSetSport()) {
+        if (struct.isSetSportactivity()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetToken()) {
           oprot.writeString(struct.token);
         }
-        if (struct.isSetSport()) {
-          struct.sport.write(oprot);
+        if (struct.isSetSportactivity()) {
+          struct.sportactivity.write(oprot);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createSport_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, createActivity_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
@@ -981,27 +981,27 @@ public class SportSvc {
           struct.setTokenIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.sport = new Sport();
-          struct.sport.read(iprot);
-          struct.setSportIsSet(true);
+          struct.sportactivity = new SportActivity();
+          struct.sportactivity.read(iprot);
+          struct.setSportactivityIsSet(true);
         }
       }
     }
 
   }
 
-  public static class createSport_result implements org.apache.thrift.TBase<createSport_result, createSport_result._Fields>, java.io.Serializable, Cloneable, Comparable<createSport_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createSport_result");
+  public static class createActivity_result implements org.apache.thrift.TBase<createActivity_result, createActivity_result._Fields>, java.io.Serializable, Cloneable, Comparable<createActivity_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createActivity_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new createSport_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createSport_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new createActivity_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createActivity_resultTupleSchemeFactory());
     }
 
-    public Sport success; // required
+    public SportActivity success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1066,16 +1066,16 @@ public class SportSvc {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SportActivity.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createSport_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createActivity_result.class, metaDataMap);
     }
 
-    public createSport_result() {
+    public createActivity_result() {
     }
 
-    public createSport_result(
-      Sport success)
+    public createActivity_result(
+      SportActivity success)
     {
       this();
       this.success = success;
@@ -1084,14 +1084,14 @@ public class SportSvc {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public createSport_result(createSport_result other) {
+    public createActivity_result(createActivity_result other) {
       if (other.isSetSuccess()) {
-        this.success = new Sport(other.success);
+        this.success = new SportActivity(other.success);
       }
     }
 
-    public createSport_result deepCopy() {
-      return new createSport_result(this);
+    public createActivity_result deepCopy() {
+      return new createActivity_result(this);
     }
 
     @Override
@@ -1099,11 +1099,11 @@ public class SportSvc {
       this.success = null;
     }
 
-    public Sport getSuccess() {
+    public SportActivity getSuccess() {
       return this.success;
     }
 
-    public createSport_result setSuccess(Sport success) {
+    public createActivity_result setSuccess(SportActivity success) {
       this.success = success;
       return this;
     }
@@ -1129,7 +1129,7 @@ public class SportSvc {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Sport)value);
+          setSuccess((SportActivity)value);
         }
         break;
 
@@ -1162,12 +1162,12 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof createSport_result)
-        return this.equals((createSport_result)that);
+      if (that instanceof createActivity_result)
+        return this.equals((createActivity_result)that);
       return false;
     }
 
-    public boolean equals(createSport_result that) {
+    public boolean equals(createActivity_result that) {
       if (that == null)
         return false;
 
@@ -1196,7 +1196,7 @@ public class SportSvc {
     }
 
     @Override
-    public int compareTo(createSport_result other) {
+    public int compareTo(createActivity_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -1230,7 +1230,7 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("createSport_result(");
+      StringBuilder sb = new StringBuilder("createActivity_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -1268,15 +1268,15 @@ public class SportSvc {
       }
     }
 
-    private static class createSport_resultStandardSchemeFactory implements SchemeFactory {
-      public createSport_resultStandardScheme getScheme() {
-        return new createSport_resultStandardScheme();
+    private static class createActivity_resultStandardSchemeFactory implements SchemeFactory {
+      public createActivity_resultStandardScheme getScheme() {
+        return new createActivity_resultStandardScheme();
       }
     }
 
-    private static class createSport_resultStandardScheme extends StandardScheme<createSport_result> {
+    private static class createActivity_resultStandardScheme extends StandardScheme<createActivity_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createSport_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createActivity_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -1288,7 +1288,7 @@ public class SportSvc {
           switch (schemeField.id) {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.success = new Sport();
+                struct.success = new SportActivity();
                 struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
@@ -1306,7 +1306,7 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createSport_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createActivity_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -1321,16 +1321,16 @@ public class SportSvc {
 
     }
 
-    private static class createSport_resultTupleSchemeFactory implements SchemeFactory {
-      public createSport_resultTupleScheme getScheme() {
-        return new createSport_resultTupleScheme();
+    private static class createActivity_resultTupleSchemeFactory implements SchemeFactory {
+      public createActivity_resultTupleScheme getScheme() {
+        return new createActivity_resultTupleScheme();
       }
     }
 
-    private static class createSport_resultTupleScheme extends TupleScheme<createSport_result> {
+    private static class createActivity_resultTupleScheme extends TupleScheme<createActivity_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createSport_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, createActivity_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -1343,11 +1343,11 @@ public class SportSvc {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createSport_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, createActivity_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = new Sport();
+          struct.success = new SportActivity();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
@@ -1356,22 +1356,22 @@ public class SportSvc {
 
   }
 
-  public static class getAllSports_args implements org.apache.thrift.TBase<getAllSports_args, getAllSports_args._Fields>, java.io.Serializable, Cloneable, Comparable<getAllSports_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllSports_args");
+  public static class getAvailableActivityList_args implements org.apache.thrift.TBase<getAvailableActivityList_args, getAvailableActivityList_args._Fields>, java.io.Serializable, Cloneable, Comparable<getAvailableActivityList_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAvailableActivityList_args");
 
-    private static final org.apache.thrift.protocol.TField BLA_FIELD_DESC = new org.apache.thrift.protocol.TField("bla", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getAllSports_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getAllSports_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getAvailableActivityList_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAvailableActivityList_argsTupleSchemeFactory());
     }
 
-    public String bla; // required
+    public String token; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      BLA((short)1, "bla");
+      TOKEN((short)1, "token");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1386,8 +1386,8 @@ public class SportSvc {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // BLA
-            return BLA;
+          case 1: // TOKEN
+            return TOKEN;
           default:
             return null;
         }
@@ -1431,71 +1431,71 @@ public class SportSvc {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.BLA, new org.apache.thrift.meta_data.FieldMetaData("bla", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllSports_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAvailableActivityList_args.class, metaDataMap);
     }
 
-    public getAllSports_args() {
+    public getAvailableActivityList_args() {
     }
 
-    public getAllSports_args(
-      String bla)
+    public getAvailableActivityList_args(
+      String token)
     {
       this();
-      this.bla = bla;
+      this.token = token;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getAllSports_args(getAllSports_args other) {
-      if (other.isSetBla()) {
-        this.bla = other.bla;
+    public getAvailableActivityList_args(getAvailableActivityList_args other) {
+      if (other.isSetToken()) {
+        this.token = other.token;
       }
     }
 
-    public getAllSports_args deepCopy() {
-      return new getAllSports_args(this);
+    public getAvailableActivityList_args deepCopy() {
+      return new getAvailableActivityList_args(this);
     }
 
     @Override
     public void clear() {
-      this.bla = null;
+      this.token = null;
     }
 
-    public String getBla() {
-      return this.bla;
+    public String getToken() {
+      return this.token;
     }
 
-    public getAllSports_args setBla(String bla) {
-      this.bla = bla;
+    public getAvailableActivityList_args setToken(String token) {
+      this.token = token;
       return this;
     }
 
-    public void unsetBla() {
-      this.bla = null;
+    public void unsetToken() {
+      this.token = null;
     }
 
-    /** Returns true if field bla is set (has been assigned a value) and false otherwise */
-    public boolean isSetBla() {
-      return this.bla != null;
+    /** Returns true if field token is set (has been assigned a value) and false otherwise */
+    public boolean isSetToken() {
+      return this.token != null;
     }
 
-    public void setBlaIsSet(boolean value) {
+    public void setTokenIsSet(boolean value) {
       if (!value) {
-        this.bla = null;
+        this.token = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case BLA:
+      case TOKEN:
         if (value == null) {
-          unsetBla();
+          unsetToken();
         } else {
-          setBla((String)value);
+          setToken((String)value);
         }
         break;
 
@@ -1504,8 +1504,8 @@ public class SportSvc {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case BLA:
-        return getBla();
+      case TOKEN:
+        return getToken();
 
       }
       throw new IllegalStateException();
@@ -1518,8 +1518,8 @@ public class SportSvc {
       }
 
       switch (field) {
-      case BLA:
-        return isSetBla();
+      case TOKEN:
+        return isSetToken();
       }
       throw new IllegalStateException();
     }
@@ -1528,21 +1528,21 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getAllSports_args)
-        return this.equals((getAllSports_args)that);
+      if (that instanceof getAvailableActivityList_args)
+        return this.equals((getAvailableActivityList_args)that);
       return false;
     }
 
-    public boolean equals(getAllSports_args that) {
+    public boolean equals(getAvailableActivityList_args that) {
       if (that == null)
         return false;
 
-      boolean this_present_bla = true && this.isSetBla();
-      boolean that_present_bla = true && that.isSetBla();
-      if (this_present_bla || that_present_bla) {
-        if (!(this_present_bla && that_present_bla))
+      boolean this_present_token = true && this.isSetToken();
+      boolean that_present_token = true && that.isSetToken();
+      if (this_present_token || that_present_token) {
+        if (!(this_present_token && that_present_token))
           return false;
-        if (!this.bla.equals(that.bla))
+        if (!this.token.equals(that.token))
           return false;
       }
 
@@ -1553,28 +1553,28 @@ public class SportSvc {
     public int hashCode() {
       List<Object> list = new ArrayList<Object>();
 
-      boolean present_bla = true && (isSetBla());
-      list.add(present_bla);
-      if (present_bla)
-        list.add(bla);
+      boolean present_token = true && (isSetToken());
+      list.add(present_token);
+      if (present_token)
+        list.add(token);
 
       return list.hashCode();
     }
 
     @Override
-    public int compareTo(getAllSports_args other) {
+    public int compareTo(getAvailableActivityList_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
 
-      lastComparison = Boolean.valueOf(isSetBla()).compareTo(other.isSetBla());
+      lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetBla()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.bla, other.bla);
+      if (isSetToken()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -1596,14 +1596,14 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getAllSports_args(");
+      StringBuilder sb = new StringBuilder("getAvailableActivityList_args(");
       boolean first = true;
 
-      sb.append("bla:");
-      if (this.bla == null) {
+      sb.append("token:");
+      if (this.token == null) {
         sb.append("null");
       } else {
-        sb.append(this.bla);
+        sb.append(this.token);
       }
       first = false;
       sb.append(")");
@@ -1631,15 +1631,15 @@ public class SportSvc {
       }
     }
 
-    private static class getAllSports_argsStandardSchemeFactory implements SchemeFactory {
-      public getAllSports_argsStandardScheme getScheme() {
-        return new getAllSports_argsStandardScheme();
+    private static class getAvailableActivityList_argsStandardSchemeFactory implements SchemeFactory {
+      public getAvailableActivityList_argsStandardScheme getScheme() {
+        return new getAvailableActivityList_argsStandardScheme();
       }
     }
 
-    private static class getAllSports_argsStandardScheme extends StandardScheme<getAllSports_args> {
+    private static class getAvailableActivityList_argsStandardScheme extends StandardScheme<getAvailableActivityList_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllSports_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAvailableActivityList_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -1649,10 +1649,10 @@ public class SportSvc {
             break;
           }
           switch (schemeField.id) {
-            case 1: // BLA
+            case 1: // TOKEN
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.bla = iprot.readString();
-                struct.setBlaIsSet(true);
+                struct.token = iprot.readString();
+                struct.setTokenIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -1668,13 +1668,13 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllSports_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAvailableActivityList_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.bla != null) {
-          oprot.writeFieldBegin(BLA_FIELD_DESC);
-          oprot.writeString(struct.bla);
+        if (struct.token != null) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          oprot.writeString(struct.token);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -1683,52 +1683,52 @@ public class SportSvc {
 
     }
 
-    private static class getAllSports_argsTupleSchemeFactory implements SchemeFactory {
-      public getAllSports_argsTupleScheme getScheme() {
-        return new getAllSports_argsTupleScheme();
+    private static class getAvailableActivityList_argsTupleSchemeFactory implements SchemeFactory {
+      public getAvailableActivityList_argsTupleScheme getScheme() {
+        return new getAvailableActivityList_argsTupleScheme();
       }
     }
 
-    private static class getAllSports_argsTupleScheme extends TupleScheme<getAllSports_args> {
+    private static class getAvailableActivityList_argsTupleScheme extends TupleScheme<getAvailableActivityList_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getAllSports_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAvailableActivityList_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetBla()) {
+        if (struct.isSetToken()) {
           optionals.set(0);
         }
         oprot.writeBitSet(optionals, 1);
-        if (struct.isSetBla()) {
-          oprot.writeString(struct.bla);
+        if (struct.isSetToken()) {
+          oprot.writeString(struct.token);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getAllSports_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAvailableActivityList_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.bla = iprot.readString();
-          struct.setBlaIsSet(true);
+          struct.token = iprot.readString();
+          struct.setTokenIsSet(true);
         }
       }
     }
 
   }
 
-  public static class getAllSports_result implements org.apache.thrift.TBase<getAllSports_result, getAllSports_result._Fields>, java.io.Serializable, Cloneable, Comparable<getAllSports_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAllSports_result");
+  public static class getAvailableActivityList_result implements org.apache.thrift.TBase<getAvailableActivityList_result, getAvailableActivityList_result._Fields>, java.io.Serializable, Cloneable, Comparable<getAvailableActivityList_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getAvailableActivityList_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getAllSports_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getAllSports_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getAvailableActivityList_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getAvailableActivityList_resultTupleSchemeFactory());
     }
 
-    public List<Sport> success; // required
+    public List<String> success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1794,16 +1794,16 @@ public class SportSvc {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class))));
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAllSports_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getAvailableActivityList_result.class, metaDataMap);
     }
 
-    public getAllSports_result() {
+    public getAvailableActivityList_result() {
     }
 
-    public getAllSports_result(
-      List<Sport> success)
+    public getAvailableActivityList_result(
+      List<String> success)
     {
       this();
       this.success = success;
@@ -1812,18 +1812,15 @@ public class SportSvc {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getAllSports_result(getAllSports_result other) {
+    public getAvailableActivityList_result(getAvailableActivityList_result other) {
       if (other.isSetSuccess()) {
-        List<Sport> __this__success = new ArrayList<Sport>(other.success.size());
-        for (Sport other_element : other.success) {
-          __this__success.add(new Sport(other_element));
-        }
+        List<String> __this__success = new ArrayList<String>(other.success);
         this.success = __this__success;
       }
     }
 
-    public getAllSports_result deepCopy() {
-      return new getAllSports_result(this);
+    public getAvailableActivityList_result deepCopy() {
+      return new getAvailableActivityList_result(this);
     }
 
     @Override
@@ -1835,22 +1832,22 @@ public class SportSvc {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<Sport> getSuccessIterator() {
+    public java.util.Iterator<String> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(Sport elem) {
+    public void addToSuccess(String elem) {
       if (this.success == null) {
-        this.success = new ArrayList<Sport>();
+        this.success = new ArrayList<String>();
       }
       this.success.add(elem);
     }
 
-    public List<Sport> getSuccess() {
+    public List<String> getSuccess() {
       return this.success;
     }
 
-    public getAllSports_result setSuccess(List<Sport> success) {
+    public getAvailableActivityList_result setSuccess(List<String> success) {
       this.success = success;
       return this;
     }
@@ -1876,7 +1873,7 @@ public class SportSvc {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<Sport>)value);
+          setSuccess((List<String>)value);
         }
         break;
 
@@ -1909,12 +1906,12 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getAllSports_result)
-        return this.equals((getAllSports_result)that);
+      if (that instanceof getAvailableActivityList_result)
+        return this.equals((getAvailableActivityList_result)that);
       return false;
     }
 
-    public boolean equals(getAllSports_result that) {
+    public boolean equals(getAvailableActivityList_result that) {
       if (that == null)
         return false;
 
@@ -1943,7 +1940,7 @@ public class SportSvc {
     }
 
     @Override
-    public int compareTo(getAllSports_result other) {
+    public int compareTo(getAvailableActivityList_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -1977,7 +1974,7 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getAllSports_result(");
+      StringBuilder sb = new StringBuilder("getAvailableActivityList_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -2012,15 +2009,15 @@ public class SportSvc {
       }
     }
 
-    private static class getAllSports_resultStandardSchemeFactory implements SchemeFactory {
-      public getAllSports_resultStandardScheme getScheme() {
-        return new getAllSports_resultStandardScheme();
+    private static class getAvailableActivityList_resultStandardSchemeFactory implements SchemeFactory {
+      public getAvailableActivityList_resultStandardScheme getScheme() {
+        return new getAvailableActivityList_resultStandardScheme();
       }
     }
 
-    private static class getAllSports_resultStandardScheme extends StandardScheme<getAllSports_result> {
+    private static class getAvailableActivityList_resultStandardScheme extends StandardScheme<getAvailableActivityList_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getAllSports_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getAvailableActivityList_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -2033,14 +2030,13 @@ public class SportSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list98 = iprot.readListBegin();
-                  struct.success = new ArrayList<Sport>(_list98.size);
-                  Sport _elem99;
-                  for (int _i100 = 0; _i100 < _list98.size; ++_i100)
+                  org.apache.thrift.protocol.TList _list90 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list90.size);
+                  String _elem91;
+                  for (int _i92 = 0; _i92 < _list90.size; ++_i92)
                   {
-                    _elem99 = new Sport();
-                    _elem99.read(iprot);
-                    struct.success.add(_elem99);
+                    _elem91 = iprot.readString();
+                    struct.success.add(_elem91);
                   }
                   iprot.readListEnd();
                 }
@@ -2060,17 +2056,17 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getAllSports_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getAvailableActivityList_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Sport _iter101 : struct.success)
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
+            for (String _iter93 : struct.success)
             {
-              _iter101.write(oprot);
+              oprot.writeString(_iter93);
             }
             oprot.writeListEnd();
           }
@@ -2082,16 +2078,16 @@ public class SportSvc {
 
     }
 
-    private static class getAllSports_resultTupleSchemeFactory implements SchemeFactory {
-      public getAllSports_resultTupleScheme getScheme() {
-        return new getAllSports_resultTupleScheme();
+    private static class getAvailableActivityList_resultTupleSchemeFactory implements SchemeFactory {
+      public getAvailableActivityList_resultTupleScheme getScheme() {
+        return new getAvailableActivityList_resultTupleScheme();
       }
     }
 
-    private static class getAllSports_resultTupleScheme extends TupleScheme<getAllSports_result> {
+    private static class getAvailableActivityList_resultTupleScheme extends TupleScheme<getAvailableActivityList_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getAllSports_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getAvailableActivityList_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -2101,28 +2097,27 @@ public class SportSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Sport _iter102 : struct.success)
+            for (String _iter94 : struct.success)
             {
-              _iter102.write(oprot);
+              oprot.writeString(_iter94);
             }
           }
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getAllSports_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getAvailableActivityList_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list103 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Sport>(_list103.size);
-            Sport _elem104;
-            for (int _i105 = 0; _i105 < _list103.size; ++_i105)
+            org.apache.thrift.protocol.TList _list95 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list95.size);
+            String _elem96;
+            for (int _i97 = 0; _i97 < _list95.size; ++_i97)
             {
-              _elem104 = new Sport();
-              _elem104.read(iprot);
-              struct.success.add(_elem104);
+              _elem96 = iprot.readString();
+              struct.success.add(_elem96);
             }
           }
           struct.setSuccessIsSet(true);
@@ -2132,25 +2127,25 @@ public class SportSvc {
 
   }
 
-  public static class getSportById_args implements org.apache.thrift.TBase<getSportById_args, getSportById_args._Fields>, java.io.Serializable, Cloneable, Comparable<getSportById_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getSportById_args");
+  public static class getActivity_args implements org.apache.thrift.TBase<getActivity_args, getActivity_args._Fields>, java.io.Serializable, Cloneable, Comparable<getActivity_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getActivity_args");
 
     private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField SPORTID_FIELD_DESC = new org.apache.thrift.protocol.TField("sportid", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField ACITIVITYID_FIELD_DESC = new org.apache.thrift.protocol.TField("acitivityid", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getSportById_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getSportById_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getActivity_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getActivity_argsTupleSchemeFactory());
     }
 
     public String token; // required
-    public String sportid; // required
+    public String acitivityid; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       TOKEN((short)1, "token"),
-      SPORTID((short)2, "sportid");
+      ACITIVITYID((short)2, "acitivityid");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -2167,8 +2162,8 @@ public class SportSvc {
         switch(fieldId) {
           case 1: // TOKEN
             return TOKEN;
-          case 2: // SPORTID
-            return SPORTID;
+          case 2: // ACITIVITYID
+            return ACITIVITYID;
           default:
             return null;
         }
@@ -2214,51 +2209,51 @@ public class SportSvc {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.SPORTID, new org.apache.thrift.meta_data.FieldMetaData("sportid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.ACITIVITYID, new org.apache.thrift.meta_data.FieldMetaData("acitivityid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getSportById_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getActivity_args.class, metaDataMap);
     }
 
-    public getSportById_args() {
+    public getActivity_args() {
     }
 
-    public getSportById_args(
+    public getActivity_args(
       String token,
-      String sportid)
+      String acitivityid)
     {
       this();
       this.token = token;
-      this.sportid = sportid;
+      this.acitivityid = acitivityid;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getSportById_args(getSportById_args other) {
+    public getActivity_args(getActivity_args other) {
       if (other.isSetToken()) {
         this.token = other.token;
       }
-      if (other.isSetSportid()) {
-        this.sportid = other.sportid;
+      if (other.isSetAcitivityid()) {
+        this.acitivityid = other.acitivityid;
       }
     }
 
-    public getSportById_args deepCopy() {
-      return new getSportById_args(this);
+    public getActivity_args deepCopy() {
+      return new getActivity_args(this);
     }
 
     @Override
     public void clear() {
       this.token = null;
-      this.sportid = null;
+      this.acitivityid = null;
     }
 
     public String getToken() {
       return this.token;
     }
 
-    public getSportById_args setToken(String token) {
+    public getActivity_args setToken(String token) {
       this.token = token;
       return this;
     }
@@ -2278,27 +2273,27 @@ public class SportSvc {
       }
     }
 
-    public String getSportid() {
-      return this.sportid;
+    public String getAcitivityid() {
+      return this.acitivityid;
     }
 
-    public getSportById_args setSportid(String sportid) {
-      this.sportid = sportid;
+    public getActivity_args setAcitivityid(String acitivityid) {
+      this.acitivityid = acitivityid;
       return this;
     }
 
-    public void unsetSportid() {
-      this.sportid = null;
+    public void unsetAcitivityid() {
+      this.acitivityid = null;
     }
 
-    /** Returns true if field sportid is set (has been assigned a value) and false otherwise */
-    public boolean isSetSportid() {
-      return this.sportid != null;
+    /** Returns true if field acitivityid is set (has been assigned a value) and false otherwise */
+    public boolean isSetAcitivityid() {
+      return this.acitivityid != null;
     }
 
-    public void setSportidIsSet(boolean value) {
+    public void setAcitivityidIsSet(boolean value) {
       if (!value) {
-        this.sportid = null;
+        this.acitivityid = null;
       }
     }
 
@@ -2312,11 +2307,11 @@ public class SportSvc {
         }
         break;
 
-      case SPORTID:
+      case ACITIVITYID:
         if (value == null) {
-          unsetSportid();
+          unsetAcitivityid();
         } else {
-          setSportid((String)value);
+          setAcitivityid((String)value);
         }
         break;
 
@@ -2328,8 +2323,8 @@ public class SportSvc {
       case TOKEN:
         return getToken();
 
-      case SPORTID:
-        return getSportid();
+      case ACITIVITYID:
+        return getAcitivityid();
 
       }
       throw new IllegalStateException();
@@ -2344,8 +2339,8 @@ public class SportSvc {
       switch (field) {
       case TOKEN:
         return isSetToken();
-      case SPORTID:
-        return isSetSportid();
+      case ACITIVITYID:
+        return isSetAcitivityid();
       }
       throw new IllegalStateException();
     }
@@ -2354,12 +2349,12 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getSportById_args)
-        return this.equals((getSportById_args)that);
+      if (that instanceof getActivity_args)
+        return this.equals((getActivity_args)that);
       return false;
     }
 
-    public boolean equals(getSportById_args that) {
+    public boolean equals(getActivity_args that) {
       if (that == null)
         return false;
 
@@ -2372,12 +2367,12 @@ public class SportSvc {
           return false;
       }
 
-      boolean this_present_sportid = true && this.isSetSportid();
-      boolean that_present_sportid = true && that.isSetSportid();
-      if (this_present_sportid || that_present_sportid) {
-        if (!(this_present_sportid && that_present_sportid))
+      boolean this_present_acitivityid = true && this.isSetAcitivityid();
+      boolean that_present_acitivityid = true && that.isSetAcitivityid();
+      if (this_present_acitivityid || that_present_acitivityid) {
+        if (!(this_present_acitivityid && that_present_acitivityid))
           return false;
-        if (!this.sportid.equals(that.sportid))
+        if (!this.acitivityid.equals(that.acitivityid))
           return false;
       }
 
@@ -2393,16 +2388,16 @@ public class SportSvc {
       if (present_token)
         list.add(token);
 
-      boolean present_sportid = true && (isSetSportid());
-      list.add(present_sportid);
-      if (present_sportid)
-        list.add(sportid);
+      boolean present_acitivityid = true && (isSetAcitivityid());
+      list.add(present_acitivityid);
+      if (present_acitivityid)
+        list.add(acitivityid);
 
       return list.hashCode();
     }
 
     @Override
-    public int compareTo(getSportById_args other) {
+    public int compareTo(getActivity_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -2419,12 +2414,12 @@ public class SportSvc {
           return lastComparison;
         }
       }
-      lastComparison = Boolean.valueOf(isSetSportid()).compareTo(other.isSetSportid());
+      lastComparison = Boolean.valueOf(isSetAcitivityid()).compareTo(other.isSetAcitivityid());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetSportid()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sportid, other.sportid);
+      if (isSetAcitivityid()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.acitivityid, other.acitivityid);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2446,7 +2441,7 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getSportById_args(");
+      StringBuilder sb = new StringBuilder("getActivity_args(");
       boolean first = true;
 
       sb.append("token:");
@@ -2457,11 +2452,11 @@ public class SportSvc {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("sportid:");
-      if (this.sportid == null) {
+      sb.append("acitivityid:");
+      if (this.acitivityid == null) {
         sb.append("null");
       } else {
-        sb.append(this.sportid);
+        sb.append(this.acitivityid);
       }
       first = false;
       sb.append(")");
@@ -2489,15 +2484,15 @@ public class SportSvc {
       }
     }
 
-    private static class getSportById_argsStandardSchemeFactory implements SchemeFactory {
-      public getSportById_argsStandardScheme getScheme() {
-        return new getSportById_argsStandardScheme();
+    private static class getActivity_argsStandardSchemeFactory implements SchemeFactory {
+      public getActivity_argsStandardScheme getScheme() {
+        return new getActivity_argsStandardScheme();
       }
     }
 
-    private static class getSportById_argsStandardScheme extends StandardScheme<getSportById_args> {
+    private static class getActivity_argsStandardScheme extends StandardScheme<getActivity_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getSportById_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getActivity_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -2515,10 +2510,10 @@ public class SportSvc {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // SPORTID
+            case 2: // ACITIVITYID
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.sportid = iprot.readString();
-                struct.setSportidIsSet(true);
+                struct.acitivityid = iprot.readString();
+                struct.setAcitivityidIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -2534,7 +2529,7 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getSportById_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getActivity_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -2543,9 +2538,9 @@ public class SportSvc {
           oprot.writeString(struct.token);
           oprot.writeFieldEnd();
         }
-        if (struct.sportid != null) {
-          oprot.writeFieldBegin(SPORTID_FIELD_DESC);
-          oprot.writeString(struct.sportid);
+        if (struct.acitivityid != null) {
+          oprot.writeFieldBegin(ACITIVITYID_FIELD_DESC);
+          oprot.writeString(struct.acitivityid);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -2554,35 +2549,35 @@ public class SportSvc {
 
     }
 
-    private static class getSportById_argsTupleSchemeFactory implements SchemeFactory {
-      public getSportById_argsTupleScheme getScheme() {
-        return new getSportById_argsTupleScheme();
+    private static class getActivity_argsTupleSchemeFactory implements SchemeFactory {
+      public getActivity_argsTupleScheme getScheme() {
+        return new getActivity_argsTupleScheme();
       }
     }
 
-    private static class getSportById_argsTupleScheme extends TupleScheme<getSportById_args> {
+    private static class getActivity_argsTupleScheme extends TupleScheme<getActivity_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getSportById_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getActivity_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetToken()) {
           optionals.set(0);
         }
-        if (struct.isSetSportid()) {
+        if (struct.isSetAcitivityid()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetToken()) {
           oprot.writeString(struct.token);
         }
-        if (struct.isSetSportid()) {
-          oprot.writeString(struct.sportid);
+        if (struct.isSetAcitivityid()) {
+          oprot.writeString(struct.acitivityid);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getSportById_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getActivity_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
@@ -2590,26 +2585,26 @@ public class SportSvc {
           struct.setTokenIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.sportid = iprot.readString();
-          struct.setSportidIsSet(true);
+          struct.acitivityid = iprot.readString();
+          struct.setAcitivityidIsSet(true);
         }
       }
     }
 
   }
 
-  public static class getSportById_result implements org.apache.thrift.TBase<getSportById_result, getSportById_result._Fields>, java.io.Serializable, Cloneable, Comparable<getSportById_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getSportById_result");
+  public static class getActivity_result implements org.apache.thrift.TBase<getActivity_result, getActivity_result._Fields>, java.io.Serializable, Cloneable, Comparable<getActivity_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getActivity_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new getSportById_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getSportById_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new getActivity_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getActivity_resultTupleSchemeFactory());
     }
 
-    public Sport success; // required
+    public SportActivity success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2674,16 +2669,16 @@ public class SportSvc {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Sport.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SportActivity.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getSportById_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getActivity_result.class, metaDataMap);
     }
 
-    public getSportById_result() {
+    public getActivity_result() {
     }
 
-    public getSportById_result(
-      Sport success)
+    public getActivity_result(
+      SportActivity success)
     {
       this();
       this.success = success;
@@ -2692,14 +2687,14 @@ public class SportSvc {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getSportById_result(getSportById_result other) {
+    public getActivity_result(getActivity_result other) {
       if (other.isSetSuccess()) {
-        this.success = new Sport(other.success);
+        this.success = new SportActivity(other.success);
       }
     }
 
-    public getSportById_result deepCopy() {
-      return new getSportById_result(this);
+    public getActivity_result deepCopy() {
+      return new getActivity_result(this);
     }
 
     @Override
@@ -2707,11 +2702,11 @@ public class SportSvc {
       this.success = null;
     }
 
-    public Sport getSuccess() {
+    public SportActivity getSuccess() {
       return this.success;
     }
 
-    public getSportById_result setSuccess(Sport success) {
+    public getActivity_result setSuccess(SportActivity success) {
       this.success = success;
       return this;
     }
@@ -2737,7 +2732,7 @@ public class SportSvc {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((Sport)value);
+          setSuccess((SportActivity)value);
         }
         break;
 
@@ -2770,12 +2765,12 @@ public class SportSvc {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof getSportById_result)
-        return this.equals((getSportById_result)that);
+      if (that instanceof getActivity_result)
+        return this.equals((getActivity_result)that);
       return false;
     }
 
-    public boolean equals(getSportById_result that) {
+    public boolean equals(getActivity_result that) {
       if (that == null)
         return false;
 
@@ -2804,7 +2799,7 @@ public class SportSvc {
     }
 
     @Override
-    public int compareTo(getSportById_result other) {
+    public int compareTo(getActivity_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -2838,7 +2833,7 @@ public class SportSvc {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("getSportById_result(");
+      StringBuilder sb = new StringBuilder("getActivity_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -2876,15 +2871,15 @@ public class SportSvc {
       }
     }
 
-    private static class getSportById_resultStandardSchemeFactory implements SchemeFactory {
-      public getSportById_resultStandardScheme getScheme() {
-        return new getSportById_resultStandardScheme();
+    private static class getActivity_resultStandardSchemeFactory implements SchemeFactory {
+      public getActivity_resultStandardScheme getScheme() {
+        return new getActivity_resultStandardScheme();
       }
     }
 
-    private static class getSportById_resultStandardScheme extends StandardScheme<getSportById_result> {
+    private static class getActivity_resultStandardScheme extends StandardScheme<getActivity_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getSportById_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getActivity_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -2896,7 +2891,7 @@ public class SportSvc {
           switch (schemeField.id) {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.success = new Sport();
+                struct.success = new SportActivity();
                 struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
@@ -2914,7 +2909,7 @@ public class SportSvc {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getSportById_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getActivity_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -2929,16 +2924,16 @@ public class SportSvc {
 
     }
 
-    private static class getSportById_resultTupleSchemeFactory implements SchemeFactory {
-      public getSportById_resultTupleScheme getScheme() {
-        return new getSportById_resultTupleScheme();
+    private static class getActivity_resultTupleSchemeFactory implements SchemeFactory {
+      public getActivity_resultTupleScheme getScheme() {
+        return new getActivity_resultTupleScheme();
       }
     }
 
-    private static class getSportById_resultTupleScheme extends TupleScheme<getSportById_result> {
+    private static class getActivity_resultTupleScheme extends TupleScheme<getActivity_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getSportById_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, getActivity_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetSuccess()) {
@@ -2951,11 +2946,11 @@ public class SportSvc {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getSportById_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, getActivity_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = new Sport();
+          struct.success = new SportActivity();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }

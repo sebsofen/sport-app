@@ -37,6 +37,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
     private SportListSelectedFilter sportListSelectedFilter;
     boolean filtered = false;
     private boolean onClickLock = false;
+    private boolean singleSelectionMode = false;
 
 
     public void resetFilter(){
@@ -63,6 +64,14 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
     public void setSelectedList(ArrayList<String> selectedSports) {
         this.selectedSportsList = selectedSports;
+    }
+
+    /**
+     * selection
+     * @param selection
+     */
+    public void setSingleSelection(boolean selection) {
+        singleSelectionMode = selection;
     }
 
     @Override
@@ -109,7 +118,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         imageTask.execute(sport.getIconid());
         title.setText(sport.getName().toUpperCase());
 
-        Log.i("AREAADAPTER", "called");
+        Log.i("SPORTLIST", "called");
         if( selectedSportsList.contains(sport.getId())){
             iconView.setColorFilter(colorFilter);
         }else {
@@ -130,6 +139,13 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
                 }else{
                     selectedSportsList.add(sport.getId());
                      ((ImageView) v).setColorFilter(colorFilter);
+                    if(singleSelectionMode == true){
+                        ArrayList<String> filterlist = new ArrayList<String>();
+                        filterlist.add(sport.getId());
+                        selectedSportsList.retainAll(filterlist);
+                        notifyDataSetChanged();
+                    }
+
                 }
 
                 if(slidingUpPanelLayout != null && filtered == false){
@@ -144,5 +160,13 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
             }
         });
         return elementView;
+    }
+
+    public String getSelectedSport(){
+        if (selectedSportsList.size() > 0){
+            return selectedSportsList.get(0);
+        }else {
+            return null;
+        }
     }
 }

@@ -39,4 +39,16 @@ public class ServiceConstants {
 
   public static final String ROLE_SUPERADMIN = "superadmin";
 
+  public static final String SERVICE_SPORTACTIVITY = "Activity";
+
+  public static final String SERVICE_USER = "User";
+
+  public static final String SERVICE_IMAGE = "Image";
+
+  public static final String SERVICE_SPORT = "Sport";
+
+  public static final String SERVICE_CITY = "City";
+
+  public static final String SERVICE_AREA = "Area";
+
 }

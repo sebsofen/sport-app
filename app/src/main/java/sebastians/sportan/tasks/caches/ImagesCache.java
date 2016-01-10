@@ -8,7 +8,7 @@ import sebastians.sportan.networking.Image;
  * Created by sebastian on 18/12/15.
  */
 public class ImagesCache {
-    private static LruCache<String, Image> lruCache = new LruCache<>(100);
+    private static LruCache<String, Image> lruCache = new LruCache<>(1000);
 
     public static void add(String id, Image object) {
         lruCache.put(id,object);

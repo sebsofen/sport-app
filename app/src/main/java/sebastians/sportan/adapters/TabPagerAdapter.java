@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import sebastians.sportan.R;
 import sebastians.sportan.TabActivity;
+import sebastians.sportan.fragments.MainAvailableSportActivitiesFragment;
 import sebastians.sportan.fragments.MainFriendsFragment;
 import sebastians.sportan.fragments.MainMapFragment;
 
@@ -16,7 +17,7 @@ import sebastians.sportan.fragments.MainMapFragment;
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private TabActivity context;
     private Toolbar toolbar;
-    private String tabTitles[] = new String[] { "Map", "Friends"};
+    private String tabTitles[] = new String[] { "Activities","Map", "Friends"};
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -32,9 +33,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         toolbar.getMenu().clear();
         switch (position) {
             case 0:
+                return MainAvailableSportActivitiesFragment.newInstance();
+            case 1:
                 toolbar.inflateMenu(R.menu.menu_main);
                 return MainMapFragment.newInstance();
-            case 1:
+            case 2:
                 toolbar.inflateMenu(R.menu.menu_friends);
                 return MainFriendsFragment.newInstance();
             default:
@@ -47,7 +50,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return tabTitles.length;
     }
 
     @Override

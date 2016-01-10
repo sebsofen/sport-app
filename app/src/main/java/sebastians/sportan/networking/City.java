@@ -40,6 +40,7 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField COORDS_FIELD_DESC = new org.apache.thrift.protocol.TField("coords", org.apache.thrift.protocol.TType.LIST, (short)3);
   private static final org.apache.thrift.protocol.TField CENTER_FIELD_DESC = new org.apache.thrift.protocol.TField("center", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField SPORTACTIVITIES_FIELD_DESC = new org.apache.thrift.protocol.TField("sportactivities", org.apache.thrift.protocol.TType.LIST, (short)5);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -51,13 +52,15 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
   public String name; // required
   public List<Coordinate> coords; // optional
   public Coordinate center; // optional
+  public List<String> sportactivities; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
     NAME((short)2, "name"),
     COORDS((short)3, "coords"),
-    CENTER((short)4, "center");
+    CENTER((short)4, "center"),
+    SPORTACTIVITIES((short)5, "sportactivities");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -80,6 +83,8 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           return COORDS;
         case 4: // CENTER
           return CENTER;
+        case 5: // SPORTACTIVITIES
+          return SPORTACTIVITIES;
         default:
           return null;
       }
@@ -120,7 +125,7 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
   }
 
   // isset id assignments
-  private static final _Fields optionals[] = {_Fields.COORDS,_Fields.CENTER};
+  private static final _Fields optionals[] = {_Fields.COORDS,_Fields.CENTER,_Fields.SPORTACTIVITIES};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -133,6 +138,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class))));
     tmpMap.put(_Fields.CENTER, new org.apache.thrift.meta_data.FieldMetaData("center", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Coordinate.class)));
+    tmpMap.put(_Fields.SPORTACTIVITIES, new org.apache.thrift.meta_data.FieldMetaData("sportactivities", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(City.class, metaDataMap);
   }
@@ -169,6 +177,10 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     if (other.isSetCenter()) {
       this.center = new Coordinate(other.center);
     }
+    if (other.isSetSportactivities()) {
+      List<String> __this__sportactivities = new ArrayList<String>(other.sportactivities);
+      this.sportactivities = __this__sportactivities;
+    }
   }
 
   public City deepCopy() {
@@ -181,6 +193,7 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     this.name = null;
     this.coords = null;
     this.center = null;
+    this.sportactivities = null;
   }
 
   public String getId() {
@@ -294,6 +307,45 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     }
   }
 
+  public int getSportactivitiesSize() {
+    return (this.sportactivities == null) ? 0 : this.sportactivities.size();
+  }
+
+  public java.util.Iterator<String> getSportactivitiesIterator() {
+    return (this.sportactivities == null) ? null : this.sportactivities.iterator();
+  }
+
+  public void addToSportactivities(String elem) {
+    if (this.sportactivities == null) {
+      this.sportactivities = new ArrayList<String>();
+    }
+    this.sportactivities.add(elem);
+  }
+
+  public List<String> getSportactivities() {
+    return this.sportactivities;
+  }
+
+  public City setSportactivities(List<String> sportactivities) {
+    this.sportactivities = sportactivities;
+    return this;
+  }
+
+  public void unsetSportactivities() {
+    this.sportactivities = null;
+  }
+
+  /** Returns true if field sportactivities is set (has been assigned a value) and false otherwise */
+  public boolean isSetSportactivities() {
+    return this.sportactivities != null;
+  }
+
+  public void setSportactivitiesIsSet(boolean value) {
+    if (!value) {
+      this.sportactivities = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case ID:
@@ -328,6 +380,14 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       }
       break;
 
+    case SPORTACTIVITIES:
+      if (value == null) {
+        unsetSportactivities();
+      } else {
+        setSportactivities((List<String>)value);
+      }
+      break;
+
     }
   }
 
@@ -344,6 +404,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
 
     case CENTER:
       return getCenter();
+
+    case SPORTACTIVITIES:
+      return getSportactivities();
 
     }
     throw new IllegalStateException();
@@ -364,6 +427,8 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       return isSetCoords();
     case CENTER:
       return isSetCenter();
+    case SPORTACTIVITIES:
+      return isSetSportactivities();
     }
     throw new IllegalStateException();
   }
@@ -417,6 +482,15 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         return false;
     }
 
+    boolean this_present_sportactivities = true && this.isSetSportactivities();
+    boolean that_present_sportactivities = true && that.isSetSportactivities();
+    if (this_present_sportactivities || that_present_sportactivities) {
+      if (!(this_present_sportactivities && that_present_sportactivities))
+        return false;
+      if (!this.sportactivities.equals(that.sportactivities))
+        return false;
+    }
+
     return true;
   }
 
@@ -443,6 +517,11 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     list.add(present_center);
     if (present_center)
       list.add(center);
+
+    boolean present_sportactivities = true && (isSetSportactivities());
+    list.add(present_sportactivities);
+    if (present_sportactivities)
+      list.add(sportactivities);
 
     return list.hashCode();
   }
@@ -491,6 +570,16 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
     }
     if (isSetCenter()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.center, other.center);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetSportactivities()).compareTo(other.isSetSportactivities());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetSportactivities()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.sportactivities, other.sportactivities);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -547,6 +636,16 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         sb.append("null");
       } else {
         sb.append(this.center);
+      }
+      first = false;
+    }
+    if (isSetSportactivities()) {
+      if (!first) sb.append(", ");
+      sb.append("sportactivities:");
+      if (this.sportactivities == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.sportactivities);
       }
       first = false;
     }
@@ -621,14 +720,14 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           case 3: // COORDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list50 = iprot.readListBegin();
-                struct.coords = new ArrayList<Coordinate>(_list50.size);
-                Coordinate _elem51;
-                for (int _i52 = 0; _i52 < _list50.size; ++_i52)
+                org.apache.thrift.protocol.TList _list74 = iprot.readListBegin();
+                struct.coords = new ArrayList<Coordinate>(_list74.size);
+                Coordinate _elem75;
+                for (int _i76 = 0; _i76 < _list74.size; ++_i76)
                 {
-                  _elem51 = new Coordinate();
-                  _elem51.read(iprot);
-                  struct.coords.add(_elem51);
+                  _elem75 = new Coordinate();
+                  _elem75.read(iprot);
+                  struct.coords.add(_elem75);
                 }
                 iprot.readListEnd();
               }
@@ -642,6 +741,24 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
               struct.center = new Coordinate();
               struct.center.read(iprot);
               struct.setCenterIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // SPORTACTIVITIES
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list77 = iprot.readListBegin();
+                struct.sportactivities = new ArrayList<String>(_list77.size);
+                String _elem78;
+                for (int _i79 = 0; _i79 < _list77.size; ++_i79)
+                {
+                  _elem78 = iprot.readString();
+                  struct.sportactivities.add(_elem78);
+                }
+                iprot.readListEnd();
+              }
+              struct.setSportactivitiesIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -676,9 +793,9 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
           oprot.writeFieldBegin(COORDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter53 : struct.coords)
+            for (Coordinate _iter80 : struct.coords)
             {
-              _iter53.write(oprot);
+              _iter80.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -689,6 +806,20 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         if (struct.isSetCenter()) {
           oprot.writeFieldBegin(CENTER_FIELD_DESC);
           struct.center.write(oprot);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.sportactivities != null) {
+        if (struct.isSetSportactivities()) {
+          oprot.writeFieldBegin(SPORTACTIVITIES_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.sportactivities.size()));
+            for (String _iter81 : struct.sportactivities)
+            {
+              oprot.writeString(_iter81);
+            }
+            oprot.writeListEnd();
+          }
           oprot.writeFieldEnd();
         }
       }
@@ -718,18 +849,30 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       if (struct.isSetCenter()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetSportactivities()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
       if (struct.isSetCoords()) {
         {
           oprot.writeI32(struct.coords.size());
-          for (Coordinate _iter54 : struct.coords)
+          for (Coordinate _iter82 : struct.coords)
           {
-            _iter54.write(oprot);
+            _iter82.write(oprot);
           }
         }
       }
       if (struct.isSetCenter()) {
         struct.center.write(oprot);
+      }
+      if (struct.isSetSportactivities()) {
+        {
+          oprot.writeI32(struct.sportactivities.size());
+          for (String _iter83 : struct.sportactivities)
+          {
+            oprot.writeString(_iter83);
+          }
+        }
       }
     }
 
@@ -740,17 +883,17 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
       struct.setIdIsSet(true);
       struct.name = iprot.readString();
       struct.setNameIsSet(true);
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list55 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.coords = new ArrayList<Coordinate>(_list55.size);
-          Coordinate _elem56;
-          for (int _i57 = 0; _i57 < _list55.size; ++_i57)
+          org.apache.thrift.protocol.TList _list84 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.coords = new ArrayList<Coordinate>(_list84.size);
+          Coordinate _elem85;
+          for (int _i86 = 0; _i86 < _list84.size; ++_i86)
           {
-            _elem56 = new Coordinate();
-            _elem56.read(iprot);
-            struct.coords.add(_elem56);
+            _elem85 = new Coordinate();
+            _elem85.read(iprot);
+            struct.coords.add(_elem85);
           }
         }
         struct.setCoordsIsSet(true);
@@ -759,6 +902,19 @@ public class City implements org.apache.thrift.TBase<City, City._Fields>, java.i
         struct.center = new Coordinate();
         struct.center.read(iprot);
         struct.setCenterIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TList _list87 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.sportactivities = new ArrayList<String>(_list87.size);
+          String _elem88;
+          for (int _i89 = 0; _i89 < _list87.size; ++_i89)
+          {
+            _elem88 = iprot.readString();
+            struct.sportactivities.add(_elem88);
+          }
+        }
+        struct.setSportactivitiesIsSet(true);
       }
     }
   }

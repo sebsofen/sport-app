@@ -5,12 +5,6 @@ import android.widget.ImageView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.ImageSvc;
 import sebastians.sportan.networking.InvalidOperation;
@@ -50,6 +44,7 @@ public class SvgImageTask extends SuperAsyncTask{
             return null;
         }
 
+        /*
         File file = new File(this.context.getCacheDir(),imageid);
         if(file.exists()){
             image = new Image();
@@ -74,33 +69,32 @@ public class SvgImageTask extends SuperAsyncTask{
             image.content = new String(bytes);
             return null;
         }
-
+        */
         try {
             TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_IMAGE);
             ImageSvc.Client client = new ImageSvc.Client(mp);
             image = client.getImageById(imageid);
-            FileOutputStream stream = new FileOutputStream(file);
+            //FileOutputStream stream = new FileOutputStream(file);
             ImagesCache.add(imageid,image);
             try {
-                stream.write(image.content.getBytes());
+                //stream.write(image.content.getBytes());
             } finally {
-                stream.close();
+               // stream.close();
             }
 
         } catch (InvalidOperation x) {
             x.printStackTrace();
         } catch (Exception x) {
             x.printStackTrace();
-        } finally {
-            transport.close();
         }
-
+        transport.close();
         return null;
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        ImagesCache.add(image.id,image);
         if(imageReady != null)
             imageReady.ready(image);
 

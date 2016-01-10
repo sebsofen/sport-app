@@ -5748,13 +5748,13 @@ public class AreaSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list82 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list82.size);
-                  String _elem83;
-                  for (int _i84 = 0; _i84 < _list82.size; ++_i84)
+                  org.apache.thrift.protocol.TList _list122 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list122.size);
+                  String _elem123;
+                  for (int _i124 = 0; _i124 < _list122.size; ++_i124)
                   {
-                    _elem83 = iprot.readString();
-                    struct.success.add(_elem83);
+                    _elem123 = iprot.readString();
+                    struct.success.add(_elem123);
                   }
                   iprot.readListEnd();
                 }
@@ -5782,9 +5782,9 @@ public class AreaSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter85 : struct.success)
+            for (String _iter125 : struct.success)
             {
-              oprot.writeString(_iter85);
+              oprot.writeString(_iter125);
             }
             oprot.writeListEnd();
           }
@@ -5815,9 +5815,9 @@ public class AreaSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter86 : struct.success)
+            for (String _iter126 : struct.success)
             {
-              oprot.writeString(_iter86);
+              oprot.writeString(_iter126);
             }
           }
         }
@@ -5829,13 +5829,13 @@ public class AreaSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list87 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list87.size);
-            String _elem88;
-            for (int _i89 = 0; _i89 < _list87.size; ++_i89)
+            org.apache.thrift.protocol.TList _list127 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list127.size);
+            String _elem128;
+            for (int _i129 = 0; _i129 < _list127.size; ++_i129)
             {
-              _elem88 = iprot.readString();
-              struct.success.add(_elem88);
+              _elem128 = iprot.readString();
+              struct.success.add(_elem128);
             }
           }
           struct.setSuccessIsSet(true);
@@ -6519,13 +6519,13 @@ public class AreaSvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list90 = iprot.readListBegin();
-                  struct.success = new ArrayList<String>(_list90.size);
-                  String _elem91;
-                  for (int _i92 = 0; _i92 < _list90.size; ++_i92)
+                  org.apache.thrift.protocol.TList _list130 = iprot.readListBegin();
+                  struct.success = new ArrayList<String>(_list130.size);
+                  String _elem131;
+                  for (int _i132 = 0; _i132 < _list130.size; ++_i132)
                   {
-                    _elem91 = iprot.readString();
-                    struct.success.add(_elem91);
+                    _elem131 = iprot.readString();
+                    struct.success.add(_elem131);
                   }
                   iprot.readListEnd();
                 }
@@ -6553,9 +6553,9 @@ public class AreaSvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.success.size()));
-            for (String _iter93 : struct.success)
+            for (String _iter133 : struct.success)
             {
-              oprot.writeString(_iter93);
+              oprot.writeString(_iter133);
             }
             oprot.writeListEnd();
           }
@@ -6586,9 +6586,9 @@ public class AreaSvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (String _iter94 : struct.success)
+            for (String _iter134 : struct.success)
             {
-              oprot.writeString(_iter94);
+              oprot.writeString(_iter134);
             }
           }
         }
@@ -6600,13 +6600,13 @@ public class AreaSvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list95 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-            struct.success = new ArrayList<String>(_list95.size);
-            String _elem96;
-            for (int _i97 = 0; _i97 < _list95.size; ++_i97)
+            org.apache.thrift.protocol.TList _list135 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+            struct.success = new ArrayList<String>(_list135.size);
+            String _elem136;
+            for (int _i137 = 0; _i137 < _list135.size; ++_i137)
             {
-              _elem96 = iprot.readString();
-              struct.success.add(_elem96);
+              _elem136 = iprot.readString();
+              struct.success.add(_elem136);
             }
           }
           struct.setSuccessIsSet(true);

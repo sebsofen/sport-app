@@ -1,5 +1,6 @@
 package sebastians.sportan;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,21 +10,35 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import org.apache.thrift.protocol.TMultiplexedProtocol;
+
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.customviews.LoadingView;
 import sebastians.sportan.fragments.AreaDetailAdminFragment;
 import sebastians.sportan.fragments.AreaDetailFragment;
+import sebastians.sportan.fragments.CreateSportActivityFragment;
+import sebastians.sportan.networking.ServiceConstants;
+import sebastians.sportan.networking.SportActivity;
+import sebastians.sportan.networking.SportActivitySvc;
+import sebastians.sportan.tasks.CustomAsyncTask;
+import sebastians.sportan.tasks.TaskCallBacks;
 
-public class AreaDetailActivity extends AppCompatActivity {
+public class AreaDetailActivity extends AppCompatActivity implements CreateSportActivityFragment.CreateSportActivityListener {
     public static final String EXTRA_AREA_ID = "areaid";
     public static final String EXTRA_AREA_LAT = "arealat";
     public static final String EXTRA_AREA_LON = "arealon";
 
+    String areaid;
     AreaDetailAdminFragment areaDetailAdminFragment;
     public LoadingView loadingView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //created from intent
+        Intent intent = this.getIntent();
+        areaid = intent.getStringExtra(AreaDetailActivity.EXTRA_AREA_ID);
+
         areaDetailAdminFragment = new AreaDetailAdminFragment();
         setContentView(R.layout.activity_area_detail);
 
@@ -94,4 +109,43 @@ public class AreaDetailActivity extends AppCompatActivity {
         return inSampleSize;
     }
 
+    /**
+     * called by create activity fragment
+     * activity will be transmitted here
+     * @param sportActivity
+     */
+    @Override
+    public void activityCreated(final SportActivity sportActivity) {
+        Log.i("AreaDetailFragment", "called");
+        sportActivity.setArea(areaid);
+        final CustomAsyncTask createActivityTask = new CustomAsyncTask(AreaDetailActivity.this);
+        createActivityTask.setTaskCallBacks(new TaskCallBacks() {
+            @Override
+            public String doInBackground() {
+                TMultiplexedProtocol mp;
+                try {
+                    MyCredentials myCredentials = new MyCredentials(AreaDetailActivity.this);
+                    mp = createActivityTask.openTransport(ServiceConstants.SERVICE_SPORTACTIVITY);
+                    SportActivitySvc.Client client = new SportActivitySvc.Client(mp);
+                    client.createActivity(myCredentials.getToken(),sportActivity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            public void onPreExecute() {
+                loadingView.startAnimation();
+            }
+
+            @Override
+            public void onPostExecute() {
+                loadingView.stopAnimation();
+            }
+        });
+        createActivityTask.execute();
+
+
+    }
 }

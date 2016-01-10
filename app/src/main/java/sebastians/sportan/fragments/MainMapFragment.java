@@ -57,7 +57,7 @@ import sebastians.sportan.tasks.caches.AreasCache;
  * Created by sebastian on 11/12/15.
  */
 public class MainMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener, LocationListener, SportListSelectedFilter {
-    ExecutorService executor = Executors.newFixedThreadPool(10);
+    ExecutorService executor = Executors.newFixedThreadPool(25);
 
     private Context mThis;
     protected HashMap<Marker,String> markerids = new HashMap<>();
@@ -206,7 +206,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
                     loadingView.stopAnimation();
                 //wait for next update, if execution is still running
                 if(executor.isTerminated())
-                    executor = Executors.newFixedThreadPool(10);
+                    executor = Executors.newFixedThreadPool(25);
                 else if(executor.isShutdown())
                     return;
 

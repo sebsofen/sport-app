@@ -969,13 +969,13 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           case 3: // SPORTS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list26 = iprot.readListBegin();
-                struct.sports = new ArrayList<String>(_list26.size);
-                String _elem27;
-                for (int _i28 = 0; _i28 < _list26.size; ++_i28)
+                org.apache.thrift.protocol.TList _list34 = iprot.readListBegin();
+                struct.sports = new ArrayList<String>(_list34.size);
+                String _elem35;
+                for (int _i36 = 0; _i36 < _list34.size; ++_i36)
                 {
-                  _elem27 = iprot.readString();
-                  struct.sports.add(_elem27);
+                  _elem35 = iprot.readString();
+                  struct.sports.add(_elem35);
                 }
                 iprot.readListEnd();
               }
@@ -987,13 +987,13 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           case 4: // CENTER
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list29 = iprot.readListBegin();
-                struct.center = new ArrayList<Double>(_list29.size);
-                double _elem30;
-                for (int _i31 = 0; _i31 < _list29.size; ++_i31)
+                org.apache.thrift.protocol.TList _list37 = iprot.readListBegin();
+                struct.center = new ArrayList<Double>(_list37.size);
+                double _elem38;
+                for (int _i39 = 0; _i39 < _list37.size; ++_i39)
                 {
-                  _elem30 = iprot.readDouble();
-                  struct.center.add(_elem30);
+                  _elem38 = iprot.readDouble();
+                  struct.center.add(_elem38);
                 }
                 iprot.readListEnd();
               }
@@ -1005,14 +1005,14 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           case 5: // COORDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list32 = iprot.readListBegin();
-                struct.coords = new ArrayList<Coordinate>(_list32.size);
-                Coordinate _elem33;
-                for (int _i34 = 0; _i34 < _list32.size; ++_i34)
+                org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
+                struct.coords = new ArrayList<Coordinate>(_list40.size);
+                Coordinate _elem41;
+                for (int _i42 = 0; _i42 < _list40.size; ++_i42)
                 {
-                  _elem33 = new Coordinate();
-                  _elem33.read(iprot);
-                  struct.coords.add(_elem33);
+                  _elem41 = new Coordinate();
+                  _elem41.read(iprot);
+                  struct.coords.add(_elem41);
                 }
                 iprot.readListEnd();
               }
@@ -1079,9 +1079,9 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           oprot.writeFieldBegin(SPORTS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.sports.size()));
-            for (String _iter35 : struct.sports)
+            for (String _iter43 : struct.sports)
             {
-              oprot.writeString(_iter35);
+              oprot.writeString(_iter43);
             }
             oprot.writeListEnd();
           }
@@ -1093,9 +1093,9 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           oprot.writeFieldBegin(CENTER_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, struct.center.size()));
-            for (double _iter36 : struct.center)
+            for (double _iter44 : struct.center)
             {
-              oprot.writeDouble(_iter36);
+              oprot.writeDouble(_iter44);
             }
             oprot.writeListEnd();
           }
@@ -1107,9 +1107,9 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
           oprot.writeFieldBegin(COORDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter37 : struct.coords)
+            for (Coordinate _iter45 : struct.coords)
             {
-              _iter37.write(oprot);
+              _iter45.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -1189,27 +1189,27 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       if (struct.isSetSports()) {
         {
           oprot.writeI32(struct.sports.size());
-          for (String _iter38 : struct.sports)
+          for (String _iter46 : struct.sports)
           {
-            oprot.writeString(_iter38);
+            oprot.writeString(_iter46);
           }
         }
       }
       if (struct.isSetCenter()) {
         {
           oprot.writeI32(struct.center.size());
-          for (double _iter39 : struct.center)
+          for (double _iter47 : struct.center)
           {
-            oprot.writeDouble(_iter39);
+            oprot.writeDouble(_iter47);
           }
         }
       }
       if (struct.isSetCoords()) {
         {
           oprot.writeI32(struct.coords.size());
-          for (Coordinate _iter40 : struct.coords)
+          for (Coordinate _iter48 : struct.coords)
           {
-            _iter40.write(oprot);
+            _iter48.write(oprot);
           }
         }
       }
@@ -1238,40 +1238,40 @@ public class Area implements org.apache.thrift.TBase<Area, Area._Fields>, java.i
       }
       if (incoming.get(2)) {
         {
-          org.apache.thrift.protocol.TList _list41 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.sports = new ArrayList<String>(_list41.size);
-          String _elem42;
-          for (int _i43 = 0; _i43 < _list41.size; ++_i43)
+          org.apache.thrift.protocol.TList _list49 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.sports = new ArrayList<String>(_list49.size);
+          String _elem50;
+          for (int _i51 = 0; _i51 < _list49.size; ++_i51)
           {
-            _elem42 = iprot.readString();
-            struct.sports.add(_elem42);
+            _elem50 = iprot.readString();
+            struct.sports.add(_elem50);
           }
         }
         struct.setSportsIsSet(true);
       }
       if (incoming.get(3)) {
         {
-          org.apache.thrift.protocol.TList _list44 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, iprot.readI32());
-          struct.center = new ArrayList<Double>(_list44.size);
-          double _elem45;
-          for (int _i46 = 0; _i46 < _list44.size; ++_i46)
+          org.apache.thrift.protocol.TList _list52 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, iprot.readI32());
+          struct.center = new ArrayList<Double>(_list52.size);
+          double _elem53;
+          for (int _i54 = 0; _i54 < _list52.size; ++_i54)
           {
-            _elem45 = iprot.readDouble();
-            struct.center.add(_elem45);
+            _elem53 = iprot.readDouble();
+            struct.center.add(_elem53);
           }
         }
         struct.setCenterIsSet(true);
       }
       if (incoming.get(4)) {
         {
-          org.apache.thrift.protocol.TList _list47 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.coords = new ArrayList<Coordinate>(_list47.size);
-          Coordinate _elem48;
-          for (int _i49 = 0; _i49 < _list47.size; ++_i49)
+          org.apache.thrift.protocol.TList _list55 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.coords = new ArrayList<Coordinate>(_list55.size);
+          Coordinate _elem56;
+          for (int _i57 = 0; _i57 < _list55.size; ++_i57)
           {
-            _elem48 = new Coordinate();
-            _elem48.read(iprot);
-            struct.coords.add(_elem48);
+            _elem56 = new Coordinate();
+            _elem56.read(iprot);
+            struct.coords.add(_elem56);
           }
         }
         struct.setCoordsIsSet(true);

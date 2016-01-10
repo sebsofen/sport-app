@@ -1011,14 +1011,14 @@ public class CitySvc {
             case 3: // COORDS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list98 = iprot.readListBegin();
-                  struct.coords = new ArrayList<Coordinate>(_list98.size);
-                  Coordinate _elem99;
-                  for (int _i100 = 0; _i100 < _list98.size; ++_i100)
+                  org.apache.thrift.protocol.TList _list138 = iprot.readListBegin();
+                  struct.coords = new ArrayList<Coordinate>(_list138.size);
+                  Coordinate _elem139;
+                  for (int _i140 = 0; _i140 < _list138.size; ++_i140)
                   {
-                    _elem99 = new Coordinate();
-                    _elem99.read(iprot);
-                    struct.coords.add(_elem99);
+                    _elem139 = new Coordinate();
+                    _elem139.read(iprot);
+                    struct.coords.add(_elem139);
                   }
                   iprot.readListEnd();
                 }
@@ -1056,9 +1056,9 @@ public class CitySvc {
           oprot.writeFieldBegin(COORDS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.coords.size()));
-            for (Coordinate _iter101 : struct.coords)
+            for (Coordinate _iter141 : struct.coords)
             {
-              _iter101.write(oprot);
+              _iter141.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -1101,9 +1101,9 @@ public class CitySvc {
         if (struct.isSetCoords()) {
           {
             oprot.writeI32(struct.coords.size());
-            for (Coordinate _iter102 : struct.coords)
+            for (Coordinate _iter142 : struct.coords)
             {
-              _iter102.write(oprot);
+              _iter142.write(oprot);
             }
           }
         }
@@ -1123,14 +1123,14 @@ public class CitySvc {
         }
         if (incoming.get(2)) {
           {
-            org.apache.thrift.protocol.TList _list103 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.coords = new ArrayList<Coordinate>(_list103.size);
-            Coordinate _elem104;
-            for (int _i105 = 0; _i105 < _list103.size; ++_i105)
+            org.apache.thrift.protocol.TList _list143 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.coords = new ArrayList<Coordinate>(_list143.size);
+            Coordinate _elem144;
+            for (int _i145 = 0; _i145 < _list143.size; ++_i145)
             {
-              _elem104 = new Coordinate();
-              _elem104.read(iprot);
-              struct.coords.add(_elem104);
+              _elem144 = new Coordinate();
+              _elem144.read(iprot);
+              struct.coords.add(_elem144);
             }
           }
           struct.setCoordsIsSet(true);
@@ -2173,14 +2173,14 @@ public class CitySvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list106 = iprot.readListBegin();
-                  struct.success = new ArrayList<City>(_list106.size);
-                  City _elem107;
-                  for (int _i108 = 0; _i108 < _list106.size; ++_i108)
+                  org.apache.thrift.protocol.TList _list146 = iprot.readListBegin();
+                  struct.success = new ArrayList<City>(_list146.size);
+                  City _elem147;
+                  for (int _i148 = 0; _i148 < _list146.size; ++_i148)
                   {
-                    _elem107 = new City();
-                    _elem107.read(iprot);
-                    struct.success.add(_elem107);
+                    _elem147 = new City();
+                    _elem147.read(iprot);
+                    struct.success.add(_elem147);
                   }
                   iprot.readListEnd();
                 }
@@ -2208,9 +2208,9 @@ public class CitySvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (City _iter109 : struct.success)
+            for (City _iter149 : struct.success)
             {
-              _iter109.write(oprot);
+              _iter149.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -2241,9 +2241,9 @@ public class CitySvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (City _iter110 : struct.success)
+            for (City _iter150 : struct.success)
             {
-              _iter110.write(oprot);
+              _iter150.write(oprot);
             }
           }
         }
@@ -2255,14 +2255,14 @@ public class CitySvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list111 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<City>(_list111.size);
-            City _elem112;
-            for (int _i113 = 0; _i113 < _list111.size; ++_i113)
+            org.apache.thrift.protocol.TList _list151 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<City>(_list151.size);
+            City _elem152;
+            for (int _i153 = 0; _i153 < _list151.size; ++_i153)
             {
-              _elem112 = new City();
-              _elem112.read(iprot);
-              struct.success.add(_elem112);
+              _elem152 = new City();
+              _elem152.read(iprot);
+              struct.success.add(_elem152);
             }
           }
           struct.setSuccessIsSet(true);
@@ -2836,14 +2836,14 @@ public class CitySvc {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list114 = iprot.readListBegin();
-                  struct.success = new ArrayList<City>(_list114.size);
-                  City _elem115;
-                  for (int _i116 = 0; _i116 < _list114.size; ++_i116)
+                  org.apache.thrift.protocol.TList _list154 = iprot.readListBegin();
+                  struct.success = new ArrayList<City>(_list154.size);
+                  City _elem155;
+                  for (int _i156 = 0; _i156 < _list154.size; ++_i156)
                   {
-                    _elem115 = new City();
-                    _elem115.read(iprot);
-                    struct.success.add(_elem115);
+                    _elem155 = new City();
+                    _elem155.read(iprot);
+                    struct.success.add(_elem155);
                   }
                   iprot.readListEnd();
                 }
@@ -2871,9 +2871,9 @@ public class CitySvc {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (City _iter117 : struct.success)
+            for (City _iter157 : struct.success)
             {
-              _iter117.write(oprot);
+              _iter157.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -2904,9 +2904,9 @@ public class CitySvc {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (City _iter118 : struct.success)
+            for (City _iter158 : struct.success)
             {
-              _iter118.write(oprot);
+              _iter158.write(oprot);
             }
           }
         }
@@ -2918,14 +2918,14 @@ public class CitySvc {
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list119 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<City>(_list119.size);
-            City _elem120;
-            for (int _i121 = 0; _i121 < _list119.size; ++_i121)
+            org.apache.thrift.protocol.TList _list159 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<City>(_list159.size);
+            City _elem160;
+            for (int _i161 = 0; _i161 < _list159.size; ++_i161)
             {
-              _elem120 = new City();
-              _elem120.read(iprot);
-              struct.success.add(_elem120);
+              _elem160 = new City();
+              _elem160.read(iprot);
+              struct.success.add(_elem160);
             }
           }
           struct.setSuccessIsSet(true);

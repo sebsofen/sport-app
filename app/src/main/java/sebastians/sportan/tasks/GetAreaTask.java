@@ -1,6 +1,7 @@
 package sebastians.sportan.tasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
@@ -18,6 +19,7 @@ public class GetAreaTask extends SuperAsyncTask {
     Context ctx;
     Area area;
     String areaid;
+    boolean skipBackground = false;
 
     public GetAreaTask(Context ctx, String areaid,GetTaskFinishCallBack<Area> taskFinishCallBack) {
         super(ctx);
@@ -27,8 +29,12 @@ public class GetAreaTask extends SuperAsyncTask {
         this.areaid = areaid;
     }
 
+
     @Override
     protected String doInBackground(String... strings) {
+        if(skipBackground)
+            return null;
+
         if(AreasCache.get(areaid) != null){
             area = AreasCache.get(areaid);
             return null;
@@ -37,7 +43,6 @@ public class GetAreaTask extends SuperAsyncTask {
             TMultiplexedProtocol mp = openTransport(SuperAsyncTask.SERVICE_AREA);
             AreaSvc.Client client = new AreaSvc.Client(mp);
             area = client.getAreaById(myCredentials.getToken(), this.areaid);
-            AreasCache.add(areaid,area);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,8 +52,20 @@ public class GetAreaTask extends SuperAsyncTask {
     }
 
     @Override
+    protected void onPreExecute() {
+        Log.i("GetArea", "AREA " + areaid);
+        if(AreasCache.get(areaid) != null){
+            area = AreasCache.get(areaid);
+            skipBackground = true;
+        }
+    }
+
+    @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        if(area != null)
+            AreasCache.add(area.getId(),area);
+
         if(getTaskFinishCallBack != null)
             getTaskFinishCallBack.onFinished(area);
     }

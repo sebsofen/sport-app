@@ -46,4 +46,24 @@
         android:layout_below="@+id/area_img"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Announce Activity"
+        android:id="@+id/announce_activity_btn"
+        android:layout_below="@+id/area_img"
+        android:layout_toLeftOf="@+id/been_here_btn"
+        android:layout_toStartOf="@+id/been_here_btn" />
+
+    <FrameLayout
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:elevation="1dp"></FrameLayout>
+
+
 </RelativeLayout>
