@@ -26,17 +26,10 @@
     >
 
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dragg"
-            android:padding="0dp"
-            android:background="@drawable/draggable"
-            android:baselineAlignBottom="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentLeft="true"
-            android:elevation="4dp"
+        <include layout="@layout/fragment_dragger"
+            android:id="@+id/dragglayout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             />
 
         <fragment
@@ -45,7 +38,7 @@
             android:layout_height="match_parent"
             class="com.google.android.gms.maps.MapFragment"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/dragg" />
+            android:layout_below="@+id/dragglayout" />
 
 
     </RelativeLayout>

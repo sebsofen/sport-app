@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar;
 
 import sebastians.sportan.R;
 import sebastians.sportan.TabActivity;
-import sebastians.sportan.fragments.MainAvailableSportActivitiesFragment;
 import sebastians.sportan.fragments.MainFriendsFragment;
 import sebastians.sportan.fragments.MainMapFragment;
+import sebastians.sportan.fragments.SuperSportActivitiesFragment;
 
 /**
  * Created by sebastian on 11/12/15.
@@ -23,6 +23,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     }
 
     public TabPagerAdapter(FragmentManager fm, TabActivity context) {
+
         super(fm);
         this.context = context;
         toolbar = (Toolbar) context.findViewById(R.id.toolbar);
@@ -33,7 +34,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         toolbar.getMenu().clear();
         switch (position) {
             case 0:
-                return MainAvailableSportActivitiesFragment.newInstance();
+                toolbar.inflateMenu(R.menu.menu_main);
+                return SuperSportActivitiesFragment.newInstance();
+
             case 1:
                 toolbar.inflateMenu(R.menu.menu_main);
                 return MainMapFragment.newInstance();

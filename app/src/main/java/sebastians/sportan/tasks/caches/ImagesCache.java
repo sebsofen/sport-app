@@ -15,6 +15,9 @@ public class ImagesCache {
     }
 
     public static Image get(String id) {
+        if(id == null)
+            return null;
+
         return lruCache.get(id);
     }
 }

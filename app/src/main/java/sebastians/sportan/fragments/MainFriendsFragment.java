@@ -132,6 +132,9 @@ public class MainFriendsFragment extends Fragment implements MyCredentialsFinish
     @Override
     public void onFinish() {
         friendRequestsList.clear();
+        if(MyCredentials.Me == null)
+            return;
+
         friendRequestsList.addAll(MyCredentials.Me.friendrequests != null ? MyCredentials.Me.friendrequests : new ArrayList<String>());
         friendsList.clear();
         friendsList.addAll(MyCredentials.Me.friends != null ? MyCredentials.Me.friends : new ArrayList<String>());

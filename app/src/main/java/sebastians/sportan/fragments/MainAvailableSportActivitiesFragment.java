@@ -3,11 +3,13 @@ package sebastians.sportan.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -39,13 +41,28 @@ public class MainAvailableSportActivitiesFragment extends Fragment {
         //final MyCredentials myCredentials = new MyCredentials(getActivity(), this);
         View view = inflater.inflate(R.layout.fragment_main_sportactivities, container, false);
 
+
          sportActivitiesListAdapter = new SportActivitiesListAdapter(getActivity(),R.id.sportactivitieslist,sportActivitiesList);
         final ListView activitiesList = (ListView) view.findViewById(R.id.sportactivitieslist);
         activitiesList.setAdapter(sportActivitiesListAdapter);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
 
 
+        getNewSportActivities();
 
+        activitiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sportactivityid = sportActivitiesListAdapter.getActivitiesList().get(position);
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                SportActivityDetailFragment sportActivityDetailFragment = new SportActivityDetailFragment();
+                sportActivityDetailFragment.setActivityid(sportactivityid);
+                ft.replace(R.id.placeholder, sportActivityDetailFragment, "NewSportActivityDetailFragment");
+                ft.addToBackStack(null).
+                        commit();
+
+            }
+        });
 
 
 

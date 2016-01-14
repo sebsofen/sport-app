@@ -43,6 +43,10 @@ public class SportActivitySvc {
 
     public SportActivity getActivity(String token, String acitivityid) throws org.apache.thrift.TException;
 
+    public void joinActivity(String token, String activityid) throws org.apache.thrift.TException;
+
+    public void declineActivity(String token, String activityid) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -52,6 +56,10 @@ public class SportActivitySvc {
     public void getAvailableActivityList(String token, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void getActivity(String token, String acitivityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void joinActivity(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+
+    public void declineActivity(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -144,6 +152,48 @@ public class SportActivitySvc {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getActivity failed: unknown result");
+    }
+
+    public void joinActivity(String token, String activityid) throws org.apache.thrift.TException
+    {
+      send_joinActivity(token, activityid);
+      recv_joinActivity();
+    }
+
+    public void send_joinActivity(String token, String activityid) throws org.apache.thrift.TException
+    {
+      joinActivity_args args = new joinActivity_args();
+      args.setToken(token);
+      args.setActivityid(activityid);
+      sendBase("joinActivity", args);
+    }
+
+    public void recv_joinActivity() throws org.apache.thrift.TException
+    {
+      joinActivity_result result = new joinActivity_result();
+      receiveBase(result, "joinActivity");
+      return;
+    }
+
+    public void declineActivity(String token, String activityid) throws org.apache.thrift.TException
+    {
+      send_declineActivity(token, activityid);
+      recv_declineActivity();
+    }
+
+    public void send_declineActivity(String token, String activityid) throws org.apache.thrift.TException
+    {
+      declineActivity_args args = new declineActivity_args();
+      args.setToken(token);
+      args.setActivityid(activityid);
+      sendBase("declineActivity", args);
+    }
+
+    public void recv_declineActivity() throws org.apache.thrift.TException
+    {
+      declineActivity_result result = new declineActivity_result();
+      receiveBase(result, "declineActivity");
+      return;
     }
 
   }
@@ -266,6 +316,76 @@ public class SportActivitySvc {
       }
     }
 
+    public void joinActivity(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      joinActivity_call method_call = new joinActivity_call(token, activityid, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class joinActivity_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String token;
+      private String activityid;
+      public joinActivity_call(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.token = token;
+        this.activityid = activityid;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("joinActivity", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        joinActivity_args args = new joinActivity_args();
+        args.setToken(token);
+        args.setActivityid(activityid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_joinActivity();
+      }
+    }
+
+    public void declineActivity(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      declineActivity_call method_call = new declineActivity_call(token, activityid, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class declineActivity_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String token;
+      private String activityid;
+      public declineActivity_call(String token, String activityid, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.token = token;
+        this.activityid = activityid;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("declineActivity", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        declineActivity_args args = new declineActivity_args();
+        args.setToken(token);
+        args.setActivityid(activityid);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_declineActivity();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -282,6 +402,8 @@ public class SportActivitySvc {
       processMap.put("createActivity", new createActivity());
       processMap.put("getAvailableActivityList", new getAvailableActivityList());
       processMap.put("getActivity", new getActivity());
+      processMap.put("joinActivity", new joinActivity());
+      processMap.put("declineActivity", new declineActivity());
       return processMap;
     }
 
@@ -345,6 +467,46 @@ public class SportActivitySvc {
       }
     }
 
+    public static class joinActivity<I extends Iface> extends org.apache.thrift.ProcessFunction<I, joinActivity_args> {
+      public joinActivity() {
+        super("joinActivity");
+      }
+
+      public joinActivity_args getEmptyArgsInstance() {
+        return new joinActivity_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public joinActivity_result getResult(I iface, joinActivity_args args) throws org.apache.thrift.TException {
+        joinActivity_result result = new joinActivity_result();
+        iface.joinActivity(args.token, args.activityid);
+        return result;
+      }
+    }
+
+    public static class declineActivity<I extends Iface> extends org.apache.thrift.ProcessFunction<I, declineActivity_args> {
+      public declineActivity() {
+        super("declineActivity");
+      }
+
+      public declineActivity_args getEmptyArgsInstance() {
+        return new declineActivity_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public declineActivity_result getResult(I iface, declineActivity_args args) throws org.apache.thrift.TException {
+        declineActivity_result result = new declineActivity_result();
+        iface.declineActivity(args.token, args.activityid);
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -361,6 +523,8 @@ public class SportActivitySvc {
       processMap.put("createActivity", new createActivity());
       processMap.put("getAvailableActivityList", new getAvailableActivityList());
       processMap.put("getActivity", new getActivity());
+      processMap.put("joinActivity", new joinActivity());
+      processMap.put("declineActivity", new declineActivity());
       return processMap;
     }
 
@@ -514,6 +678,106 @@ public class SportActivitySvc {
 
       public void start(I iface, getActivity_args args, org.apache.thrift.async.AsyncMethodCallback<SportActivity> resultHandler) throws TException {
         iface.getActivity(args.token, args.acitivityid,resultHandler);
+      }
+    }
+
+    public static class joinActivity<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, joinActivity_args, Void> {
+      public joinActivity() {
+        super("joinActivity");
+      }
+
+      public joinActivity_args getEmptyArgsInstance() {
+        return new joinActivity_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            joinActivity_result result = new joinActivity_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            joinActivity_result result = new joinActivity_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, joinActivity_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.joinActivity(args.token, args.activityid,resultHandler);
+      }
+    }
+
+    public static class declineActivity<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, declineActivity_args, Void> {
+      public declineActivity() {
+        super("declineActivity");
+      }
+
+      public declineActivity_args getEmptyArgsInstance() {
+        return new declineActivity_args();
+      }
+
+      public AsyncMethodCallback<Void> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            declineActivity_result result = new declineActivity_result();
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            declineActivity_result result = new declineActivity_result();
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, declineActivity_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws TException {
+        iface.declineActivity(args.token, args.activityid,resultHandler);
       }
     }
 
@@ -2954,6 +3218,1434 @@ public class SportActivitySvc {
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
+      }
+    }
+
+  }
+
+  public static class joinActivity_args implements org.apache.thrift.TBase<joinActivity_args, joinActivity_args._Fields>, java.io.Serializable, Cloneable, Comparable<joinActivity_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("joinActivity_args");
+
+    private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField ACTIVITYID_FIELD_DESC = new org.apache.thrift.protocol.TField("activityid", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new joinActivity_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new joinActivity_argsTupleSchemeFactory());
+    }
+
+    public String token; // required
+    public String activityid; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TOKEN((short)1, "token"),
+      ACTIVITYID((short)2, "activityid");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TOKEN
+            return TOKEN;
+          case 2: // ACTIVITYID
+            return ACTIVITYID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ACTIVITYID, new org.apache.thrift.meta_data.FieldMetaData("activityid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(joinActivity_args.class, metaDataMap);
+    }
+
+    public joinActivity_args() {
+    }
+
+    public joinActivity_args(
+      String token,
+      String activityid)
+    {
+      this();
+      this.token = token;
+      this.activityid = activityid;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public joinActivity_args(joinActivity_args other) {
+      if (other.isSetToken()) {
+        this.token = other.token;
+      }
+      if (other.isSetActivityid()) {
+        this.activityid = other.activityid;
+      }
+    }
+
+    public joinActivity_args deepCopy() {
+      return new joinActivity_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.token = null;
+      this.activityid = null;
+    }
+
+    public String getToken() {
+      return this.token;
+    }
+
+    public joinActivity_args setToken(String token) {
+      this.token = token;
+      return this;
+    }
+
+    public void unsetToken() {
+      this.token = null;
+    }
+
+    /** Returns true if field token is set (has been assigned a value) and false otherwise */
+    public boolean isSetToken() {
+      return this.token != null;
+    }
+
+    public void setTokenIsSet(boolean value) {
+      if (!value) {
+        this.token = null;
+      }
+    }
+
+    public String getActivityid() {
+      return this.activityid;
+    }
+
+    public joinActivity_args setActivityid(String activityid) {
+      this.activityid = activityid;
+      return this;
+    }
+
+    public void unsetActivityid() {
+      this.activityid = null;
+    }
+
+    /** Returns true if field activityid is set (has been assigned a value) and false otherwise */
+    public boolean isSetActivityid() {
+      return this.activityid != null;
+    }
+
+    public void setActivityidIsSet(boolean value) {
+      if (!value) {
+        this.activityid = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case TOKEN:
+        if (value == null) {
+          unsetToken();
+        } else {
+          setToken((String)value);
+        }
+        break;
+
+      case ACTIVITYID:
+        if (value == null) {
+          unsetActivityid();
+        } else {
+          setActivityid((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TOKEN:
+        return getToken();
+
+      case ACTIVITYID:
+        return getActivityid();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TOKEN:
+        return isSetToken();
+      case ACTIVITYID:
+        return isSetActivityid();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof joinActivity_args)
+        return this.equals((joinActivity_args)that);
+      return false;
+    }
+
+    public boolean equals(joinActivity_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_token = true && this.isSetToken();
+      boolean that_present_token = true && that.isSetToken();
+      if (this_present_token || that_present_token) {
+        if (!(this_present_token && that_present_token))
+          return false;
+        if (!this.token.equals(that.token))
+          return false;
+      }
+
+      boolean this_present_activityid = true && this.isSetActivityid();
+      boolean that_present_activityid = true && that.isSetActivityid();
+      if (this_present_activityid || that_present_activityid) {
+        if (!(this_present_activityid && that_present_activityid))
+          return false;
+        if (!this.activityid.equals(that.activityid))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_token = true && (isSetToken());
+      list.add(present_token);
+      if (present_token)
+        list.add(token);
+
+      boolean present_activityid = true && (isSetActivityid());
+      list.add(present_activityid);
+      if (present_activityid)
+        list.add(activityid);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(joinActivity_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetToken()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetActivityid()).compareTo(other.isSetActivityid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetActivityid()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.activityid, other.activityid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("joinActivity_args(");
+      boolean first = true;
+
+      sb.append("token:");
+      if (this.token == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.token);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("activityid:");
+      if (this.activityid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.activityid);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class joinActivity_argsStandardSchemeFactory implements SchemeFactory {
+      public joinActivity_argsStandardScheme getScheme() {
+        return new joinActivity_argsStandardScheme();
+      }
+    }
+
+    private static class joinActivity_argsStandardScheme extends StandardScheme<joinActivity_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, joinActivity_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TOKEN
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.token = iprot.readString();
+                struct.setTokenIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // ACTIVITYID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.activityid = iprot.readString();
+                struct.setActivityidIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, joinActivity_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.token != null) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          oprot.writeString(struct.token);
+          oprot.writeFieldEnd();
+        }
+        if (struct.activityid != null) {
+          oprot.writeFieldBegin(ACTIVITYID_FIELD_DESC);
+          oprot.writeString(struct.activityid);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class joinActivity_argsTupleSchemeFactory implements SchemeFactory {
+      public joinActivity_argsTupleScheme getScheme() {
+        return new joinActivity_argsTupleScheme();
+      }
+    }
+
+    private static class joinActivity_argsTupleScheme extends TupleScheme<joinActivity_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, joinActivity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetToken()) {
+          optionals.set(0);
+        }
+        if (struct.isSetActivityid()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetToken()) {
+          oprot.writeString(struct.token);
+        }
+        if (struct.isSetActivityid()) {
+          oprot.writeString(struct.activityid);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, joinActivity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.token = iprot.readString();
+          struct.setTokenIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.activityid = iprot.readString();
+          struct.setActivityidIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class joinActivity_result implements org.apache.thrift.TBase<joinActivity_result, joinActivity_result._Fields>, java.io.Serializable, Cloneable, Comparable<joinActivity_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("joinActivity_result");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new joinActivity_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new joinActivity_resultTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(joinActivity_result.class, metaDataMap);
+    }
+
+    public joinActivity_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public joinActivity_result(joinActivity_result other) {
+    }
+
+    public joinActivity_result deepCopy() {
+      return new joinActivity_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof joinActivity_result)
+        return this.equals((joinActivity_result)that);
+      return false;
+    }
+
+    public boolean equals(joinActivity_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(joinActivity_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("joinActivity_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class joinActivity_resultStandardSchemeFactory implements SchemeFactory {
+      public joinActivity_resultStandardScheme getScheme() {
+        return new joinActivity_resultStandardScheme();
+      }
+    }
+
+    private static class joinActivity_resultStandardScheme extends StandardScheme<joinActivity_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, joinActivity_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, joinActivity_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class joinActivity_resultTupleSchemeFactory implements SchemeFactory {
+      public joinActivity_resultTupleScheme getScheme() {
+        return new joinActivity_resultTupleScheme();
+      }
+    }
+
+    private static class joinActivity_resultTupleScheme extends TupleScheme<joinActivity_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, joinActivity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, joinActivity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+      }
+    }
+
+  }
+
+  public static class declineActivity_args implements org.apache.thrift.TBase<declineActivity_args, declineActivity_args._Fields>, java.io.Serializable, Cloneable, Comparable<declineActivity_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("declineActivity_args");
+
+    private static final org.apache.thrift.protocol.TField TOKEN_FIELD_DESC = new org.apache.thrift.protocol.TField("token", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField ACTIVITYID_FIELD_DESC = new org.apache.thrift.protocol.TField("activityid", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new declineActivity_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new declineActivity_argsTupleSchemeFactory());
+    }
+
+    public String token; // required
+    public String activityid; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TOKEN((short)1, "token"),
+      ACTIVITYID((short)2, "activityid");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TOKEN
+            return TOKEN;
+          case 2: // ACTIVITYID
+            return ACTIVITYID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TOKEN, new org.apache.thrift.meta_data.FieldMetaData("token", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ACTIVITYID, new org.apache.thrift.meta_data.FieldMetaData("activityid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(declineActivity_args.class, metaDataMap);
+    }
+
+    public declineActivity_args() {
+    }
+
+    public declineActivity_args(
+      String token,
+      String activityid)
+    {
+      this();
+      this.token = token;
+      this.activityid = activityid;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public declineActivity_args(declineActivity_args other) {
+      if (other.isSetToken()) {
+        this.token = other.token;
+      }
+      if (other.isSetActivityid()) {
+        this.activityid = other.activityid;
+      }
+    }
+
+    public declineActivity_args deepCopy() {
+      return new declineActivity_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.token = null;
+      this.activityid = null;
+    }
+
+    public String getToken() {
+      return this.token;
+    }
+
+    public declineActivity_args setToken(String token) {
+      this.token = token;
+      return this;
+    }
+
+    public void unsetToken() {
+      this.token = null;
+    }
+
+    /** Returns true if field token is set (has been assigned a value) and false otherwise */
+    public boolean isSetToken() {
+      return this.token != null;
+    }
+
+    public void setTokenIsSet(boolean value) {
+      if (!value) {
+        this.token = null;
+      }
+    }
+
+    public String getActivityid() {
+      return this.activityid;
+    }
+
+    public declineActivity_args setActivityid(String activityid) {
+      this.activityid = activityid;
+      return this;
+    }
+
+    public void unsetActivityid() {
+      this.activityid = null;
+    }
+
+    /** Returns true if field activityid is set (has been assigned a value) and false otherwise */
+    public boolean isSetActivityid() {
+      return this.activityid != null;
+    }
+
+    public void setActivityidIsSet(boolean value) {
+      if (!value) {
+        this.activityid = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case TOKEN:
+        if (value == null) {
+          unsetToken();
+        } else {
+          setToken((String)value);
+        }
+        break;
+
+      case ACTIVITYID:
+        if (value == null) {
+          unsetActivityid();
+        } else {
+          setActivityid((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TOKEN:
+        return getToken();
+
+      case ACTIVITYID:
+        return getActivityid();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TOKEN:
+        return isSetToken();
+      case ACTIVITYID:
+        return isSetActivityid();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof declineActivity_args)
+        return this.equals((declineActivity_args)that);
+      return false;
+    }
+
+    public boolean equals(declineActivity_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_token = true && this.isSetToken();
+      boolean that_present_token = true && that.isSetToken();
+      if (this_present_token || that_present_token) {
+        if (!(this_present_token && that_present_token))
+          return false;
+        if (!this.token.equals(that.token))
+          return false;
+      }
+
+      boolean this_present_activityid = true && this.isSetActivityid();
+      boolean that_present_activityid = true && that.isSetActivityid();
+      if (this_present_activityid || that_present_activityid) {
+        if (!(this_present_activityid && that_present_activityid))
+          return false;
+        if (!this.activityid.equals(that.activityid))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      boolean present_token = true && (isSetToken());
+      list.add(present_token);
+      if (present_token)
+        list.add(token);
+
+      boolean present_activityid = true && (isSetActivityid());
+      list.add(present_activityid);
+      if (present_activityid)
+        list.add(activityid);
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(declineActivity_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetToken()).compareTo(other.isSetToken());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetToken()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.token, other.token);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetActivityid()).compareTo(other.isSetActivityid());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetActivityid()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.activityid, other.activityid);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("declineActivity_args(");
+      boolean first = true;
+
+      sb.append("token:");
+      if (this.token == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.token);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("activityid:");
+      if (this.activityid == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.activityid);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class declineActivity_argsStandardSchemeFactory implements SchemeFactory {
+      public declineActivity_argsStandardScheme getScheme() {
+        return new declineActivity_argsStandardScheme();
+      }
+    }
+
+    private static class declineActivity_argsStandardScheme extends StandardScheme<declineActivity_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, declineActivity_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TOKEN
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.token = iprot.readString();
+                struct.setTokenIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // ACTIVITYID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.activityid = iprot.readString();
+                struct.setActivityidIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, declineActivity_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.token != null) {
+          oprot.writeFieldBegin(TOKEN_FIELD_DESC);
+          oprot.writeString(struct.token);
+          oprot.writeFieldEnd();
+        }
+        if (struct.activityid != null) {
+          oprot.writeFieldBegin(ACTIVITYID_FIELD_DESC);
+          oprot.writeString(struct.activityid);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class declineActivity_argsTupleSchemeFactory implements SchemeFactory {
+      public declineActivity_argsTupleScheme getScheme() {
+        return new declineActivity_argsTupleScheme();
+      }
+    }
+
+    private static class declineActivity_argsTupleScheme extends TupleScheme<declineActivity_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, declineActivity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetToken()) {
+          optionals.set(0);
+        }
+        if (struct.isSetActivityid()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetToken()) {
+          oprot.writeString(struct.token);
+        }
+        if (struct.isSetActivityid()) {
+          oprot.writeString(struct.activityid);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, declineActivity_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.token = iprot.readString();
+          struct.setTokenIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.activityid = iprot.readString();
+          struct.setActivityidIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class declineActivity_result implements org.apache.thrift.TBase<declineActivity_result, declineActivity_result._Fields>, java.io.Serializable, Cloneable, Comparable<declineActivity_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("declineActivity_result");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new declineActivity_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new declineActivity_resultTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(declineActivity_result.class, metaDataMap);
+    }
+
+    public declineActivity_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public declineActivity_result(declineActivity_result other) {
+    }
+
+    public declineActivity_result deepCopy() {
+      return new declineActivity_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof declineActivity_result)
+        return this.equals((declineActivity_result)that);
+      return false;
+    }
+
+    public boolean equals(declineActivity_result that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      List<Object> list = new ArrayList<Object>();
+
+      return list.hashCode();
+    }
+
+    @Override
+    public int compareTo(declineActivity_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("declineActivity_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class declineActivity_resultStandardSchemeFactory implements SchemeFactory {
+      public declineActivity_resultStandardScheme getScheme() {
+        return new declineActivity_resultStandardScheme();
+      }
+    }
+
+    private static class declineActivity_resultStandardScheme extends StandardScheme<declineActivity_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, declineActivity_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, declineActivity_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class declineActivity_resultTupleSchemeFactory implements SchemeFactory {
+      public declineActivity_resultTupleScheme getScheme() {
+        return new declineActivity_resultTupleScheme();
+      }
+    }
+
+    private static class declineActivity_resultTupleScheme extends TupleScheme<declineActivity_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, declineActivity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, declineActivity_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
       }
     }
 

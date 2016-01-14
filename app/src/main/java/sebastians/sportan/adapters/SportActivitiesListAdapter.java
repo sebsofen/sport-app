@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import sebastians.sportan.R;
@@ -19,9 +20,12 @@ import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.networking.ServiceConstants;
 import sebastians.sportan.networking.SportActivity;
 import sebastians.sportan.networking.SportActivitySvc;
+import sebastians.sportan.networking.User;
+import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 import sebastians.sportan.tasks.caches.AreasCache;
+import sebastians.sportan.tasks.caches.UsersCache;
 
 /**
  * Created by sebastian on 10/01/16.
@@ -33,6 +37,11 @@ public class SportActivitiesListAdapter extends ArrayAdapter<String> {
         super(context, resource, objects);
         this.context = context;
         this.activitiesList = (ArrayList<String>) objects;
+    }
+
+    public ArrayList<String> getActivitiesList() {
+        return this.activitiesList;
+
     }
 
     @Override
@@ -50,6 +59,7 @@ public class SportActivitiesListAdapter extends ArrayAdapter<String> {
         getSportActivityTask.setTaskCallBacks(new TaskCallBacks() {
             SportActivity sportActivity;
             Area area;
+            User hostUser;
             @Override
             public String doInBackground() {
                 TMultiplexedProtocol mp;
@@ -61,14 +71,21 @@ public class SportActivitiesListAdapter extends ArrayAdapter<String> {
                     getSportActivityTask.closeTransport();
 
                     area = AreasCache.get(sportActivity.getArea());
-
                     if(area == null) {
                         mp = getSportActivityTask.openTransport(ServiceConstants.SERVICE_AREA);
                         AreaSvc.Client areaClient = new AreaSvc.Client(mp);
                         area = areaClient.getAreaById(myCredentials.getToken(), sportActivity.getArea());
                         getSportActivityTask.closeTransport();
                     }
-                    
+
+                    hostUser = UsersCache.get(sportActivity.getHostid());
+                    if(hostUser == null) {
+                        mp = getSportActivityTask.openTransport(ServiceConstants.SERVICE_USER);
+                        UserSvc.Client userClient = new UserSvc.Client(mp);
+                        hostUser = userClient.getUserById(myCredentials.getToken(), sportActivity.getHostid());
+                        getSportActivityTask.closeTransport();
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -83,6 +100,19 @@ public class SportActivitiesListAdapter extends ArrayAdapter<String> {
             @Override
             public void onPostExecute() {
                 location_txt.setText(area.getTitle());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(sportActivity.getDate());
+                when_txt.setText(
+                        calendar.get(Calendar.DAY_OF_MONTH) + "." +
+                        (calendar.get(Calendar.MONTH) + 1 ) + "." +
+                        calendar.get(Calendar.YEAR) + " " +
+                        calendar.get(Calendar.HOUR_OF_DAY) + ":" +
+                        calendar.get(Calendar.MINUTE)
+                );
+                if(hostUser.getProfile().getUsername() != null){
+                    who_txt.setText(hostUser.getProfile().getUsername());
+                }
+
 
             }
         });
@@ -90,4 +120,6 @@ public class SportActivitiesListAdapter extends ArrayAdapter<String> {
         return view;
 
     }
+
+
 }
