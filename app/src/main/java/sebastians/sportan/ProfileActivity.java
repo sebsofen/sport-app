@@ -2,7 +2,12 @@ package sebastians.sportan;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -25,13 +32,14 @@ import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
 public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
+    RelativeLayout layoutPhoto;
+    ImageView profile_photo_view;
+    ImageButton profile_photo_edit;
     ImageButton edit_username_button;
     TextView edit_username_text;
     SwipeRefreshLayout swipeRefresh;
-    ImageButton share_btn;
     ImageButton select_city_btn;
-    EditText user_id_txt;
-    EditText city_name_txt;
+    TextView city_name_txt;
 
     MyCredentials myCredentials;
     @Override
@@ -39,56 +47,41 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        edit_username_button = (ImageButton)findViewById(R.id.edit_button);
         final ProfileActivity mThis = this;
+
+        layoutPhoto = (RelativeLayout) findViewById(R.id.layoutPhoto);
+        profile_photo_view = (ImageView) findViewById(R.id.profile_photo_view);
+        profile_photo_edit = (ImageButton) findViewById(R.id.profile_photo_edit);
+        edit_username_button = (ImageButton)findViewById(R.id.edit_button);
         edit_username_text = (TextView)findViewById(R.id.username);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
-
-
-        share_btn = (ImageButton) findViewById(R.id.share_btn);
         select_city_btn = (ImageButton) findViewById(R.id.select_city_btn);
-
-        user_id_txt = (EditText) findViewById(R.id.user_id_txt);
-        city_name_txt = (EditText) findViewById(R.id.city_name_txt);
-
+        city_name_txt = (TextView) findViewById(R.id.city_name_txt);
 
         myCredentials = new MyCredentials(this);
-        user_id_txt.setText(myCredentials.getIdentifier());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
+
+        layoutPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                choosePicture();
             }
         });
 
-
-
-        //share userid ;_)
-        share_btn.setOnClickListener(new View.OnClickListener() {
+        profile_photo_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent();
-                intent2.setAction(Intent.ACTION_SEND);
-                intent2.setType("text/plain");
-                String link = getResources().getString(R.string.webhost) + getResources().getString(R.string.apppref) + "users/" +  myCredentials.getIdentifier();
-
-                intent2.putExtra(Intent.EXTRA_TEXT, "Hey Hey, Sport Informell: " + link);
-                startActivity(Intent.createChooser(intent2, "Share via"));
+                choosePicture();
             }
         });
-
-        select_city_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("ProfileActivity", "start fragment");
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SelectCityFragment()).commit();
-            }
-        });
-
-
 
         edit_username_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,16 +109,18 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                                     Profile profile = new Profile();
                                     profile.setUsername(userInputValue);
                                     client.setProfile(myCredentials.getToken(), profile);
-                                    Log.i("ProfileActivity","new username set");
+                                    Log.i("ProfileActivity", "new username set");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 return null;
                             }
+
                             @Override
                             public void onPreExecute() {
                                 swipeRefresh.setRefreshing(true);
                             }
+
                             @Override
                             public void onPostExecute() {
                                 swipeRefresh.setRefreshing(false);
@@ -143,20 +138,56 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                 });
                 AlertDialog alertDialog = inputAlert.create();
                 alertDialog.show();
-
-
             }
         });
 
-
+        select_city_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("ProfileActivity", "start fragment");
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SelectCityFragment()).commit();
+            }
+        });
     }
+
+    public void choosePicture() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+            {
+                if (resultCode == RESULT_OK)
+                {
+                    Uri photoUri = data.getData();
+                    if (photoUri != null)
+                    {
+                        try {
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
+                            cursor.moveToFirst();
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            String filePath = cursor.getString(columnIndex);
+                            cursor.close();
+                            Bitmap bMap_image = BitmapFactory.decodeFile(filePath);
+                            profile_photo_view.setImageBitmap(bMap_image);
+                        }catch(Exception e)
+                        {}
+                    }
+                }// resultCode
+            }// case 1
+        }// switch, request code
+    }// public void onActivityResult
 
     protected void updateUsername(String username){
         //update stuff here!
         Log.i("Profile", "username " + username);
         edit_username_text.setText(username);
     }
-
 
     @Override
     public void citySelected(City city) {

@@ -30,6 +30,7 @@ public class CustomAsyncTask extends SuperAsyncTask {
         super.onPreExecute();
         taskCallBacks.onPreExecute();
     }
+
     public void setTaskCallBacks(TaskCallBacks taskCallBacks){
         this.taskCallBacks = taskCallBacks;
     }

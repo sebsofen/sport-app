@@ -10,19 +10,16 @@ android {
         targetSdkVersion 22
         versionCode 12
         versionName "1.0"
-
     }
-
 
     signingConfigs {
         release {
-            storeFile file("myreleasekey.keystore")
-            storePassword "password"
-            keyAlias "MyReleaseKey"
-            keyPassword "password"
+            storeFile file('D:/Uni_Oldenburg/Mobile_Commerce/Projekt/keystore.jks')
+            storePassword '2wsx3edc'
+            keyAlias 'sportan'
+            keyPassword '2wsx3edc'
         }
     }
-
 
     buildTypes {
         release {
@@ -30,6 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
@@ -46,13 +44,9 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile 'com.android.support:design:22.2.0'
     compile 'com.google.android.gms:play-services-maps:8.3.0'
-    //compile 'com.google.android.gms:play-services-maps:8.3.0'
     compile 'com.android.support:appcompat-v7:22.0.1'
     compile 'com.sothree.slidinguppanel:library:3.2.0'
     compile 'org.apache.thrift:libthrift:0.9.3'
-
-
 }
