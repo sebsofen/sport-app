@@ -1,11 +1,11 @@
 package sebastians.sportan.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +20,11 @@ import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.util.ArrayList;
 
-import sebastians.sportan.AreaDetailActivity;
 import sebastians.sportan.R;
 import sebastians.sportan.adapters.SportStringListAdapter;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.customviews.LoadingView;
+import sebastians.sportan.layouts.AreaContentLayout;
 import sebastians.sportan.networking.Area;
 import sebastians.sportan.networking.AreaSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
@@ -36,7 +36,7 @@ import sebastians.sportan.tools.DateCalculations;
 /**
  * Created by sebastian on 06/12/15.
  */
-public class AreaDetailFragment extends Fragment{
+public class AreaDetailFragment extends Fragment implements AreaContentLayout.OnReleaseListener {
     MyCredentials myCredentials;
     ImageView area_img;
     TextView area_name_txt;
@@ -47,8 +47,16 @@ public class AreaDetailFragment extends Fragment{
     Button been_here_btn;
     Button announce_activity_btn;
     LoadingView loadingView;
-    public AreaDetailFragment(){
+    String areaid;
+    AreaContentLayout in_reveal;
+    ImageView close_img;
 
+    public AreaDetailFragment() {
+
+    }
+
+    public void setAreaid(String id) {
+        this.areaid = id;
     }
 
     @Override
@@ -58,10 +66,24 @@ public class AreaDetailFragment extends Fragment{
         final Activity mActivity = getActivity();
         myCredentials = new MyCredentials(mActivity);
 
+        // To run the animation as soon as the view is layout in the view hierarchy we add this
+        // listener and remove it
+        // as soon as it runs to prevent multiple animations if the view changes bounds
+// get the center for the clipping circle
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+
+        // get the final radius for the clipping circle
+        int dx = Math.max(cx, view.getWidth() - cx);
+        int dy = Math.max(cy, view.getHeight() - cy);
+        float finalRadius = (float) Math.hypot(dx, dy);
+
 
         //created from intent
         Intent intent = mActivity.getIntent();
-        final String areaid = intent.getStringExtra(AreaDetailActivity.EXTRA_AREA_ID);
+        final String areaid = this.areaid;
+
+
 
         loadingView = (LoadingView) view.findViewById(R.id.loading_view);
         area_img = (ImageView) view.findViewById(R.id.area_img);
@@ -72,13 +94,25 @@ public class AreaDetailFragment extends Fragment{
         announce_activity_btn = (Button) view.findViewById(R.id.announce_activity_btn);
         number_participants_txt = (EditText) view.findViewById(R.id.number_participants_txt);
 
+        close_img = (ImageView) view.findViewById(R.id.close_img);
+
+        close_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(AreaDetailFragment.this).commit();
+            }
+        });
+
+        in_reveal = (AreaContentLayout) view.findViewById(R.id.in_reveal);
+        in_reveal.setOnReleaseListener(this);
+
         final ArrayList<String> sportList = new ArrayList<>();
-        final SportStringListAdapter sportListAdapter = new SportStringListAdapter(getActivity(),R.id.sports,sportList);
+        final SportStringListAdapter sportListAdapter = new SportStringListAdapter(getActivity(), R.id.sports, sportList);
         sport_list.setAdapter(sportListAdapter);
 
 
         //get image for area;
-        if(areaid != null &&  !areaid.equals("")) {
+        if (areaid != null && !areaid.equals("")) {
             final CustomAsyncTask gatherInformationTask = new CustomAsyncTask(mActivity);
             gatherInformationTask.setTaskCallBacks(
                     new TaskCallBacks() {
@@ -90,7 +124,7 @@ public class AreaDetailFragment extends Fragment{
                             try {
                                 mp = gatherInformationTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                                 AreaSvc.Client client = new AreaSvc.Client(mp);
-                                area = client.getAreaById(myCredentials.getToken(),areaid);
+                                area = client.getAreaById(myCredentials.getToken(), areaid);
                                 gatherInformationTask.closeTransport();
                                 if (area.getImageid() != null && !area.getImageid().equals("")) {
                                     GetImageTask imgTask = new GetImageTask(mActivity, area_img, area.getImageid());
@@ -121,7 +155,6 @@ public class AreaDetailFragment extends Fragment{
                                 sportListAdapter.notifyDataSetInvalidated();
 
 
-
                             }
 
                         }
@@ -135,7 +168,7 @@ public class AreaDetailFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 CreateSportActivityFragment createSportActivityFragment = new CreateSportActivityFragment();
-                getFragmentManager().beginTransaction().replace(R.id.placeholder, createSportActivityFragment).commit();
+               // getFragmentManager().beginTransaction().replace(R.id.placeholder, createSportActivityFragment).commit();
             }
         });
 
@@ -176,7 +209,7 @@ public class AreaDetailFragment extends Fragment{
                                         try {
                                             mp = submitActivityTask.openTransport(SuperAsyncTask.SERVICE_AREA);
                                             AreaSvc.Client client = new AreaSvc.Client(mp);
-                                            client.wasHere(myCredentials.getToken(),areaid, mDate);
+                                            client.wasHere(myCredentials.getToken(), areaid, mDate);
                                             submitActivityTask.closeTransport();
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -187,13 +220,13 @@ public class AreaDetailFragment extends Fragment{
 
                                     @Override
                                     public void onPreExecute() {
-                                        if(loadingView != null)
+                                        if (loadingView != null)
                                             loadingView.startAnimation();
                                     }
 
                                     @Override
                                     public void onPostExecute() {
-                                        if(loadingView != null)
+                                        if (loadingView != null)
                                             loadingView.stopAnimation();
                                     }
                                 });
@@ -209,4 +242,13 @@ public class AreaDetailFragment extends Fragment{
     }
 
 
+    /**
+     * will close this fragment, when views are pulled out of window
+     * @param releaseToClose
+     */
+    @Override
+    public void onRelease(boolean releaseToClose) {
+        if(releaseToClose)
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
 }

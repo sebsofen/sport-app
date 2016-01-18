@@ -1,69 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/area_img"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="#b9c0b9" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="..."
-        android:id="@+id/area_name_txt"
-        android:layout_alignBottom="@+id/area_img"
-        android:layout_alignParentLeft="true" />
+<sebastians.sportan.layouts.AreaContentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/in_reveal"
+    android:clickable="true"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:focusable="false"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="..."
-        android:id="@+id/area_description_txt"
-        android:layout_below="@+id/area_img"
-        android:layout_alignParentLeft="true" />
-
-    <ListView
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/sports"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/area_img" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="been here"
-        android:id="@+id/been_here_btn"
-        android:layout_below="@+id/area_img"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Announce Activity"
-        android:id="@+id/announce_activity_btn"
-        android:layout_below="@+id/area_img"
-        android:layout_toLeftOf="@+id/been_here_btn"
-        android:layout_toStartOf="@+id/been_here_btn" />
-
-    <FrameLayout
-        android:id="@+id/placeholder"
+    <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:elevation="1dp"></FrameLayout>
+        android:layout_weight=".5"
+        android:id="@+id/area_image_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/area_img"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true"
+            android:background="#a8a8a8" />
+
+        <ListView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sports"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBottom="@+id/area_img" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/close_img"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_close_black_48dp" />
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_weight=".5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/area_content_content"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="..."
+                android:id="@+id/area_description_txt"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="been here"
+                android:id="@+id/been_here_btn"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Announce Activity"
+                android:id="@+id/announce_activity_btn"
+                android:layout_toLeftOf="@+id/been_here_btn"
+                android:layout_toStartOf="@+id/been_here_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="..."
+                android:id="@+id/area_name_txt"
+                android:layout_alignParentLeft="true" />
+        </RelativeLayout>
+
+
+</sebastians.sportan.layouts.AreaContentLayout>

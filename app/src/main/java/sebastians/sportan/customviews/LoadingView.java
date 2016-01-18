@@ -48,6 +48,7 @@ public class LoadingView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if(animate) {
             super.onDraw(canvas);
             float h = canvas.getHeight();

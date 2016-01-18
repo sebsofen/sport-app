@@ -3,7 +3,6 @@ package sebastians.sportan.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,12 +53,11 @@ public class MainAvailableSportActivitiesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String sportactivityid = sportActivitiesListAdapter.getActivitiesList().get(position);
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                SportActivityDetailFragment sportActivityDetailFragment = new SportActivityDetailFragment();
-                sportActivityDetailFragment.setActivityid(sportactivityid);
-                ft.replace(R.id.placeholder, sportActivityDetailFragment, "NewSportActivityDetailFragment");
-                ft.addToBackStack(null).
-                        commit();
+                //final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                //SportActivityDetailFragment sportActivityDetailFragment = new SportActivityDetailFragment();
+                //sportActivityDetailFragment.setActivityid(sportactivityid);
+                //ft.replace(R.id.placeholder, sportActivityDetailFragment, "NewSportActivityDetailFragment");
+                //ft.addToBackStack(null).commit();
 
             }
         });

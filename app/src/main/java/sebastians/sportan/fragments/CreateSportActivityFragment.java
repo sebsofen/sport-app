@@ -2,9 +2,9 @@ package sebastians.sportan.fragments;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,7 +132,7 @@ public class CreateSportActivityFragment extends Fragment {
                 }else{
 
                 }
-                getActivity().getFragmentManager().beginTransaction().remove(CreateSportActivityFragment.this).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().remove(CreateSportActivityFragment.this).commit();
             }
         });
 

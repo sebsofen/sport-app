@@ -10,4 +10,8 @@
     <color name="greyBlack">#2E302F</color>
     <color name="greyMedium">#B5BDB9</color>
     <color name="greyLight">#F5FFFA</color>
+
+
+    <!-- Transparent stuff -->
+    <color name="transparentbackground">#55000000</color>
 </resources>

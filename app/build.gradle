@@ -8,20 +8,11 @@ android {
         applicationId "sebastians.sportan"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 15
+        versionCode 17
         versionName "1.0"
 
     }
 
-
-    signingConfigs {
-        release {
-            storeFile file("myreleasekey.keystore")
-            storePassword "password"
-            keyAlias "MyReleaseKey"
-            keyPassword 'passwords'
-        }
-    }
 
 
     buildTypes {
@@ -44,12 +35,16 @@ android {
 
 }
 
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:design:22.2.0'
     compile 'com.google.android.gms:play-services-maps:8.3.0'
     //compile 'com.google.android.gms:play-services-maps:8.3.0'
     compile 'com.android.support:appcompat-v7:22.0.1'
-    compile 'com.sothree.slidinguppanel:library:3.2.0'
+    compile 'com.sothree.slidinguppanel:library:3.2.1'
     compile 'org.apache.thrift:libthrift:0.9.3'
+
+
 }

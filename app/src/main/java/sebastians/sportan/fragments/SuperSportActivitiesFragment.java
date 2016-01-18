@@ -24,8 +24,8 @@ public class SuperSportActivitiesFragment extends Fragment {
 
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-        ft.replace(R.id.placeholder, MainAvailableSportActivitiesFragment.newInstance(), "MainSportActivities");
-        ft.commit();
+        //ft.replace(R.id.placeholder, MainAvailableSportActivitiesFragment.newInstance(), "MainSportActivities");
+        //ft.commit();
 
         return view;
     }

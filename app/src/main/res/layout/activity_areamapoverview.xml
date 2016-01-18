@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,9 +8,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="68dp"
-    sothree:umanoShadowHeight="4dp">
+    sothree:umanoPanelHeight="50dp"
+    sothree:umanoShadowHeight="0dp"
+    sothree:umanoFadeColor="@android:color/transparent"
+    sothree:umanoOverlay="true"
 
+    android:elevation="0dp"
+    android:fadingEdgeLength="0dp"
+    android:background="#00ffffff"
+    >
 
 
 
@@ -16,32 +24,7 @@
     <include layout="@layout/sport_select_content"/>
 
 
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/sport_select_layout"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:background="@color/colorSecond"
-    >
-
-
-        <include layout="@layout/fragment_dragger"
-            android:id="@+id/dragglayout"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            />
-
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.MapFragment"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/dragglayout" />
-
-
-    </RelativeLayout>
-
+    <include layout="@layout/fragment_map" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+

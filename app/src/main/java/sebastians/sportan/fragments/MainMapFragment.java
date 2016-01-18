@@ -2,18 +2,23 @@ package sebastians.sportan.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,7 +76,11 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
     GoogleMap googleMap;
     ImageButton noFilterButton;
     LoadingView loadingView;
+    RelativeLayout dragglayout;
     private boolean noFilter = true;
+
+    AnimationDrawable map_arrow_animation;
+
     public static MainMapFragment newInstance() {
         MainMapFragment fragment = new MainMapFragment();
         return fragment;
@@ -100,6 +109,15 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
 
         final ArrayList<Sport> sportList = new ArrayList<>();
         sportListAdapter = new SportListAdapter(mThis,R.id.sport_select_layout,sportList);
+
+
+        dragglayout = (RelativeLayout) view.findViewById(R.id.dragglayout);
+
+        final ImageButton dragbutton = (ImageButton)dragglayout.findViewById(R.id.dragg);
+
+
+        map_arrow_animation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.animation_map_arrow,getActivity().getTheme());
+        dragbutton.setImageDrawable(map_arrow_animation.getFrame(0));
 
         noFilterButton = (ImageButton) view.findViewById(R.id.no_filter_btn);
         noFilterButton.setVisibility(View.GONE);
@@ -132,6 +150,44 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         //sliding panel layout!
         SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         slidingUpPanelLayout.setDragView(R.id.dragg);
+        slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, final float slideOffset) {
+                Log.i("slideOffset", slideOffset + "");
+                    Animation a = new Animation() {
+                        @Override
+                        protected void applyTransformation(float interpolatedTime, Transformation t) {
+                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)dragglayout.getLayoutParams();
+                            params.bottomMargin = (int) (-params.height * slideOffset);
+                            dragglayout.setLayoutParams(params);
+                        }
+                    };
+                    a.setDuration(1);
+                    dragglayout.startAnimation(a);
+                    dragbutton.setImageDrawable(map_arrow_animation.getFrame((int) (14 * slideOffset)));
+
+            }
+
+            @Override
+            public void onPanelCollapsed(View panel) {
+
+            }
+
+            @Override
+            public void onPanelExpanded(View panel) {
+
+            }
+
+            @Override
+            public void onPanelAnchored(View panel) {
+
+            }
+
+            @Override
+            public void onPanelHidden(View panel) {
+
+            }
+        });
         sportListAdapter.setSlidingUpPanelLayout(slidingUpPanelLayout);
 
         return view;
@@ -239,14 +295,33 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         markerTask.execute();
     }
 
+
+    /**
+     * Load new fragment to fragment placeholder
+     * @param marker
+     * @return
+     */
     @Override
     public boolean onMarkerClick(Marker marker) {
         String areaid = markerids.get(marker);
+
+        //if user is not admin:
+        AreaDetailFragment areaDetailFragment = new AreaDetailFragment();
+        areaDetailFragment.setAreaid(areaid);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.snackbar_in, R.anim.snackbar_out);
+        ft.replace(R.id.area_detail_fragment_placeholder, areaDetailFragment).commit();
+
+
+        /*
         Intent intent = new Intent(mThis, AreaDetailActivity.class);
+
         intent.putExtra(AreaDetailActivity.EXTRA_AREA_ID, areaid);
         startActivity(intent);
+        */
         return false;
     }
+
 
     @Override
     public void onMapLongClick(final LatLng latLng) {

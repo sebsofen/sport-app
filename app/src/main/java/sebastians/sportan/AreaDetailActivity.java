@@ -48,22 +48,22 @@ public class AreaDetailActivity extends AppCompatActivity implements CreateSport
         Switch toggleAdmin = (Switch) findViewById(R.id.adm_swtch);
         if(myCredentials.amIAdmin()) {
             Log.i("AreaDetailActivity", "This is the admin");
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container, areaDetailAdminFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, areaDetailAdminFragment).commit();
 
             toggleAdmin.setChecked(true);
             toggleAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked){
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailAdminFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailAdminFragment()).commit();
                     }else{
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailFragment()).commit();
                     }
                 }
             });
         }else{
             toggleAdmin.setVisibility(View.GONE);
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AreaDetailFragment()).commit();
 
         }
 
