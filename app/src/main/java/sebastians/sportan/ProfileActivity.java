@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +30,11 @@ import android.widget.Toast;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.fragments.SelectCityFragment;
@@ -36,6 +44,7 @@ import sebastians.sportan.networking.UserSvc;
 import sebastians.sportan.tasks.CustomAsyncTask;
 import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
+import sebastians.sportan.tools.ImageProcessing;
 
 public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
 
@@ -140,7 +149,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                             }
                         });
 
-                        transmit.execute("");
+                        transmit.execute("asd");
                     }
                 });
                 inputAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -173,7 +182,20 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                     Uri photoUri = data.getData();
                     if (photoUri != null)
                     {
-                        doCrop(photoUri);
+                        try {
+                            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                            Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
+                            cursor.moveToFirst();
+                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                            String filePath = cursor.getString(columnIndex);
+                            cursor.close();
+                            Bitmap bMap_image = BitmapFactory.decodeFile(filePath);
+
+                            // Crop
+                            doCrop(getImageUri(this, bMap_image));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 break;
@@ -183,9 +205,6 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                 if (data != null) {
                     Uri photoUri = data.getData();
                     if (photoUri != null) {
-//                    Bundle extras = data.getExtras();
-//                    Bitmap bitmap= extras.getParcelable("data");
-//                    profile_photo_view.setImageBitmap(bitmap);
                         try {
                             String[] filePathColumn = {MediaStore.Images.Media.DATA};
                             Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
@@ -194,7 +213,10 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                             String filePath = cursor.getString(columnIndex);
                             cursor.close();
                             Bitmap bMap_image = BitmapFactory.decodeFile(filePath);
-                            profile_photo_view.setImageBitmap(bMap_image);
+                            saveBitmapPersistent(bMap_image,"profile_pic.jpg");
+//                            profile_photo_view.setImageBitmap(bMap_image);
+                            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(bMap_image, 10));
+                            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -255,5 +277,82 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
     public void citySelected(City city) {
         Log.i("ProfileActivity", "City set");
         city_name_txt.setText(city.getName());
+    }
+
+    /**
+     * Get the directory, which the app uses for persistence file savings.
+     *
+     * @return The MEDIC folder which contains the taken pictures.
+     */
+    private File getWearableDir() {
+        File sdDir = Environment
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return new File(sdDir, "SportanData");
+    }
+
+//    public Bitmap loadBitmapFromAsset(Asset asset) {
+//        if (asset == null) {
+//            throw new IllegalArgumentException("Asset must be non-null");
+//        }
+//        final long TIMEOUT_MS = 10000L;
+//
+//        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+//                .addApi(Wearable.API)
+//                .build();
+//
+//        ConnectionResult result =
+//                googleApiClient.blockingConnect(TIMEOUT_MS, TimeUnit.MILLISECONDS);
+//        if (!result.isSuccess()) {
+//            return null;
+//        }
+//        // convert asset into a file descriptor and block until it's ready
+//        InputStream assetInputStream = Wearable.DataApi.getFdForAsset(
+//                googleApiClient, asset).await().getInputStream();
+//        googleApiClient.disconnect();
+//
+//        if (assetInputStream == null) {
+//            Log.w("WearMesLisService", "Requested an unknown Asset.");
+//            return null;
+//        }
+//        // decode the stream into a bitmap
+//        return BitmapFactory.decodeStream(assetInputStream);
+//    }
+
+    /**
+     * Save a bitmap persistent with a specific name.
+     *
+     * @param bmp   bitmap to be saved.
+     * @param photoName The photonomae including the ending, example: pic1.png
+     */
+    private void saveBitmapPersistent(Bitmap bmp, String photoName){
+        File pictureFileDir = getWearableDir();
+
+        if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
+            Log.d("WearMesLisService", "Can't create directory to save image.");
+            Toast.makeText(this.getApplicationContext(), "Can't create directory to save image.",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //photoName = "Picture_MedicTest.jpg";
+        String fileName = pictureFileDir.getPath() + File.separator + photoName;
+        File pictureFile = new File(fileName);
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(pictureFile); //fileName
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="sebastians.sportan.ProfileActivity"
     android:weightSum="1">
 
@@ -28,8 +28,8 @@
             <RelativeLayout
                 android:id="@+id/layoutPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="183dp"
-                android:background="@drawable/rounded_dialog_photo"
+                android:layout_height="186dp"
+                android:background="@drawable/rounded_dialog_photo_unavailable"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
 
@@ -56,12 +56,12 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_photo_view"
                     android:src="@drawable/ic_person_white_24px"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignRight="@+id/profile_photo_edit"
-                    android:layout_alignEnd="@+id/profile_photo_edit"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_alignLeft="@+id/textView"
-                    android:layout_alignStart="@+id/textView" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_above="@+id/textView" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,6 +159,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/fragment_container"
-        />
+        android:id="@+id/fragment_container"/>
+
 </RelativeLayout>
