@@ -1,5 +1,7 @@
 package sebastians.sportan;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -19,8 +22,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
+
+import java.io.ByteArrayOutputStream;
 
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.fragments.SelectCityFragment;
@@ -32,6 +38,10 @@ import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 
 public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
+
+    final int CHOOSE_PIC_REQUEST_CODE = 1;
+    final int CROP_PIC_REQUEST_CODE = 2;
+
     RelativeLayout layoutPhoto;
     ImageView profile_photo_view;
     ImageButton profile_photo_edit;
@@ -60,7 +70,10 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
 
         myCredentials = new MyCredentials(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        View toolbarInclude = findViewById(R.id.include);
+        Toolbar toolbar = (Toolbar) toolbarInclude.findViewById(R.id.toolbar);
+        if(toolbar != null) Log.d("profileactivity","toolbar != null");
+        else Log.d("profileactivity", "toolbar == null");
 //        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 //        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -150,22 +163,29 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         });
     }
 
-    public void choosePicture() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, 1);
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case 1:
+            case CHOOSE_PIC_REQUEST_CODE:
             {
                 if (resultCode == RESULT_OK)
                 {
                     Uri photoUri = data.getData();
                     if (photoUri != null)
                     {
+                        doCrop(photoUri);
+                    }
+                }
+                break;
+            }
+
+            case CROP_PIC_REQUEST_CODE:{
+                if (data != null) {
+                    Uri photoUri = data.getData();
+                    if (photoUri != null) {
+//                    Bundle extras = data.getExtras();
+//                    Bitmap bitmap= extras.getParcelable("data");
+//                    profile_photo_view.setImageBitmap(bitmap);
                         try {
                             String[] filePathColumn = {MediaStore.Images.Media.DATA};
                             Cursor cursor = getContentResolver().query(photoUri, filePathColumn, null, null, null);
@@ -175,13 +195,55 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
                             cursor.close();
                             Bitmap bMap_image = BitmapFactory.decodeFile(filePath);
                             profile_photo_view.setImageBitmap(bMap_image);
-                        }catch(Exception e)
-                        {}
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }// resultCode
-            }// case 1
-        }// switch, request code
-    }// public void onActivityResult
+                    else{
+                        Log.d("ProfileActivity", "photouri == null");
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public void choosePicture() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, Environment.getExternalStorageDirectory());
+        startActivityForResult(photoPickerIntent, CHOOSE_PIC_REQUEST_CODE);
+    }
+
+    private void doCrop(Uri picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+
+            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 128);
+            cropIntent.putExtra("outputY", 128);
+            cropIntent.putExtra("return-data", true);
+//            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, Environment.getExternalStorageDirectory());
+            startActivityForResult(cropIntent, CROP_PIC_REQUEST_CODE);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support the crop action!";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     protected void updateUsername(String username){
         //update stuff here!
