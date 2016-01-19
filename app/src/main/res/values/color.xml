@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorMain">#96CA2D</color>
-    <color name="colorSecond">#B5E655</color>
+    <!-- Old colors used by the App -->
+    <!--<color name="colorMain">#96CA2D</color>
+    <color name="colorSecond">#B5E655</color>-->
     <color name="colorThird">#EDF7F2</color>
     <color name="colorFourth">#4BB5C1</color>
     <color name="colorFifth">#7FC6BC</color>
@@ -10,4 +11,10 @@
     <color name="greyBlack">#2E302F</color>
     <color name="greyMedium">#B5BDB9</color>
     <color name="greyLight">#F5FFFA</color>
+
+    <!-- Suggested colors by google -->
+    <color name="colorMain">#8BC34A</color>
+    <color name="colorSecond">#AED581</color>
+
+    <color name="whatsappNoPhoto">#4DB6AC</color>
 </resources>

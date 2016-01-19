@@ -7,10 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,8 +30,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.fragments.SelectCityFragment;
@@ -46,7 +41,10 @@ import sebastians.sportan.tasks.SuperAsyncTask;
 import sebastians.sportan.tasks.TaskCallBacks;
 import sebastians.sportan.tools.ImageProcessing;
 
-public class ProfileActivity extends ActionBarActivity implements SelectCityFragment.SelectedCityListener {
+public class ProfileActivity extends ActionBarActivity
+        implements SelectCityFragment.SelectedCityListener {
+
+    private static final String TAG = "ProfileActivity";
 
     final int CHOOSE_PIC_REQUEST_CODE = 1;
     final int CROP_PIC_REQUEST_CODE = 2;
@@ -56,7 +54,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
     ImageButton profile_photo_edit;
     ImageButton edit_username_button;
     TextView edit_username_text;
-    SwipeRefreshLayout swipeRefresh;
+//    SwipeRefreshLayout swipeRefresh;
     ImageButton select_city_btn;
     TextView city_name_txt;
 
@@ -73,23 +71,32 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
         profile_photo_edit = (ImageButton) findViewById(R.id.profile_photo_edit);
         edit_username_button = (ImageButton)findViewById(R.id.edit_button);
         edit_username_text = (TextView)findViewById(R.id.username);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
+//        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
         select_city_btn = (ImageButton) findViewById(R.id.select_city_btn);
         city_name_txt = (TextView) findViewById(R.id.city_name_txt);
 
         myCredentials = new MyCredentials(this);
 
-        View toolbarInclude = findViewById(R.id.include);
-        Toolbar toolbar = (Toolbar) toolbarInclude.findViewById(R.id.toolbar);
-        if(toolbar != null) Log.d("profileactivity","toolbar != null");
-        else Log.d("profileactivity", "toolbar == null");
-//        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.include);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        // Show the already set picture, if the user already has set and saved a profile picture
+        Bitmap photo = loadBitmapFromDirectory("profile_pic.jpg");
+        if(photo != null){
+            Log.d(TAG, "photo != null");
+            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(photo, 10));
+            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
+        }
+        else{
+            Log.d(TAG, "photo == null");
+        }
 
         layoutPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,12 +147,12 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
 
                             @Override
                             public void onPreExecute() {
-                                swipeRefresh.setRefreshing(true);
+//                                swipeRefresh.setRefreshing(true);
                             }
 
                             @Override
                             public void onPostExecute() {
-                                swipeRefresh.setRefreshing(false);
+//                                swipeRefresh.setRefreshing(false);
                             }
                         });
 
@@ -245,8 +252,8 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("outputX", 128);
-            cropIntent.putExtra("outputY", 128);
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
             cropIntent.putExtra("return-data", true);
 //            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, Environment.getExternalStorageDirectory());
             startActivityForResult(cropIntent, CROP_PIC_REQUEST_CODE);
@@ -284,39 +291,18 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
      *
      * @return The MEDIC folder which contains the taken pictures.
      */
-    private File getWearableDir() {
+    private File getSportanDir() {
         File sdDir = Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "SportanData");
     }
 
-//    public Bitmap loadBitmapFromAsset(Asset asset) {
-//        if (asset == null) {
-//            throw new IllegalArgumentException("Asset must be non-null");
-//        }
-//        final long TIMEOUT_MS = 10000L;
-//
-//        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
-//                .addApi(Wearable.API)
-//                .build();
-//
-//        ConnectionResult result =
-//                googleApiClient.blockingConnect(TIMEOUT_MS, TimeUnit.MILLISECONDS);
-//        if (!result.isSuccess()) {
-//            return null;
-//        }
-//        // convert asset into a file descriptor and block until it's ready
-//        InputStream assetInputStream = Wearable.DataApi.getFdForAsset(
-//                googleApiClient, asset).await().getInputStream();
-//        googleApiClient.disconnect();
-//
-//        if (assetInputStream == null) {
-//            Log.w("WearMesLisService", "Requested an unknown Asset.");
-//            return null;
-//        }
-//        // decode the stream into a bitmap
-//        return BitmapFactory.decodeStream(assetInputStream);
-//    }
+    public Bitmap loadBitmapFromDirectory(String fileNameWithEnding) {
+        String photoPath = getSportanDir() + File.separator + fileNameWithEnding;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        return BitmapFactory.decodeFile(photoPath, options);
+    }
 
     /**
      * Save a bitmap persistent with a specific name.
@@ -325,7 +311,7 @@ public class ProfileActivity extends ActionBarActivity implements SelectCityFrag
      * @param photoName The photonomae including the ending, example: pic1.png
      */
     private void saveBitmapPersistent(Bitmap bmp, String photoName){
-        File pictureFileDir = getWearableDir();
+        File pictureFileDir = getSportanDir();
 
         if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
             Log.d("WearMesLisService", "Can't create directory to save image.");
