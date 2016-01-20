@@ -127,7 +127,7 @@
                 android:layout_weight="1.44"
                 android:layout_marginTop="@dimen/profile_vertical_margin">
 
-                <TextViewx
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/city_name_txt"
