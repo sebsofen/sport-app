@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -91,8 +92,9 @@ public class ProfileActivity extends ActionBarActivity
         Bitmap photo = loadBitmapFromDirectory("profile_pic.jpg");
         if(photo != null){
             Log.d(TAG, "photo != null");
-            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(photo, 10));
-            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
+            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(photo, 7));
+//            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
+            layoutPhoto.setBackgroundColor(Color.TRANSPARENT);
         }
         else{
             Log.d(TAG, "photo == null");
@@ -220,10 +222,11 @@ public class ProfileActivity extends ActionBarActivity
                             String filePath = cursor.getString(columnIndex);
                             cursor.close();
                             Bitmap bMap_image = BitmapFactory.decodeFile(filePath);
-                            saveBitmapPersistent(bMap_image,"profile_pic.jpg");
+                            saveBitmapPersistent(bMap_image, "profile_pic.jpg");
 //                            profile_photo_view.setImageBitmap(bMap_image);
-                            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(bMap_image, 10));
-                            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
+                            profile_photo_view.setImageBitmap(ImageProcessing.getRoundedCornerBitmap(bMap_image, 7));
+//                            layoutPhoto.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_dialog_photo_available));
+                            layoutPhoto.setBackgroundColor(Color.TRANSPARENT);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
