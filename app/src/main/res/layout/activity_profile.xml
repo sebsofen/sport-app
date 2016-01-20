@@ -8,97 +8,75 @@
     android:weightSum="1">
 
     <!-- Add toolbar to activity -->
-    <include layout="@layout/toolbar"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
+    <include layout="@layout/toolbar"
+        android:id="@+id/include" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/include"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/profile_vertical_margin">
 
             <RelativeLayout
+                android:id="@+id/layoutPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="183dp"
-                android:background="@drawable/rounded_dialog"
-                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_dialog_photo_unavailable"
                 android:layout_alignParentLeft="true"
-                android:layout_marginBottom="127dp">
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/profile_photo_view"
+                    android:src="@drawable/ic_person_white_24px"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+
                 <View
+                    android:id="@+id/view"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:background="@android:color/holo_blue_light"
-                    android:layout_alignTop="@+id/img_edit"
-                    android:layout_toLeftOf="@+id/img_edit"
-                    android:layout_alignBottom="@+id/img_edit"
-                    android:id="@+id/view" />
+                    android:background="@android:color/white"
+                    android:layout_alignTop="@+id/profile_photo_edit"
+                    android:layout_toLeftOf="@+id/profile_photo_edit"
+                    android:layout_alignBottom="@+id/profile_photo_view"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="@dimen/profile_photo_elements_margin"/>
+
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/img_edit"
-                    android:background="@drawable/abc_btn_radio_to_on_mtrl_015"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
+                    android:id="@+id/profile_photo_edit"
+                    android:background="@drawable/ic_create_white_24dp"
+                    android:layout_alignBottom="@+id/profile_photo_view"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/view" />
+                    android:layout_marginBottom="@dimen/profile_photo_elements_margin"
+                    android:layout_marginRight="@dimen/profile_photo_elements_margin"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Profile Picture"
                     android:id="@+id/textView"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true" />
-
-            </RelativeLayout>
-
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_dialog"
-                android:layout_weight="1.44">
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/user_id_txt"
-                    android:layout_alignParentBottom="true"
+                    android:textColor="#FFFFFF"
+                    android:layout_alignBottom="@+id/profile_photo_view"
                     android:layout_alignParentLeft="true"
-                    android:text="userid"
-                    android:layout_toLeftOf="@+id/share_btn" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/share_btn"
-                    android:layout_alignTop="@+id/user_id_txt"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_share" />
-
+                    android:layout_marginBottom="@dimen/profile_photo_elements_margin"
+                    android:layout_marginLeft="@dimen/profile_photo_elements_margin"/>
 
             </RelativeLayout>
 
@@ -106,39 +84,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_dialog"
-                android:layout_weight="1.44" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/city_name_txt"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:text="Select City"
-                    android:layout_toLeftOf="@+id/select_city_btn" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/select_city_btn"
-                    android:layout_alignTop="@+id/city_name_txt"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_location_select" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_dialog"
+                android:id="@+id/layoutUsername"
+                android:layout_below="@+id/layoutPhoto"
                 android:layout_alignParentLeft="true"
-                android:id="@+id/relativeLayout">
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/profile_vertical_margin">
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:background="@android:color/holo_blue_light"
+                    android:background="@android:color/darker_gray"
                     android:layout_alignTop="@+id/username"
                     android:layout_toLeftOf="@+id/edit_button"
-                    android:layout_alignBottom="@+id/edit_button" />
+                    android:layout_alignBottom="@+id/edit_button"
+                    android:layout_marginRight="10dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -152,22 +112,59 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_button"
-                    android:background="@drawable/abc_btn_radio_to_on_mtrl_015"
+                    android:background="@drawable/ic_create_black_24dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
-        </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutSelectCity"
+                android:layout_below="@+id/layoutUsername"
+                android:background="@drawable/rounded_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1.44"
+                android:layout_marginTop="@dimen/profile_vertical_margin">
+
+                <TextViewx
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/city_name_txt"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Select City"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/select_city_btn"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_location_select" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_alignTop="@+id/select_city_btn"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/select_city_btn"
+                    android:layout_alignBottom="@+id/select_city_btn"
+                    android:layout_marginRight="10dp"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
     </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/fragment_container"
-        ></RelativeLayout>
+        android:id="@+id/fragment_container"/>
+
 </RelativeLayout>
