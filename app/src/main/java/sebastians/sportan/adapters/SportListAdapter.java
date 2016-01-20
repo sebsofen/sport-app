@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -86,16 +85,16 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         iconView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         iconView.setAdjustViewBounds(true);
-        final Bitmap iconBitmap = Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
-        TextView title = (TextView) elementView.findViewById(R.id.name);
+        final Bitmap iconBitmap = Bitmap.createBitmap(50,50, Bitmap.Config.ARGB_8888);
 
 
         //grayscale filter
         ColorMatrix grayMatrix = new ColorMatrix();
-        grayMatrix.setSaturation(0);
+        grayMatrix.setSaturation(.2f);
         final ColorMatrixColorFilter grayFilter = new ColorMatrixColorFilter(grayMatrix);
         //color filter
         ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(1.2f);
         final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
 
         iconView.setColorFilter(grayFilter);
@@ -116,9 +115,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         });
 
         imageTask.execute(sport.getIconid());
-        title.setText(sport.getName().toUpperCase());
 
-        Log.i("SPORTLIST", "called");
         if( selectedSportsList.contains(sport.getId())){
             iconView.setColorFilter(colorFilter);
         }else {

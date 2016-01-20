@@ -14,8 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -116,7 +114,14 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         final ImageButton dragbutton = (ImageButton)dragglayout.findViewById(R.id.dragg);
 
 
-        map_arrow_animation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.animation_map_arrow,getActivity().getTheme());
+        if(android.os.Build.VERSION.SDK_INT >= 21){
+            map_arrow_animation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.animation_map_arrow,getActivity().getTheme());
+        } else {
+            map_arrow_animation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.animation_map_arrow);
+        }
+
+
+
         dragbutton.setImageDrawable(map_arrow_animation.getFrame(0));
 
         noFilterButton = (ImageButton) view.findViewById(R.id.no_filter_btn);
@@ -154,16 +159,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
             @Override
             public void onPanelSlide(View panel, final float slideOffset) {
                 Log.i("slideOffset", slideOffset + "");
-                    Animation a = new Animation() {
-                        @Override
-                        protected void applyTransformation(float interpolatedTime, Transformation t) {
-                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)dragglayout.getLayoutParams();
-                            params.bottomMargin = (int) (-params.height * slideOffset);
-                            dragglayout.setLayoutParams(params);
-                        }
-                    };
-                    a.setDuration(1);
-                    dragglayout.startAnimation(a);
+
                     dragbutton.setImageDrawable(map_arrow_animation.getFrame((int) (14 * slideOffset)));
 
             }
@@ -309,7 +305,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         AreaDetailFragment areaDetailFragment = new AreaDetailFragment();
         areaDetailFragment.setAreaid(areaid);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.snackbar_in, R.anim.snackbar_out);
+        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_in);
         ft.replace(R.id.area_detail_fragment_placeholder, areaDetailFragment).commit();
 
 

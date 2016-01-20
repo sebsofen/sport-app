@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import sebastians.sportan.R;
@@ -15,12 +15,9 @@ import sebastians.sportan.R;
 /**
  * Created by sebastian on 18/01/16.
  */
-public class AreaContentLayout extends LinearLayout {
+public class AreaContentLayout extends RelativeLayout{
     private ViewDragHelper mDragHelper;
-    private RelativeLayout area_content_content;
-    private RelativeLayout area_image_content;
-    private int top_area_content_content = 0;
-    private int top_area_image_content = 0;
+    private FrameLayout area_content_content;
     private OnReleaseListener onReleaseListener;
     public AreaContentLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,10 +39,8 @@ public class AreaContentLayout extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        area_content_content = (RelativeLayout)findViewById(R.id.area_content_content);
-        area_image_content = (RelativeLayout)findViewById(R.id.area_image_content);
-        top_area_image_content = area_image_content.getTop();
-        top_area_content_content = area_content_content.getTop();
+        area_content_content = (FrameLayout)findViewById(R.id.area_content_content);
+
 
     }
 
@@ -75,21 +70,19 @@ public class AreaContentLayout extends LinearLayout {
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
             Log.i("AreaContentLayout", "tryCaptureView");
-
             return child == area_content_content;
         }
 
         @Override
-        public int clampViewPositionVertical(View child, int top, int dy) {
-
-            if(dy < 0)
-                top += -dy;
-            return top;
+        public int clampViewPositionHorizontal(View child, int left, int dx) {
+            return left + dx;
         }
+
 
 
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+            /*
             int glob_top = AreaContentLayout.this.getTop();
             int glob_bottom = AreaContentLayout.this.getBottom();
             int glob_center = AreaContentLayout.this.getBottom() / 2;
@@ -99,24 +92,49 @@ public class AreaContentLayout extends LinearLayout {
             //set alpha values
             area_image_content.setAlpha(1.5f - (float)(glob_center - new_image_position) / (float)glob_bottom);
             area_content_content.setAlpha(1.5f - (float)(glob_center - new_image_position) / (float)glob_bottom);
+            */
 
+            int layoutwidth = AreaContentLayout.this.getWidth();
+
+
+            Log.i("AreaContentLayout", "width:" + layoutwidth + ", " + (float)(left + (layoutwidth / 2)) / (float)layoutwidth);
+            float alpha =(float)(left + (layoutwidth / 2)) / (float)layoutwidth + .5f;
+
+            if (alpha > 1){
+                alpha = 2.0f - alpha;
+            }else {
+                alpha = alpha;
+            }
+
+
+            changedView.setAlpha(alpha);
+            Log.i("AreaContentLayout", "alpha:" + alpha);
 
         }
 
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
-            boolean timeToClose = area_content_content.getTop() > .8 * AreaContentLayout.this.getHeight();
+            int layoutwidth = AreaContentLayout.this.getWidth();
+
+            int left = area_content_content.getLeft();
+            Log.i("AreaContentLayout", "width:" + layoutwidth + ", " + (float)(left + (layoutwidth / 2)) / (float)layoutwidth);
+            float alpha =(float)(left + (layoutwidth / 2)) / (float)layoutwidth + .5f;
+
+            if (alpha > 1){
+                alpha = 2.0f - alpha;
+            }else {
+                alpha = alpha;
+            }
+            boolean timeToClose = (alpha < .5);
             if(AreaContentLayout.this.onReleaseListener != null)
                 AreaContentLayout.this.onReleaseListener.onRelease(timeToClose);
 
             if(!timeToClose) {
-                area_content_content.setTop(AreaContentLayout.this.getBottom() / 2);
-                area_image_content.setTop(0);
-                //set alpha values
-                area_image_content.setAlpha(1.0f);
+                area_content_content.setLeft(0);
                 area_content_content.setAlpha(1.0f);
             }
+
 
         }
 

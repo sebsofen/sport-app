@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class SportStringListAdapter extends ArrayAdapter<String> {
 
         final SvgImageTask imageTask = new SvgImageTask(context);
         final ImageView iconView = (ImageView) elementView.findViewById(R.id.sport_icon);
-        final TextView title = (TextView) elementView.findViewById(R.id.name);
+
 
         String sportid = sportList.get(position);
         imageTask.setImageView(iconView);
@@ -48,7 +47,7 @@ public class SportStringListAdapter extends ArrayAdapter<String> {
             @Override
             public void onFinished(Sport sport) {
                 imageTask.execute(sport.getIconid());
-                title.setText(sport.getName().toUpperCase());
+
             }
         });
         getSportTask.execute();

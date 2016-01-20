@@ -6,73 +6,57 @@
     android:clickable="true"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:focusable="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#96d4d4d4">
 
-    <RelativeLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_weight=".5"
-        android:id="@+id/area_image_content">
+        android:padding="10dp"
+        android:id="@+id/area_content_content"
+        android:background="#96afafaf">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/area_img"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:scaleType="centerCrop"
-            android:layout_alignParentBottom="true"
-            android:background="#a8a8a8" />
-
-        <ListView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/sports"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignBottom="@+id/area_img" />
-
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:id="@+id/close_img"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_close_black_48dp" />
-
-    </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_weight=".5"
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/area_content_content"
-            android:background="#ffffff">
+            android:background="#ffffff"
+        android:padding="0dp">
 
-            <TextView
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="..."
                 android:id="@+id/area_description_txt"
-                android:layout_alignParentLeft="true" />
+            android:layout_alignRight="@+id/close_img"
+            android:layout_alignEnd="@+id/close_img"
+            android:layout_below="@+id/area_name_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-            <Button
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/area_img"
+            android:scaleType="centerCrop"
+            android:background="#a8a8a8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="been here"
                 android:id="@+id/been_here_btn"
+                android:layout_below="@+id/area_img"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -81,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:text="Announce Activity"
                 android:id="@+id/announce_activity_btn"
+                android:layout_below="@+id/area_img"
                 android:layout_toLeftOf="@+id/been_here_btn"
                 android:layout_toStartOf="@+id/been_here_btn" />
 
@@ -90,8 +75,31 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="..."
                 android:id="@+id/area_name_txt"
-                android:layout_alignParentLeft="true" />
-        </RelativeLayout>
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        <ListView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/sports"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignBottom="@+id/area_img" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/close_img"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_close_black_48dp" />
 
 
+    </RelativeLayout>
+
+</FrameLayout>
 </sebastians.sportan.layouts.AreaContentLayout>
