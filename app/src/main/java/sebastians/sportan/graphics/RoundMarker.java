@@ -9,6 +9,7 @@ import android.graphics.Paint;
  */
 public class RoundMarker  {
 
+
     public static Bitmap RoundMarker(int r, int g, int b) {
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
         int size = 40;
@@ -21,4 +22,6 @@ public class RoundMarker  {
 
         return bmp;
     }
+
+
 }

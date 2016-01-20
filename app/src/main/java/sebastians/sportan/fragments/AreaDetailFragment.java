@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -50,6 +52,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     String areaid;
     AreaContentLayout in_reveal;
     ImageView close_img;
+    ImageView pin_img;
 
     public AreaDetailFragment() {
 
@@ -93,7 +96,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
         been_here_btn = (Button) view.findViewById(R.id.been_here_btn);
         announce_activity_btn = (Button) view.findViewById(R.id.announce_activity_btn);
         number_participants_txt = (EditText) view.findViewById(R.id.number_participants_txt);
-
+        pin_img = (ImageView) view.findViewById(R.id.pin_img);
         close_img = (ImageView) view.findViewById(R.id.close_img);
 
         close_img.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +105,22 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
                 getActivity().getSupportFragmentManager().beginTransaction().remove(AreaDetailFragment.this).commit();
             }
         });
+
+        pin_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ColorMatrix colorMatrix = new ColorMatrix();
+                colorMatrix.setSaturation(1.0f);
+                final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+                pin_img.setColorFilter(colorFilter);
+            }
+        });
+
+
+        ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(0f);
+        final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+        pin_img.setColorFilter(colorFilter);
 
         in_reveal = (AreaContentLayout) view.findViewById(R.id.in_reveal);
         in_reveal.setOnReleaseListener(this);
@@ -250,5 +269,10 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     public void onRelease(boolean releaseToClose) {
         if(releaseToClose)
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    @Override
+    public void closeToLeft(boolean left) {
+        //pin up selected area!
     }
 }

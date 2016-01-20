@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -77,6 +76,8 @@ public class ProfileActivity extends ActionBarActivity
         city_name_txt = (TextView) findViewById(R.id.city_name_txt);
 
         myCredentials = new MyCredentials(this);
+
+        edit_username_text.setText(MyCredentials.Me.getProfile().getUsername());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(toolbar);

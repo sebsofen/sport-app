@@ -120,7 +120,7 @@ public class LoadingView extends View {
      */
     public void startAnimation() {
         animationCounter++;
-        animate = true;
+        //animate = true;
     }
 
 }

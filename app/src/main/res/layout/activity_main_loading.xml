@@ -12,7 +12,7 @@
         android:id="@+id/app_icon_img"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_sportapp" />
+        android:background="@mipmap/ic_mainicon" />
 
     <sebastians.sportan.customviews.LoadingView
         android:layout_width="240dp"

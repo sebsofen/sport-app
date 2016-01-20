@@ -45,9 +45,10 @@ public class TabActivity extends AppCompatActivity {
                 toolbar.getMenu().clear();
                 switch (position) {
                     case 0:
+                    case 1:
                         toolbar.inflateMenu(R.menu.menu_main);
                         break;
-                    case 1:
+                    case 2:
                         toolbar.inflateMenu(R.menu.menu_friends);
                         break;
                 }

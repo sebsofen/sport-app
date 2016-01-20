@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sebastians.sportan.R;
+import sebastians.sportan.customviews.SportImageView;
 import sebastians.sportan.networking.Image;
 import sebastians.sportan.networking.Sport;
 import sebastians.sportan.tasks.ImageReady;
@@ -75,17 +75,18 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.i("SportListAdapter", "position:"+ position);
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View elementView = inflater.inflate(R.layout.sport_select_item, parent, false);
 
         SvgImageTask imageTask = new SvgImageTask(context);
-        final ImageView iconView = (ImageView) elementView.findViewById(R.id.sport_icon);
-        iconView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        iconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        iconView.setAdjustViewBounds(true);
-        final Bitmap iconBitmap = Bitmap.createBitmap(50,50, Bitmap.Config.ARGB_8888);
+        final SportImageView iconView = (SportImageView) elementView.findViewById(R.id.sport_icon);
+        iconView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+
+        final Bitmap iconBitmap = Bitmap.createBitmap(63,63, Bitmap.Config.ARGB_8888);
+
 
 
         //grayscale filter
@@ -145,8 +146,7 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
                 }
 
-                if(slidingUpPanelLayout != null && filtered == false){
-                    filtered = true;
+                if(slidingUpPanelLayout != null){
                     slidingUpPanelLayout.setAnchorPoint(.3f);
                     slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
                 }

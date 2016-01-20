@@ -70,7 +70,6 @@ public class GeoContourView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Log.i("ratio", "ratio" + ((this.bboxBR[0] - this.bboxTL[0]) / (this.bboxBR[1] - this.bboxTL[1])));
 
         int width = canvas.getWidth();
         int height = canvas.getHeight();
