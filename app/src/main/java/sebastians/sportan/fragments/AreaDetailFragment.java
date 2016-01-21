@@ -8,14 +8,19 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -45,7 +50,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     TextView area_description_txt;
     EditText number_participants_txt;
     Area area;
-    ListView sport_list;
+    RecyclerView sport_list;
     Button been_here_btn;
     Button announce_activity_btn;
     LoadingView loadingView;
@@ -53,6 +58,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     AreaContentLayout in_reveal;
     ImageView close_img;
     ImageView pin_img;
+    Switch adm_swtch;
 
     public AreaDetailFragment() {
 
@@ -92,12 +98,39 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
         area_img = (ImageView) view.findViewById(R.id.area_img);
         area_name_txt = (TextView) view.findViewById(R.id.area_name_txt);
         area_description_txt = (TextView) view.findViewById(R.id.area_description_txt);
-        sport_list = (ListView) view.findViewById(R.id.sports);
+
         been_here_btn = (Button) view.findViewById(R.id.been_here_btn);
         announce_activity_btn = (Button) view.findViewById(R.id.announce_activity_btn);
         number_participants_txt = (EditText) view.findViewById(R.id.number_participants_txt);
         pin_img = (ImageView) view.findViewById(R.id.pin_img);
         close_img = (ImageView) view.findViewById(R.id.close_img);
+        adm_swtch = (Switch) view.findViewById(R.id.adm_swtch);
+
+
+
+
+        if(myCredentials.amIAdmin()){
+            adm_swtch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        //load new fragment in this view!
+                        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.addToBackStack(null);
+                        AreaDetailAdminFragment areaDetailAdminFragment = new AreaDetailAdminFragment();
+                        areaDetailAdminFragment.setAreaId(AreaDetailFragment.this.areaid);
+                        ft.replace(R.id.area_detail_fragment_placeholder, areaDetailAdminFragment, "AreaDetailFragment");
+
+                        ft.commit();
+                        adm_swtch.setChecked(false);
+                    }
+                }
+            });
+
+        }else{
+            adm_swtch.setVisibility(View.GONE);
+        }
+
 
         close_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +157,11 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
 
         in_reveal = (AreaContentLayout) view.findViewById(R.id.in_reveal);
         in_reveal.setOnReleaseListener(this);
+
+
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false);
+        sport_list = (RecyclerView) view.findViewById(R.id.sports);
+        sport_list.setLayoutManager(layoutManager);
 
         final ArrayList<String> sportList = new ArrayList<>();
         final SportStringListAdapter sportListAdapter = new SportStringListAdapter(getActivity(), R.id.sports, sportList);
@@ -171,7 +209,9 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
                                 ArrayList<String> asports = (ArrayList<String>) area.getSports();
                                 sportList.clear();
                                 sportList.addAll(asports);
-                                sportListAdapter.notifyDataSetInvalidated();
+
+                                sportListAdapter.notifyItemRangeChanged(0,sportList.size());
+                                Log.i("AreaDetail", "sports " + sportList.size());
 
 
                             }

@@ -55,18 +55,20 @@
                 android:layout_height="wrap_content"
                 android:text="been here"
                 android:id="@+id/been_here_btn"
-                android:layout_below="@+id/area_img"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:visibility="gone" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Announce Activity"
                 android:id="@+id/announce_activity_btn"
-                android:layout_below="@+id/area_img"
-                android:layout_toLeftOf="@+id/been_here_btn"
-                android:layout_toStartOf="@+id/been_here_btn" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,19 +76,18 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="..."
                 android:id="@+id/area_name_txt"
-                android:layout_centerVertical="true"
+                android:layout_below="@+id/sports"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentStart="true" />
 
-        <ListView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:id="@+id/sports"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignBottom="@+id/area_img" />
+            android:layout_below="@+id/area_img"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-35dp" />
 
             <ImageView
                 android:layout_width="48dp"
@@ -105,6 +106,15 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="adm"
+            android:id="@+id/adm_swtch"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:checked="false" />
 
 
     </RelativeLayout>

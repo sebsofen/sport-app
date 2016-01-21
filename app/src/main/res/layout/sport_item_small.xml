@@ -6,13 +6,12 @@
     android:weightSum="1">
 
     <sebastians.sportan.customviews.SportImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/sport_icon"
 
         android:scaleType="fitCenter"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

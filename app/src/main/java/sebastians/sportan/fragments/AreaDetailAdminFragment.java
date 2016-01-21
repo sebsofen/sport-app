@@ -71,6 +71,8 @@ public class AreaDetailAdminFragment extends Fragment {
     }
 
 
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i("AreaDetailActivity", "hiiI");
         if (resultCode == AppCompatActivity.RESULT_OK) {
@@ -81,6 +83,10 @@ public class AreaDetailAdminFragment extends Fragment {
 
             }
         }
+    }
+
+    public void setAreaId(String areaid) {
+        this.areaid = areaid;
     }
 
     @Override
@@ -103,7 +109,10 @@ public class AreaDetailAdminFragment extends Fragment {
 
         //created from intent
         Intent intent = mActivity.getIntent();
-        areaid = intent.getStringExtra(EXTRA_AREA_ID);
+
+        if(intent.getStringExtra(EXTRA_AREA_ID) != null) {
+            areaid = intent.getStringExtra(EXTRA_AREA_ID);
+        }
 
         final double lat = intent.getDoubleExtra(EXTRA_AREA_LAT,Double.MAX_VALUE);
         final double lon = intent.getDoubleExtra(EXTRA_AREA_LON,Double.MAX_VALUE);
@@ -225,8 +234,9 @@ public class AreaDetailAdminFragment extends Fragment {
 
                             @Override
                             public void onPostExecute() {
-                                //TODO This might be a strange behavoir
-                                mActivity.finish();
+                                //getActivity().getFragmentManager().popBackStack();
+                                getActivity().onBackPressed();
+
                             }
                         }
                 );

@@ -138,7 +138,6 @@ public class MyCredentials implements TaskFinishInterface {
     //TODO change to more realistic thing!
     public boolean isTokenExpired(){
         return System.currentTimeMillis() - 5000 > this.tokenValidity;
-
     }
 
     public String getToken(){
