@@ -12,6 +12,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import sebastians.sportan.R;
+import sebastians.sportan.adapters.FriendDetailFragment;
 import sebastians.sportan.app.MyCredentials;
 import sebastians.sportan.networking.User;
 import sebastians.sportan.tasks.GetUserTask;
@@ -56,6 +57,19 @@ public class FriendItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend_item, container, false);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FriendDetailFragment friendDetailFragment = new FriendDetailFragment();
+                friendDetailFragment.setFriend(friend);
+                //FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                //ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_in);
+                //ft.addToBackStack(null);
+                //ft.replace(R.id.placeholder, friendDetailFragment).commit();
+            }
+        });
+
         final TextView username_txt = (TextView) view.findViewById(R.id.username_txt);
         final Switch adm = (Switch) view.findViewById(R.id.friend_adm);
         myCredentials = new MyCredentials(context == null? getActivity(): context);

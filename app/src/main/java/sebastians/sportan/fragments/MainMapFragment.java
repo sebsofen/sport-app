@@ -306,6 +306,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         areaDetailFragment.setAreaid(areaid);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_in);
+        ft.addToBackStack(null);
         ft.replace(R.id.area_detail_fragment_placeholder, areaDetailFragment).commit();
 
 
