@@ -24,6 +24,7 @@ import android.widget.TextView;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -77,8 +78,20 @@ public class AreaDetailAdminFragment extends Fragment {
         Log.i("AreaDetailActivity", "hiiI");
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
+                Log.i("AreaDetailActivity", "new Picture");
                 Uri selectedImageUri = data.getData();
-                area_bitmap = getScaledBitmap(getPath(selectedImageUri), 640, 640);
+                InputStream is = null;
+                try {
+                    is = getActivity().getContentResolver().openInputStream(selectedImageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(is);
+                    area_bitmap = Bitmap.createScaledBitmap(bitmap, 640, 640, false);
+
+                    is.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 this.setImgBitmap(area_bitmap);
 
             }
@@ -267,7 +280,7 @@ public class AreaDetailAdminFragment extends Fragment {
     }
 
     public String getPath(Uri contentUri) {
-        String res = null;
+        String res = "";
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
         if(cursor.moveToFirst()){;
@@ -275,6 +288,7 @@ public class AreaDetailAdminFragment extends Fragment {
             res = cursor.getString(column_index);
         }
         cursor.close();
+        Log.i("AreaDetailActivity", "imagepath " +  res);
         return res;
     }
 

@@ -59,6 +59,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     ImageView close_img;
     ImageView pin_img;
     Switch adm_swtch;
+    ArrayList<String> favAreas = new ArrayList<>();
 
     public AreaDetailFragment() {
 
@@ -74,6 +75,7 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
         final View view = inflater.inflate(R.layout.fragment_area_detail, container, false);
         final Activity mActivity = getActivity();
         myCredentials = new MyCredentials(mActivity);
+        favAreas = myCredentials.getFavAreas();
 
         // To run the animation as soon as the view is layout in the view hierarchy we add this
         // listener and remove it
@@ -100,7 +102,9 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
         area_description_txt = (TextView) view.findViewById(R.id.area_description_txt);
 
         been_here_btn = (Button) view.findViewById(R.id.been_here_btn);
+        been_here_btn.setVisibility(View.GONE);
         announce_activity_btn = (Button) view.findViewById(R.id.announce_activity_btn);
+        announce_activity_btn.setVisibility(View.GONE);
         number_participants_txt = (EditText) view.findViewById(R.id.number_participants_txt);
         pin_img = (ImageView) view.findViewById(R.id.pin_img);
         close_img = (ImageView) view.findViewById(R.id.close_img);
@@ -142,21 +146,40 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
         pin_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorMatrix colorMatrix = new ColorMatrix();
-                colorMatrix.setSaturation(1.0f);
-                final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
-                pin_img.setColorFilter(colorFilter);
+                if(favAreas.contains(areaid)){
+                    favAreas.remove(areaid);
+                    myCredentials.setFavAreas(favAreas);
+                    ColorMatrix colorMatrix = new ColorMatrix();
+                    colorMatrix.setSaturation(0f);
+                    final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+                    pin_img.setColorFilter(colorFilter);
+                }else{
+                    favAreas.add(areaid);
+                    myCredentials.setFavAreas(favAreas);
+                    ColorMatrix colorMatrix = new ColorMatrix();
+                    colorMatrix.setSaturation(1.0f);
+                    final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+                    pin_img.setColorFilter(colorFilter);
+                }
             }
         });
 
+        if(favAreas.contains(areaid)){
+            ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(1.0f);
+            final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+            pin_img.setColorFilter(colorFilter);
+        }else{
+            ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0f);
+            final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
+            pin_img.setColorFilter(colorFilter);
+        }
 
-        ColorMatrix colorMatrix = new ColorMatrix();
-        colorMatrix.setSaturation(0f);
-        final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
-        pin_img.setColorFilter(colorFilter);
 
         in_reveal = (AreaContentLayout) view.findViewById(R.id.in_reveal);
         in_reveal.setOnReleaseListener(this);
+        in_reveal.setAreaFav(favAreas.contains(areaid));
 
 
         LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false);
@@ -314,5 +337,14 @@ public class AreaDetailFragment extends Fragment implements AreaContentLayout.On
     @Override
     public void closeToLeft(boolean left) {
         //pin up selected area!
+        Log.i("AreaDetail", "closetoleft +" + left);
+
+        if(!left) {
+            if(!favAreas.contains(areaid)){
+                favAreas.add(areaid);
+                myCredentials.setFavAreas(favAreas);
+            }
+
+        }
     }
 }

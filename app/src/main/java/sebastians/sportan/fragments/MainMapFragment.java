@@ -67,9 +67,10 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
     protected HashMap<String,Marker> areamarkers = new HashMap<>();
     private MyCredentials myCredentials;
     private ArrayList<String> areas = new ArrayList<>();
+    private ArrayList<String> favAreas = new ArrayList<>();
     private boolean locationSet = false;
     public final long LOCATION_UPDATE_INTERVAL = 30 * 1000;
-    public final float LOCATION_UPDATE_DISTANCE = 0.0f;
+    public final float LOCATION_UPDATE_DISTANCE = 500.0f;
     SportListAdapter sportListAdapter;
     GoogleMap googleMap;
     ImageButton noFilterButton;
@@ -102,6 +103,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         View view = inflater.inflate(R.layout.activity_areamapoverview, container, false);
         mThis = getActivity();
         myCredentials = new MyCredentials(getActivity());
+        favAreas = myCredentials.getFavAreas();
 
         final GridView sportListView = (GridView) view.findViewById(R.id.sport_list);
 
@@ -125,7 +127,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
         dragbutton.setImageDrawable(map_arrow_animation.getFrame(0));
 
         noFilterButton = (ImageButton) view.findViewById(R.id.no_filter_btn);
-        noFilterButton.setVisibility(View.GONE);
+        noFilterButton.setEnabled(false);
         noFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +140,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
                         addToMap(area, null);
                     };
                 }
-                v.setVisibility(View.GONE);
+                noFilterButton.setEnabled(false);
 
             }
         });
@@ -382,15 +384,16 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public void filterChanged(final ArrayList<String> filters) {
         noFilter = false;
-        noFilterButton.setVisibility(View.VISIBLE);
+        noFilterButton.setEnabled(true);
         //display no filter icon!
         for(int i = 0; i < areas.size(); i++) {
             final String areaid = areas.get(i);
             Area area = AreasCache.get(areaid);
             displayArea(filters,area);
-        };
-
+        }
     }
+
+
 
     public void displayArea(final ArrayList<String> mfilters, Area area) {
         if (area != null) {
@@ -421,7 +424,7 @@ public class MainMapFragment extends Fragment implements OnMapReadyCallback, Goo
                         .title(area.title)
                         .snippet(area.description)
                         .flat(true)
-                        .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(0,255,0)))
+                        .icon(BitmapDescriptorFactory.fromBitmap(RoundMarker.RoundMarker(0,200,0)))
         );
         markerids.put(marker, area.id);
         areamarkers.put(area.id,marker);

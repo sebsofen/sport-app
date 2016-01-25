@@ -66,7 +66,7 @@ public class SportStringListAdapter extends RecyclerView.Adapter<SportItemViewHo
                     public void ready(Image image) {
                         try {
                             SVG iconsvg = SVG.getFromString(image.content);
-                            final Bitmap iconBitmap = Bitmap.createBitmap(63,63, Bitmap.Config.ARGB_8888);
+                            final Bitmap iconBitmap = Bitmap.createBitmap(256,256, Bitmap.Config.ARGB_8888);
                             Canvas canvas = new Canvas(iconBitmap);
                             iconsvg.renderToCanvas(canvas);
                             mh.icon_view.setImageBitmap(iconBitmap);

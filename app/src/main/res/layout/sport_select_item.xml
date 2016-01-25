@@ -10,9 +10,18 @@
         android:layout_height="match_parent"
         android:id="@+id/sport_icon"
 
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp" />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/location_count_txt"
+        android:layout_alignBottom="@+id/sport_icon"
+        android:layout_alignRight="@+id/sport_icon"
+        android:layout_alignEnd="@+id/sport_icon" />
 
 </RelativeLayout>

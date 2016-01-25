@@ -11,6 +11,10 @@ import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import sebastians.sportan.R;
 import sebastians.sportan.networking.Profile;
 import sebastians.sportan.networking.ServiceConstants;
@@ -31,6 +35,7 @@ public class MyCredentials implements TaskFinishInterface {
     public static final String USERCREDENTIALS_PASSWORD = "password";// + "j";
     public static final String USERCREDENTIALS_TOKENVALIDITY = "tokenvalidity";// + "j";
     public static final String USERCREDENTIALS_TOKEN = "token";// + "j";
+    public static final String USERCREDENTIALS_FAVAREAS = "favAreas";
     private String identifier;
     private String password;
     String host;
@@ -41,6 +46,7 @@ public class MyCredentials implements TaskFinishInterface {
     public static User Me;
     MyCredentialsFinishedCallBack myCredentialsFinishedCallBack;
     Context ctx;
+    ArrayList<String> areaFavs;
 
     public MyCredentials(Context ctx, MyCredentialsFinishedCallBack myCredentialsFinishedCallBack){
         host = ctx.getString(R.string.host);
@@ -60,6 +66,36 @@ public class MyCredentials implements TaskFinishInterface {
             getMe();
         }
     }
+
+
+    public ArrayList<String> getFavAreas() {
+        if(areaFavs != null)
+            return areaFavs;
+
+        ArrayList<String> favs = new ArrayList<>();
+        if(sharedPref != null) {
+            Set<String> set = sharedPref.getStringSet(USERCREDENTIALS_FAVAREAS, null);
+            if(set != null) {
+                favs.addAll(set);
+            }
+        }
+        areaFavs = new ArrayList<>(favs);
+        return favs;
+    }
+
+    public void setFavAreas(ArrayList<String> areas) {
+        if(sharedPref != null){
+            if(areas.size() > 6){
+                areas = (ArrayList) areas.subList(areas.size() - 7, areas.size() - 1);
+            }
+            SharedPreferences.Editor edit = sharedPref.edit();
+            edit.putStringSet(USERCREDENTIALS_FAVAREAS,new HashSet<String>(areas));
+            edit.commit();
+        }
+        areaFavs.clear();
+        areaFavs.addAll(areas);
+    }
+
 
 
     public void getMe() {

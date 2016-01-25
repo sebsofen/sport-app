@@ -23,9 +23,15 @@ public class AreaContentLayout extends RelativeLayout{
     private FrameLayout area_content_content;
     private OnReleaseListener onReleaseListener;
     private ImageView pin_img;
+    private boolean area_fav =false;
     public AreaContentLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback());
+    }
+
+
+    public void setAreaFav(boolean fav){
+        area_fav = fav;
     }
 
 
@@ -99,14 +105,14 @@ public class AreaContentLayout extends RelativeLayout{
             Log.i("AreaContentLayout", "width:" + layoutwidth + ", " + (float)(left + (layoutwidth / 2)) / (float)layoutwidth);
             float alpha =(float)(left + (layoutwidth / 2)) / (float)layoutwidth + .5f;
 
-            if (alpha > 1){
+            if (alpha > 1 ){
                 alpha = 2.0f - alpha;
                 ColorMatrix colorMatrix = new ColorMatrix();
                 colorMatrix.setSaturation(1.0f - alpha);
                 final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
-                pin_img.setColorFilter(colorFilter);
+                if(!area_fav)
+                    pin_img.setColorFilter(colorFilter);
 
-                Log.i("AreaContent", "settop : " + pin_img.getTop());
             }else {
 
 
@@ -129,7 +135,8 @@ public class AreaContentLayout extends RelativeLayout{
                 ColorMatrix colorMatrix = new ColorMatrix();
                 colorMatrix.setSaturation(0f);
                 final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
-                pin_img.setColorFilter(colorFilter);
+                if(!area_fav)
+                    pin_img.setColorFilter(colorFilter);
                 leftdirection = true;
             }else {
                 alpha = alpha;
@@ -139,7 +146,7 @@ public class AreaContentLayout extends RelativeLayout{
             if(AreaContentLayout.this.onReleaseListener != null) {
                 AreaContentLayout.this.onReleaseListener.onRelease(timeToClose);
                 if(timeToClose) {
-                    AreaContentLayout.this.onReleaseListener.closeToLeft(leftdirection);
+                    AreaContentLayout.this.onReleaseListener.closeToLeft(!leftdirection);
                 }
             }
 

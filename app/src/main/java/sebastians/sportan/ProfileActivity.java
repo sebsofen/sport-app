@@ -121,8 +121,8 @@ public class ProfileActivity extends ActionBarActivity
                 Log.i("Profile", "usernameedit");
 
                 final AlertDialog.Builder inputAlert = new AlertDialog.Builder(mThis);
-                inputAlert.setTitle("Title of the Input Box");
-                inputAlert.setMessage("We need your name to proceed");
+                inputAlert.setTitle("Benutzer");
+                inputAlert.setMessage("Wähle einen Titel");
                 final EditText userInput = new EditText(mThis);
                 inputAlert.setView(userInput);
                 inputAlert.setPositiveButton("Submit", new DialogInterface.OnClickListener() {

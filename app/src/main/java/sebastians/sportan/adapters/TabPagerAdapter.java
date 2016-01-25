@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar;
 
 import sebastians.sportan.R;
 import sebastians.sportan.TabActivity;
+import sebastians.sportan.fragments.AreaFavoritesListFragment;
 import sebastians.sportan.fragments.MainFriendsFragment;
 import sebastians.sportan.fragments.MainMapFragment;
-import sebastians.sportan.fragments.SuperSportActivitiesFragment;
 
 /**
  * Created by sebastian on 11/12/15.
@@ -17,7 +17,7 @@ import sebastians.sportan.fragments.SuperSportActivitiesFragment;
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private TabActivity context;
     private Toolbar toolbar;
-    private String tabTitles[] = new String[] { "Activities","Map", "Friends"};
+    private String tabTitles[] = new String[] { "Favoriten","Karte", "Freunde"};
     public TabPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -31,17 +31,14 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
-        toolbar.getMenu().clear();
         switch (position) {
             case 0:
-                toolbar.inflateMenu(R.menu.menu_main);
-                return SuperSportActivitiesFragment.newInstance();
+                //return SuperSportActivitiesFragment.newInstance();
+                return AreaFavoritesListFragment.newInstance();
 
             case 1:
-                toolbar.inflateMenu(R.menu.menu_main);
                 return MainMapFragment.newInstance();
             case 2:
-                toolbar.inflateMenu(R.menu.menu_friends);
                 return MainFriendsFragment.newInstance();
             default:
                 return null;

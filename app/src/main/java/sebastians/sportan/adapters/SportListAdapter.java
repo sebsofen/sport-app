@@ -3,13 +3,11 @@ package sebastians.sportan.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 
 import com.caverock.androidsvg.SVG;
 import com.caverock.androidsvg.SVGParseException;
@@ -35,8 +33,9 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private SportListSelectedFilter sportListSelectedFilter;
     boolean filtered = false;
-    private boolean onClickLock = false;
     private boolean singleSelectionMode = false;
+
+
 
 
     public void resetFilter(){
@@ -59,6 +58,8 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
         super(context, resource, objects);
         this.context = context;
         this.sportList = (ArrayList<Sport>) objects;
+
+
     }
 
     public void setSelectedList(ArrayList<String> selectedSports) {
@@ -75,40 +76,24 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        Log.i("SportList", "getview : " + position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View elementView = inflater.inflate(R.layout.sport_select_item, parent, false);
 
         SvgImageTask imageTask = new SvgImageTask(context);
         final SportImageView iconView = (SportImageView) elementView.findViewById(R.id.sport_icon);
-        iconView.setScaleType(ImageView.ScaleType.FIT_XY);
-
-
-
-        final Bitmap iconBitmap = Bitmap.createBitmap(63,63, Bitmap.Config.ARGB_8888);
-
-
-
-        //grayscale filter
-        ColorMatrix grayMatrix = new ColorMatrix();
-        grayMatrix.setSaturation(.2f);
-        final ColorMatrixColorFilter grayFilter = new ColorMatrixColorFilter(grayMatrix);
-        //color filter
-        ColorMatrix colorMatrix = new ColorMatrix();
-        colorMatrix.setSaturation(1.2f);
-        final ColorMatrixColorFilter colorFilter = new ColorMatrixColorFilter(colorMatrix);
-
-        iconView.setColorFilter(grayFilter);
         final Sport sport = sportList.get(position);
         imageTask.onImageReady(new ImageReady(){
             @Override
             public void ready(Image image) {
                 try {
                     SVG iconsvg = SVG.getFromString(image.content);
-
+                    Bitmap iconBitmap = Bitmap.createBitmap(256,256, Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(iconBitmap);
                     iconsvg.renderToCanvas(canvas);
                     iconView.setImageBitmap(iconBitmap);
+                    iconView.setSelected(selectedSportsList.contains(sport.getId()));
+
                 } catch (SVGParseException e) {
                     e.printStackTrace();
                 }
@@ -117,26 +102,22 @@ public class SportListAdapter extends ArrayAdapter<Sport> {
 
         imageTask.execute(sport.getIconid());
 
-        if( selectedSportsList.contains(sport.getId())){
-            iconView.setColorFilter(colorFilter);
-        }else {
-            iconView.setColorFilter(grayFilter);
-        }
+
 
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onClickLock)
-                    return;
-
+                //selectedsportslistoutput
+                Log.i("SportsListAdapter", "selectedsports" + selectedSportsList.size());
                 //logic stuff
                 if(selectedSportsList.contains(sport.getId())){
                     selectedSportsList.remove(sport.getId());
-                    ((ImageView) v).setColorFilter(grayFilter);
+                    iconView.setSelected(false);
+
 
                 }else{
                     selectedSportsList.add(sport.getId());
-                     ((ImageView) v).setColorFilter(colorFilter);
+                    iconView.setSelected(true);
                     if(singleSelectionMode == true){
                         ArrayList<String> filterlist = new ArrayList<String>();
                         filterlist.add(sport.getId());
